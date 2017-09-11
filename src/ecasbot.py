@@ -11,8 +11,13 @@ def runbot(key):
 
     # Initialize command handlers...
     @bot.message_handler(commands=['start', 'help'])
-    def handlestart(message):
-        bot.send_message(message.chat.id, 'Приветствую вас!')
+    def handle_start(message):
+        if message.chat.type == "private":
+            bot.send_message(message.chat.id, 'Приветствую вас!')
+
+    @bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
+    def handle_join(message):
+        bot.reply_to(message, 'Приветствуем вас в нашем чате! Это тестовое оповещение на время тестов бота. Ваш ID записан в наш журнал.')
 
     # Run bot forever...
     bot.polling(none_stop=True)

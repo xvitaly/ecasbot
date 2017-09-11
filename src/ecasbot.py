@@ -13,10 +13,16 @@ def runbot(key):
     @bot.message_handler(commands=['start', 'help'])
     def handle_start(message):
         if message.chat.type == "private":
-            bot.send_message(message.chat.id, 'Приветствую вас!')
+            bot.send_message(message.chat.id, 'Приветствую вас, %s!' % bot.get_me().first_name)
 
     @bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
     def handle_join(message):
+        # Get Telegram internal UserID...
+        user = bot.get_me()
+
+        # Add new user to our database...
+
+        # Send test message...
         bot.reply_to(message, 'Приветствуем вас в нашем чате! Это тестовое оповещение на время тестов бота. Ваш ID записан в наш журнал.')
 
     # Run bot forever...

@@ -1,0 +1,2 @@
+# ecasbot
+EasyCoding AntiSpam Bot

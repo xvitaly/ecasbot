@@ -3,6 +3,7 @@
 
 from telebot import TeleBot, types
 from settings import tgkey
+import sqlite3
 
 
 def runbot(key):
@@ -17,13 +18,22 @@ def runbot(key):
 
     @bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
     def handle_join(message):
-        # Get Telegram internal UserID...
-        user = bot.get_me()
+        db_adduser(bot.get_me().id, message.date)
+        bot.reply_to(message, 'Приветствуем вас в нашем чате! Это тестовое оповещение на время тестов бота. Ваш ID записан в наш журнал.')
+
+    def db_adduser(userid, joindate):
+        # Attaching to database...
+        con = sqlite3.connect('ecas.db')
+        cs = con.cursor()
 
         # Add new user to our database...
+        cs.execute('INSERT INTO as_users (NN, UserID, JoinDate, MsgCount) VALUES (NULL, ?, ?, ?)', (userid, joindate, '0'))
 
-        # Send test message...
-        bot.reply_to(message, 'Приветствуем вас в нашем чате! Это тестовое оповещение на время тестов бота. Ваш ID записан в наш журнал.')
+        # Write to database...
+        con.commit()
+
+        # Close connection...
+        con.close()
 
     # Run bot forever...
     bot.polling(none_stop=True)

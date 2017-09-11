@@ -1,6 +1,5 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
 *$py.class
 
 # C extensions
@@ -58,8 +57,6 @@ docs/_build/
 # PyBuilder
 target/
 
-*.iml
-
 ## Directory-based project format:
 .idea/
 # if you remove the above rule, at least ignore the following:
@@ -104,3 +101,6 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+# Local database files
+*.db

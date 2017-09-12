@@ -43,10 +43,9 @@ def runbot(key):
         userbl.append(bot.get_me().id)
         bot.reply_to(message, 'Приветствуем вас в нашем чате! Это тестовое оповещение на время тестов бота. Ваш ID записан в наш журнал.')
 
-    @bot.message_handler(func=lambda message: True, content_types=['text'])
+    @bot.message_handler(func=lambda m: bot.get_me().id in userbl, content_types=['text'])
     def handle_msg(message):
-        if bot.get_me().id in userbl:
-            bot.reply_to(message, 'Сработал фильтр бота. Тестовое оповещение.')
+        bot.reply_to(message, 'Сработал фильтр бота. Тестовое оповещение.')
 
     # Run bot forever...
     bot.polling(none_stop=True)

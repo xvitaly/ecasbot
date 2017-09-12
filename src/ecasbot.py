@@ -19,7 +19,7 @@ def runbot(key):
             bot.send_message(message.chat.id, 'Приветствую вас, %s!' % bot.get_me().first_name)
 
     @bot.message_handler(commands=['addme'])
-    def handle_start(message):
+    def handle_addme(message):
         if message.chat.type == "private":
             uid = bot.get_me().id
             if uid not in userbl:
@@ -27,6 +27,16 @@ def runbot(key):
                 bot.send_message(message.chat.id, 'Успешно добавил ваш ID в базу!')
             else:
                 bot.send_message(message.chat.id, 'Ваш ID уже есть в нашей базе!')
+
+    @bot.message_handler(commands=['removeme'])
+    def handle_removeme(message):
+        if message.chat.type == "private":
+            uid = bot.get_me().id
+            if uid in userbl:
+                userbl.remove(uid)
+                bot.send_message(message.chat.id, 'Ваш ID успешно удалён из базы!')
+            else:
+                bot.send_message(message.chat.id, 'Вашего ID нет в нашей базе. Нечего удалять!')
 
     @bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
     def handle_join(message):

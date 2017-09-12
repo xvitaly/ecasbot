@@ -38,7 +38,9 @@ def runbot(key):
 
     @bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
     def handle_join(message):
-        blacklist.append(bot.get_me().id)
+        uid = bot.get_me().id
+        if uid not in blacklist:
+            blacklist.append(uid)
         bot.reply_to(message, 'Приветствуем вас в нашем чате! Это тестовое оповещение на время тестов бота. Ваш ID записан в наш журнал.')
 
     @bot.message_handler(func=lambda m: bot.get_me().id in blacklist, content_types=['text'])

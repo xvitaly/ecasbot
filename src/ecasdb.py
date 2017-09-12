@@ -5,7 +5,7 @@ import sqlite3
 
 
 class ASDbClass:
-    def __adduser(self, userid, joindate):
+    def adduser(self, userid, joindate):
         # Attaching to database...
         con = sqlite3.connect(self.DbName)
         cs = con.cursor()

@@ -9,6 +9,9 @@ def runbot(key):
     # Initialize bot...
     bot = TeleBot(key)
 
+    # Set empty user blacklist...
+    userbl = []
+
     # Initialize command handlers...
     @bot.message_handler(commands=['start', 'help'])
     def handle_start(message):
@@ -17,7 +20,7 @@ def runbot(key):
 
     @bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
     def handle_join(message):
-        db_adduser(bot.get_me().id, message.date)
+        userbl.append(bot.get_me().id)
         bot.reply_to(message, 'Приветствуем вас в нашем чате! Это тестовое оповещение на время тестов бота. Ваш ID записан в наш журнал.')
 
     # Run bot forever...

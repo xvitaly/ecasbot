@@ -6,11 +6,9 @@ from settings import tgkey
 
 
 def runbot(key):
-    # Initialize bot...
+    # Initialize bot and set default values...
     bot = TeleBot(key)
-
-    # Set empty user blacklist...
-    userbl = []
+    blacklist = []
 
     # Initialize command handlers...
     @bot.message_handler(commands=['start', 'help'])
@@ -22,8 +20,8 @@ def runbot(key):
     def handle_addme(message):
         if message.chat.type == "private":
             uid = bot.get_me().id
-            if uid not in userbl:
-                userbl.append(uid)
+            if uid not in blacklist:
+                blacklist.append(uid)
                 bot.send_message(message.chat.id, 'Успешно добавил ваш ID в базу!')
             else:
                 bot.send_message(message.chat.id, 'Ваш ID уже есть в нашей базе!')
@@ -32,18 +30,18 @@ def runbot(key):
     def handle_removeme(message):
         if message.chat.type == "private":
             uid = bot.get_me().id
-            if uid in userbl:
-                userbl.remove(uid)
+            if uid in blacklist:
+                blacklist.remove(uid)
                 bot.send_message(message.chat.id, 'Ваш ID успешно удалён из базы!')
             else:
                 bot.send_message(message.chat.id, 'Вашего ID нет в нашей базе. Нечего удалять!')
 
     @bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
     def handle_join(message):
-        userbl.append(bot.get_me().id)
+        blacklist.append(bot.get_me().id)
         bot.reply_to(message, 'Приветствуем вас в нашем чате! Это тестовое оповещение на время тестов бота. Ваш ID записан в наш журнал.')
 
-    @bot.message_handler(func=lambda m: bot.get_me().id in userbl, content_types=['text'])
+    @bot.message_handler(func=lambda m: bot.get_me().id in blacklist, content_types=['text'])
     def handle_msg(message):
         bot.reply_to(message, 'Сработал фильтр бота. Тестовое оповещение.')
 

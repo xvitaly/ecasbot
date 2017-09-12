@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # coding=utf-8
 
-from telebot import TeleBot, types
+from telebot import TeleBot
 from settings import tgkey
 
 

@@ -48,7 +48,7 @@ def runbot(key):
             try:
                 # Removing spam message and restricting user for 30 minutes...
                 bot.delete_message(message.chat.id, message.message_id)
-                bot.restrict_chat_member(message.chat.id, message.from_user.id, until_date=time() + 30 * 60)
+                bot.restrict_chat_member(message.chat.id, message.from_user.id, until_date=time() + 60 * 60)
             except:
                 print('Found spam message from %s, but I have no admin rights in this channel to delete it and restrict user.' % message.from_user.id)
 

@@ -44,15 +44,15 @@ def runbot(key):
     @bot.message_handler(func=lambda m: m.chat.type == 'supergroup' and m.from_user.id in blacklist)
     @bot.edited_message_handler(func=lambda m: m.chat.type == 'supergroup' and m.from_user.id in blacklist)
     def handle_msg(message):
-        if message.entities is not None:
-            for entity in message.entities:
-                if entity.type in ['url', 'text_link', 'mention']:
-                    try:
+        try:
+            if message.entities is not None:
+                for entity in message.entities:
+                    if entity.type in ['url', 'text_link', 'mention']:
                         # Removing spam message and restricting user for 30 minutes...
                         bot.delete_message(message.chat.id, message.message_id)
                         bot.restrict_chat_member(message.chat.id, message.from_user.id, until_date=time() + 60 * 60)
-                    except:
-                        print('Found spam message from %s, but I have no admin rights in this channel to delete it and restrict user.' % message.from_user.id)
+        except Exception as ex:
+            print('Exception detected while handling spam message from %s. Inner exception message was: %s.' % (message.from_user.id, ex))
 
     # Run bot forever...
     bot.polling(none_stop=True)

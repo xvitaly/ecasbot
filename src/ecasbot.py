@@ -58,8 +58,9 @@ def runbot(key):
 
 def main():
     try:
-        print('Launching bot with token %s...' % tgkey)
+        print('Launching bot...')
         runbot(tgkey)
+        print('Shutting down... Goodbye.')
 
     except:
         # Exception detected...

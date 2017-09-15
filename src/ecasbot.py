@@ -41,12 +41,12 @@ def runbot(key):
             blacklist.append(message.from_user.id)
         bot.reply_to(message, 'Приветствуем вас в нашем чате! Это тестовое оповещение на время тестов бота. Ваш ID записан в наш журнал. Не размещайте ссылок, иначе нам придётся вас заблокировать!')
 
-    @bot.message_handler(func=lambda m: m.chat.type == "supergroup" and m.from_user.id in blacklist)
-    @bot.edited_message_handler(func=lambda m: m.chat.type == "supergroup" and m.from_user.id in blacklist)
+    @bot.message_handler(func=lambda m: m.chat.type == 'supergroup' and m.from_user.id in blacklist)
+    @bot.edited_message_handler(func=lambda m: m.chat.type == 'supergroup' and m.from_user.id in blacklist)
     def handle_msg(message):
         if message.entities is not None:
             for entity in message.entities:
-                if entity.type in ["url", "text_link"]:
+                if entity.type in ['url', 'text_link', 'mention']:
                     try:
                         # Removing spam message and restricting user for 30 minutes...
                         bot.delete_message(message.chat.id, message.message_id)

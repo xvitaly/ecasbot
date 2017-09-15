@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # coding=utf-8
 
-from re import match
 from time import time
 from settings import tgkey
 from telebot import TeleBot

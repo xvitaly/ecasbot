@@ -41,9 +41,12 @@ class ASBot:
 
         @self.bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
         def handle_join(message):
-            if message.from_user.id not in self.blacklist:
-                self.blacklist.append(message.from_user.id)
-                self.bot.reply_to(message, 'Приветствуем вас в нашем чате! Это тестовое оповещение на время тестов бота. Ваш ID записан в наш журнал. Не размещайте ссылок, иначе нам придётся вас заблокировать!')
+            try:
+                if message.from_user.id not in self.blacklist:
+                    self.blacklist.append(message.from_user.id)
+                    self.bot.reply_to(message, 'Приветствуем вас в нашем чате! Не размещайте никаких ссылок, иначе нам придётся вас заблокировать!')
+            except Exception as ex:
+                self.log(ex)
 
         @self.bot.message_handler(func=self.msg_check)
         @self.bot.edited_message_handler(func=self.msg_check)

@@ -7,10 +7,12 @@ from settings import tgkey
 
 def main():
     try:
-        print('Launching bot...')
+        # Starting bot...
         bot = ASBot(tgkey)
         bot.runbot()
-        print('Shutting down... Goodbye.')
+
+        # Starting shutdown sequence...
+        ASBot.log('Shutting down bot...')
 
     except Exception as ex:
         # Exception detected...

@@ -1,11 +1,16 @@
 #!/usr/bin/python3
 # coding=utf-8
 
+from datetime import datetime
 from time import time
 from telebot import TeleBot
 
 
 class ASBot:
+    @staticmethod
+    def log(msg):
+        print('(%s) %s' % (datetime.fromtimestamp(time()).strftime('%d.%m.%Y %H:%M:%S'), msg))
+
     def runbot(self):
         # Initialize command handlers...
         @self.bot.message_handler(commands=['start', 'help'])
@@ -48,9 +53,10 @@ class ASBot:
                             self.bot.delete_message(message.chat.id, message.message_id)
                             self.bot.restrict_chat_member(message.chat.id, message.from_user.id, until_date=time() + 60 * 60)
             except Exception as ex:
-                print('Exception detected while handling spam message from %s. Inner exception message was: %s.' % (message.from_user.id, ex))
+                self.log('Exception detected while handling spam message from %s. Inner exception message was: %s.' % (message.from_user.id, ex))
 
         # Run bot forever...
+        self.log('Starting bot...')
         self.bot.polling(none_stop=True)
 
     def __init__(self, key):

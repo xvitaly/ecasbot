@@ -43,7 +43,7 @@ class ASBot:
         @self.bot.message_handler(commands=['about'])
         def handle_about(message):
             if message.chat.type == "private":
-                self.bot.send_message(message.chat.id, 'EasyCoding AntiSpam bot версии %s.\nРаботает на Python версии %s.\nЗапущен под ОС %s %s.' % ('0.1pre', python_version(), system(), release()))
+                self.bot.send_message(message.chat.id, '%s версии %s.\nРаботает на Python версии %s.\nЗапущен под ОС %s %s.' % (self.bot.get_me().first_name, '0.1pre', python_version(), system(), release()))
 
         @self.bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
         def handle_join(message):

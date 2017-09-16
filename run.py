@@ -2,7 +2,7 @@
 # coding=utf-8
 
 from ecasbot import ASBot
-from settings import tgkey
+from ecasbot.settings import tgkey
 
 
 def main():

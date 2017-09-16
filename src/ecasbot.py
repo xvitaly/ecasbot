@@ -49,9 +49,9 @@ class ASBot:
                 if message.entities is not None:
                     for entity in message.entities:
                         if entity.type in ['url', 'text_link', 'mention']:
-                            # Removing spam message and restricting user for 30 minutes...
+                            # Removing spam message and restricting user for N minutes...
                             self.bot.delete_message(message.chat.id, message.message_id)
-                            self.bot.restrict_chat_member(message.chat.id, message.from_user.id, until_date=time() + 60 * 60)
+                            self.bot.restrict_chat_member(message.chat.id, message.from_user.id, until_date=time() + self.bantime)
             except Exception as ex:
                 self.log('Exception detected while handling spam message from %s. Inner exception message was: %s.' % (message.from_user.id, ex))
 
@@ -62,3 +62,4 @@ class ASBot:
     def __init__(self, key):
         self.bot = TeleBot(key)
         self.blacklist = []
+        self.bantime = 60 * 60

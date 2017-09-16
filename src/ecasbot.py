@@ -12,6 +12,10 @@ class ASBot:
         print('(%s) %s' % (datetime.fromtimestamp(time()).strftime('%d.%m.%Y %H:%M:%S'), msg))
 
     def runbot(self):
+        # Initialize special helpers...
+        def msg_check(m):
+            return m.chat.type == 'supergroup' and m.from_user.id in self.blacklist
+
         # Initialize command handlers...
         @self.bot.message_handler(commands=['start', 'help'])
         def handle_start(message):
@@ -42,8 +46,8 @@ class ASBot:
                 self.blacklist.append(message.from_user.id)
                 self.bot.reply_to(message, 'Приветствуем вас в нашем чате! Это тестовое оповещение на время тестов бота. Ваш ID записан в наш журнал. Не размещайте ссылок, иначе нам придётся вас заблокировать!')
 
-        @self.bot.message_handler(func=lambda m: m.chat.type == 'supergroup' and m.from_user.id in self.blacklist)
-        @self.bot.edited_message_handler(func=lambda m: m.chat.type == 'supergroup' and m.from_user.id in self.blacklist)
+        @self.bot.message_handler(func=msg_check)
+        @self.bot.edited_message_handler(func=msg_check)
         def handle_msg(message):
             try:
                 if message.entities is not None:

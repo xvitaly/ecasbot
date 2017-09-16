@@ -9,6 +9,7 @@ setup(
     packages=['ecasbot'],
     url='https://www.easycoding.org/projects/ecasbot',
     license='GPLv3',
+    install_requires=['pytelegrambotapi'],
     author='Vitaly Zaitsev',
     author_email='vitaly@easycoding.org',
     description='AntiSpam bot for Telegram by EasyCoding Team'

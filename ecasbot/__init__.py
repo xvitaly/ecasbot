@@ -51,6 +51,11 @@ class ASBot:
                 if message.from_user.id not in self.blacklist:
                     self.blacklist.append(message.from_user.id)
                     self.bot.reply_to(message, self.__msgs['as_newsr'])
+                    if self.__rest_new:
+                        self.bot.restrict_chat_member(message.chat.id, message.from_user.id,
+                                                      until_date=time() + self.__rest_time, can_send_messages=True,
+                                                      can_send_media_messages=False, can_send_other_messages=False,
+                                                      can_add_web_page_previews=False)
             except Exception as ex:
                 self.log(ex)
 
@@ -63,7 +68,8 @@ class ASBot:
                         if entity.type in ['url', 'text_link', 'mention']:
                             # Removing spam message and restricting user for N minutes...
                             self.bot.delete_message(message.chat.id, message.message_id)
-                            self.bot.restrict_chat_member(message.chat.id, message.from_user.id, until_date=time() + self.bantime)
+                            self.bot.restrict_chat_member(message.chat.id, message.from_user.id,
+                                                          until_date=time() + self.bantime)
             except Exception as ex:
                 self.log(self.__msgs['as_msgex'] % (message.from_user.id, ex))
 
@@ -74,7 +80,9 @@ class ASBot:
     def __init__(self, key):
         self.bot = TeleBot(key)
         self.blacklist = []
-        self.bantime = 60 * 60
+        self.bantime = 60 * 60 * 1
+        self.__rest_new = False
+        self.__rest_time = 60 * 60 * 24 * 7
         self.__msgs = {
             'as_welcome': 'Приветствую вас! Этот бот предназначен для борьбы с нежелательными сообщениями рекламного характера в супергруппах. Он автоматически обнаруживает и удаляет спам от недавно вступивших пользователей, а также временно блокирует нарушителей на указанное в настройках время.\n\nЕсли вы были автоматически заблокированы ботом, просто отправьте /removeme и следуйте дальнейшим инструкциям. Блокировка в защищаемом чате будет снята автоматически по истечении времени.',
             'as_addsc': 'Успешно добавил ваш ID в базу!',

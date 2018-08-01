@@ -2,13 +2,12 @@
 # coding=utf-8
 
 from ecasbot import ASBot
-from ecasbot.settings import tgkey
 
 
 def main():
     try:
         # Starting bot...
-        bot = ASBot(tgkey)
+        bot = ASBot()
         bot.runbot()
 
         # Starting shutdown sequence...

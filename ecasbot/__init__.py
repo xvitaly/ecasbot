@@ -2,19 +2,17 @@
 # coding=utf-8
 
 from datetime import datetime
-from platform import system, release, python_version
 from time import time
 from telebot import TeleBot
+from re import compile
+
+from .settings import tgkey, chkrgx, bantime
 
 
 class ASBot:
     @staticmethod
     def log(msg):
-        print('(%s) %s' % (datetime.fromtimestamp(time()).strftime('%d.%m.%Y %H:%M:%S'), msg))
-
-    def msg_check(self, m):
-        usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
-        return m.chat.type == 'supergroup' and usr.status == 'restricted'
+        print('({}) {}'.format(datetime.fromtimestamp(time()).strftime('%d.%m.%Y %H:%M:%S'), msg))
 
     def runbot(self):
         # Initialize command handlers...
@@ -23,15 +21,21 @@ class ASBot:
             if message.chat.type == "private":
                 self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
 
-        @self.bot.message_handler(commands=['about'])
-        def handle_about(message):
-            if message.chat.type == "private":
-                self.bot.send_message(message.chat.id, self.__msgs['as_about'] % (self.bot.get_me().first_name, '0.1pre', python_version(), system(), release()))
-
         @self.bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
         def handle_join(message):
             try:
-                self.bot.reply_to(message, self.__msgs['as_newsr'])
+                # Find and block chineese bots...
+                if self.__pattern.match(message.from_user.first_name):
+                    # Write user ID to log...
+                    self.log(self.__msgs['as_alog'].format(message.from_user.id))
+                    # Delete join message...
+                    self.bot.delete_message(message.chat.id, message.message_id)
+                    # Temporary show message...
+                    self.bot.reply_to(message, self.__msgs['as_newsr'])
+                    # Ban user permanently...
+                    self.bot.restrict_chat_member(message.chat.id, message.from_user.id)
+
+                # Restrict new users for specified in config time...
                 self.bot.restrict_chat_member(message.chat.id, message.from_user.id,
                                               until_date=time() + self.__rest_time, can_send_messages=True,
                                               can_send_media_messages=False, can_send_other_messages=False,
@@ -39,29 +43,17 @@ class ASBot:
             except Exception as ex:
                 self.log(ex)
 
-        @self.bot.message_handler(func=self.msg_check)
-        @self.bot.edited_message_handler(func=self.msg_check)
-        def handle_msg(message):
-            try:
-                if message.entities is not None:
-                    for entity in message.entities:
-                        if entity.type in ['url', 'text_link', 'mention']:
-                            # Removing spam message and banning user forever...
-                            self.bot.delete_message(message.chat.id, message.message_id)
-                            self.bot.restrict_chat_member(message.chat.id, message.from_user.id)
-            except Exception as ex:
-                self.log(self.__msgs['as_msgex'] % (message.from_user.id, ex))
-
         # Run bot forever...
         self.log('Starting bot...')
         self.bot.polling(none_stop=True)
 
-    def __init__(self, key):
-        self.bot = TeleBot(key)
-        self.__rest_time = 60 * 60 * 24 * 7
+    def __init__(self):
+        self.bot = TeleBot(tgkey)
+        self.__rest_time = bantime
+        self.__pattern = compile(chkrgx)
         self.__msgs = {
-            'as_welcome': 'Приветствую вас! Этот бот предназначен для борьбы с нежелательными сообщениями рекламного характера в супергруппах. Он автоматически обнаруживает и удаляет спам от недавно вступивших пользователей, а также временно блокирует нарушителей на указанное в настройках время.\n\nЕсли вы были автоматически заблокированы ботом, просто отправьте /removeme и следуйте дальнейшим инструкциям. Блокировка в защищаемом чате будет снята автоматически по истечении времени.',
-            'as_about': '%s версии %s.\nРаботает на Python версии %s.\nЗапущен под ОС %s %s.',
-            'as_newsr': 'Приветствуем вас в нашем чате! Не размещайте никаких ссылок, иначе нам придётся вас заблокировать!',
+            'as_welcome': 'Приветствую вас! Этот бот предназначен для борьбы с нежелательными сообщениями рекламного характера в супергруппах. Он автоматически обнаруживает и удаляет спам от недавно вступивших пользователей, а также временно блокирует нарушителей на указанное в настройках время.\n\nБлокировка в защищаемом чате будет снята автоматически по истечении времени.',
+            'as_newsr': 'Похоже, что ты бот. Сейчас я в тестовом режиме, поэтому не забаню тебя, а лишь сообщу админам об инциденте.',
+            'as_alog': 'Spammer with ID {} detected.',
             'as_msgex': 'Exception detected while handling spam message from %s. Inner exception message was: %s.'
         }

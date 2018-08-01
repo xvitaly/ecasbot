@@ -28,12 +28,13 @@ class ASBot:
                 if self.__pattern.match(message.from_user.first_name):
                     # Write user ID to log...
                     self.log(self.__msgs['as_alog'].format(message.from_user.id))
-                    # Delete join message...
-                    self.bot.delete_message(message.chat.id, message.message_id)
-                    # Temporary show message...
-                    self.bot.reply_to(message, self.__msgs['as_newsr'])
-                    # Ban user permanently...
-                    self.bot.restrict_chat_member(message.chat.id, message.from_user.id)
+                    try:
+                        # Delete join message and ban user permanently...
+                        self.bot.delete_message(message.chat.id, message.message_id)
+                        self.bot.restrict_chat_member(message.chat.id, message.from_user.id)
+                    except Exception as ex:
+                        # We have no admin rights, show message then...
+                        self.bot.reply_to(message, self.__msgs['as_newsr'])
 
                 # Restrict new users for specified in config time...
                 self.bot.restrict_chat_member(message.chat.id, message.from_user.id,
@@ -53,7 +54,7 @@ class ASBot:
         self.__pattern = compile(chkrgx)
         self.__msgs = {
             'as_welcome': 'Приветствую вас! Этот бот предназначен для борьбы с нежелательными сообщениями рекламного характера в супергруппах. Он автоматически обнаруживает и удаляет спам от недавно вступивших пользователей, а также временно блокирует нарушителей на указанное в настройках время.\n\nБлокировка в защищаемом чате будет снята автоматически по истечении времени.',
-            'as_newsr': 'Похоже, что ты бот. Сейчас я в тестовом режиме, поэтому не забаню тебя, а лишь сообщу админам об инциденте.',
+            'as_newsr': 'Похоже, что ты бот. Сейчас у меня нет прав администратора, поэтому я не забаню тебя, а лишь сообщу админам об инциденте.',
             'as_alog': 'Spammer with ID {} detected.',
             'as_msgex': 'Exception detected while handling spam message from %s. Inner exception message was: %s.'
         }

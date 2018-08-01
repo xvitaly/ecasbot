@@ -2,9 +2,9 @@
 # coding=utf-8
 
 from datetime import datetime
+from re import compile
 from time import time
 from telebot import TeleBot
-from re import compile
 
 from .settings import tgkey, chkrgx, bantime
 

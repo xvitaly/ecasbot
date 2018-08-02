@@ -17,24 +17,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from setuptools import setup, find_packages
+from ecasbot import ASBot
 
-setup(
-    name='ecasbot',
-    version='0.1',
-    packages=find_packages(),
-    package_dir={
-        'ecasbot': 'ecasbot',
-    },
-    url='https://www.easycoding.org/projects/ecasbot',
-    entry_points={
-        'console_scripts': [
-            'ecasbot = ecasbot.scripts.runbot:main',
-        ],
-    },
-    license='GPLv3',
-    install_requires=['pytelegrambotapi', 'requests', 'six'],
-    author='Vitaly Zaitsev',
-    author_email='vitaly@easycoding.org',
-    description='AntiSpam bot for Telegram by EasyCoding Team'
-)
+
+def main():
+    try:
+        # Starting bot...
+        ASBot().runbot()
+
+    except Exception as ex:
+        # Exception detected...
+        print('An error occurred while running bot! Inner message: {}'.format(ex))
+
+
+if __name__ == '__main__':
+    main()

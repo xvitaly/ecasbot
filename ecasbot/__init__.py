@@ -83,9 +83,7 @@ class ASBot:
                 self.log(self.__msgs['as_msgex'].format(message.from_user.id, ex))
 
         # Run bot forever...
-        self.log('Starting bot...')
         self.bot.polling(none_stop=True)
-        self.log('Shutting down bot...')
 
     def __init__(self):
         self.bot = TeleBot(tgkey)

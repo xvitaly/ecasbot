@@ -59,6 +59,7 @@ You can also install bot:
  ```
 
  You must change `User` and `Group` and set `VENVPATH` to path of create Python Virtual Environment.
+ 
  2. Reload system configuration:
  ```
  sudo systemctl daemon-reload

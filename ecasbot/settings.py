@@ -2,5 +2,5 @@
 # coding=utf-8
 
 tgkey = ''
-chkrgx = '/(VX\(QQ\).+[\d]+|TELEGRAM)/gi'
+chkrgx = '(.+VX.+QQ.+TELEGRAM.+)'
 bantime = 60 * 60 * 24 * 1

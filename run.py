@@ -10,9 +10,6 @@ def main():
         bot = ASBot()
         bot.runbot()
 
-        # Starting shutdown sequence...
-        ASBot.log('Shutting down bot...')
-
     except Exception as ex:
         # Exception detected...
         print('An error occurred while running bot! Inner message: {}'.format(ex))

@@ -5,7 +5,6 @@ from datetime import datetime
 from re import search, I, M, U
 from time import time
 from telebot import TeleBot
-from logging import warning
 
 from .settings import tgkey, chkrgx, bantime
 
@@ -13,7 +12,7 @@ from .settings import tgkey, chkrgx, bantime
 class ASBot:
     @staticmethod
     def log(msg):
-        warning('({}) {}'.format(datetime.fromtimestamp(time()).strftime('%d.%m.%Y %H:%M:%S'), msg))
+        print('({}) {}'.format(datetime.fromtimestamp(time()).strftime('%d.%m.%Y %H:%M:%S'), msg))
 
     def msg_check(self, m):
         usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
@@ -70,6 +69,7 @@ class ASBot:
         # Run bot forever...
         self.log('Starting bot...')
         self.bot.polling(none_stop=True)
+        self.log('Shutting down bot...')
 
     def __init__(self):
         self.bot = TeleBot(tgkey)

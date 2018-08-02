@@ -2,7 +2,7 @@
 # coding=utf-8
 
 from datetime import datetime
-from re import compile, I, M, U
+from re import search, I, M, U
 from time import time
 from telebot import TeleBot
 from logging import warning
@@ -13,7 +13,7 @@ from .settings import tgkey, chkrgx, bantime
 class ASBot:
     @staticmethod
     def log(msg):
-        print('({}) {}'.format(datetime.fromtimestamp(time()).strftime('%d.%m.%Y %H:%M:%S'), msg))
+        warning('({}) {}'.format(datetime.fromtimestamp(time()).strftime('%d.%m.%Y %H:%M:%S'), msg))
 
     def msg_check(self, m):
         usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
@@ -39,7 +39,7 @@ class ASBot:
                     self.log(self.__msgs['as_restex'].format(message.from_user.id))
 
                 # Find and block chineese bots...
-                if self.__pattern.match(message.new_chat_member.first_name):
+                if search(chkrgx, message.new_chat_member.first_name, I | M | U):
                     # Write user ID to log...
                     self.log(self.__msgs['as_alog'].format(message.new_chat_member.id))
                     try:
@@ -74,7 +74,6 @@ class ASBot:
     def __init__(self):
         self.bot = TeleBot(tgkey)
         self.__rest_time = bantime
-        self.__pattern = compile(chkrgx, I | M | U)
         self.__restent = ['url', 'text_link', 'mention']
         self.__msgs = {
             'as_welcome': 'Приветствую вас! Этот бот предназначен для борьбы с нежелательными сообщениями рекламного характера в супергруппах. Он автоматически обнаруживает и удаляет спам от недавно вступивших пользователей, а также временно блокирует нарушителей на указанное в настройках время.\n\nБлокировка в защищаемом чате будет снята автоматически по истечении времени.',

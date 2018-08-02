@@ -5,6 +5,7 @@ from datetime import datetime
 from re import compile
 from time import time
 from telebot import TeleBot
+from logging import warning
 
 from .settings import tgkey, chkrgx, bantime
 
@@ -13,6 +14,10 @@ class ASBot:
     @staticmethod
     def log(msg):
         print('({}) {}'.format(datetime.fromtimestamp(time()).strftime('%d.%m.%Y %H:%M:%S'), msg))
+
+    def msg_check(self, m):
+        usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
+        return m.chat.type == 'supergroup' and usr.status == 'restricted'
 
     def runbot(self):
         # Initialize command handlers...
@@ -26,7 +31,7 @@ class ASBot:
             try:
                 # Restrict all new users for specified in config time...
                 try:
-                    self.bot.restrict_chat_member(message.chat.id, message.from_user.id,
+                    self.bot.restrict_chat_member(message.chat.id, message.new_chat_member.id,
                                                   until_date=time() + self.__rest_time, can_send_messages=True,
                                                   can_send_media_messages=False, can_send_other_messages=False,
                                                   can_add_web_page_previews=False)
@@ -34,18 +39,33 @@ class ASBot:
                     self.log(self.__msgs['as_restex'].format(message.from_user.id))
 
                 # Find and block chineese bots...
-                if self.__pattern.match(message.from_user.first_name):
+                if len(message.new_chat_member.first_name) > 50:
                     # Write user ID to log...
-                    self.log(self.__msgs['as_alog'].format(message.from_user.id))
+                    self.log(self.__msgs['as_alog'].format(message.new_chat_member.id))
                     try:
                         # Delete join message and ban user permanently...
                         self.bot.delete_message(message.chat.id, message.message_id)
-                        self.bot.restrict_chat_member(message.chat.id, message.from_user.id)
+                        self.bot.kick_chat_member(message.chat.id, message.new_chat_member.id)
+                        # Also ban user who added him...
+                        if message.from_user.id != message.new_chat_member.id:
+                            self.bot.kick_chat_member(message.chat.id, message.from_user.id)
                     except Exception:
-                        # We have no admin rights, show message then...
+                        # We have no admin rights, show message instead...
                         self.bot.reply_to(message, self.__msgs['as_newsr'])
             except Exception as ex:
                 self.log(ex)
+
+        @self.bot.message_handler(func=self.msg_check)
+        @self.bot.edited_message_handler(func=self.msg_check)
+        def handle_msg(message):
+            try:
+                if message.entities is not None:
+                    for entity in message.entities:
+                        if entity.type in self.__restent:
+                            # Removing message from restricted member...
+                            self.bot.delete_message(message.chat.id, message.message_id)
+            except Exception as ex:
+                self.log(self.__msgs['as_msgex'] % (message.from_user.id, ex))
 
         # Run bot forever...
         self.log('Starting bot...')
@@ -55,6 +75,7 @@ class ASBot:
         self.bot = TeleBot(tgkey)
         self.__rest_time = bantime
         self.__pattern = compile(chkrgx)
+        self.__restent = ['url', 'text_link', 'mention']
         self.__msgs = {
             'as_welcome': 'Приветствую вас! Этот бот предназначен для борьбы с нежелательными сообщениями рекламного характера в супергруппах. Он автоматически обнаруживает и удаляет спам от недавно вступивших пользователей, а также временно блокирует нарушителей на указанное в настройках время.\n\nБлокировка в защищаемом чате будет снята автоматически по истечении времени.',
             'as_newsr': 'Похоже, что ты бот. Сейчас у меня нет прав администратора, поэтому я не забаню тебя, а лишь сообщу админам об инциденте.',

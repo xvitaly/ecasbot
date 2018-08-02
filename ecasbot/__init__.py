@@ -65,7 +65,7 @@ class ASBot:
                             # Removing message from restricted member...
                             self.bot.delete_message(message.chat.id, message.message_id)
             except Exception as ex:
-                self.log(self.__msgs['as_msgex'] % (message.from_user.id, ex))
+                self.log(self.__msgs['as_msgex'].format(message.from_user.id, ex))
 
         # Run bot forever...
         self.log('Starting bot...')
@@ -81,5 +81,5 @@ class ASBot:
             'as_newsr': 'Похоже, что ты бот. Сейчас у меня нет прав администратора, поэтому я не забаню тебя, а лишь сообщу админам об инциденте.',
             'as_alog': 'Spammer with ID {} detected.',
             'as_restex': 'Cannot restrict a new user with ID {} due to missing admin rights.',
-            'as_msgex': 'Exception detected while handling spam message from %s. Inner exception message was: %s.'
+            'as_msgex': 'Exception detected while handling spam message from {}. Inner exception message was: {}.'
         }

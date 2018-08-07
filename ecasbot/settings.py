@@ -17,7 +17,33 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-tgkey = ''
-chkrgx = '(.+VX.+QQ.+)'
-bantime = 60 * 60 * 24 * 1
-admins = ['569350564']
+
+from json import dump, load
+from os import makedirs, path as opath
+from pathlib import Path as ppath
+
+
+class Settings:
+    def __save(self):
+        with open(self.__cfgfile, 'w') as f:
+            dump(self.data, f)
+
+    def __load(self):
+        with open(self.__cfgfile, 'r') as f:
+            self.data = load(f)
+
+    def __create(self):
+        self.data = {'tgkey': '', 'chkrgx': '(.+VX.+QQ.+)', 'bantime': 60 * 60 * 24 * 1,
+                     'admins': [''], 'restent': ['url', 'text_link', 'mention']}
+        dirname = opath.dirname(self.__cfgfile)
+        if not opath.exists(dirname):
+            makedirs(dirname)
+        self.__save()
+        raise Exception('Basic configuration created. Now open {} file and set API token.'.format(self.__cfgfile))
+
+    def __init__(self):
+        self.data = {}
+        self.__cfgfile = str(opath.join(ppath.home(), '.config', 'ecasbot', 'config.json'))
+        if not opath.isfile(self.__cfgfile):
+            self.__create()
+        self.__load()

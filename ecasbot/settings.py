@@ -18,6 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 tgkey = ''
-chkrgx = '(.+VX.+QQ.+TELEGRAM.+)'
+chkrgx = '(.+VX.+QQ.+)'
 bantime = 60 * 60 * 24 * 1
 admins = ['569350564']

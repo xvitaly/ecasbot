@@ -43,7 +43,7 @@ class Settings:
 
     def __init__(self):
         self.data = {}
-        self.__cfgfile = str(opath.join(ppath.home(), '.config', 'ecasbot', 'config.json'))
+        self.__cfgfile = str(opath.join(str(ppath.home()), '.config', 'ecasbot', 'config.json'))
         if not opath.isfile(self.__cfgfile):
             self.__create()
         self.__load()

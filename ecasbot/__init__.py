@@ -42,7 +42,7 @@ class ASBot:
                 self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
 
         @self.bot.message_handler(commands=['id'])
-        def handle_start(message):
+        def handle_id(message):
             if message.chat.type == "private":
                 self.bot.send_message(message.chat.id, self.__msgs['as_usrid'].format(message.from_user.id))
 

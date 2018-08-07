@@ -41,6 +41,11 @@ class ASBot:
             if message.chat.type == "private":
                 self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
 
+        @self.bot.message_handler(commands=['id'])
+        def handle_start(message):
+            if message.chat.type == "private":
+                self.bot.send_message(message.chat.id, self.__msgs['as_usrid'].format(message.from_user.id))
+
         @self.bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
         def handle_join(message):
             try:
@@ -94,5 +99,6 @@ class ASBot:
             'as_newsr': 'Похоже, что ты бот. Сейчас у меня нет прав администратора, поэтому я не забаню тебя, а лишь сообщу админам об инциденте.',
             'as_alog': 'Spammer with ID {} detected.',
             'as_restex': 'Cannot restrict a new user with ID {} due to missing admin rights.',
-            'as_msgex': 'Exception detected while handling spam message from {}. Inner exception message was: {}.'
+            'as_msgex': 'Exception detected while handling spam message from {}. Inner exception message was: {}.',
+            'as_usrid': 'Your Telegram ID is: {}'
         }

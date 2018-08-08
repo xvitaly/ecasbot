@@ -28,6 +28,10 @@ class Settings:
     def tgkey(self):
         return self.data['tgkey']
 
+    @property
+    def chkrgx(self):
+        return self.data['chkrgx']
+
     def __save(self):
         with open(self.__cfgfile, 'w') as f:
             dump(self.data, f)

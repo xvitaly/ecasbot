@@ -26,35 +26,35 @@ from pathlib import Path as ppath
 class Settings:
     @property
     def tgkey(self) -> str:
-        return self.data['tgkey']
+        return self.__data['tgkey']
 
     @property
     def chkrgx(self) -> str:
-        return self.data['chkrgx']
+        return self.__data['chkrgx']
 
     @property
     def bantime(self) -> int:
-        return self.data['bantime']
+        return self.__data['bantime']
 
     @property
     def admins(self) -> list:
-        return self.data['admins']
+        return self.__data['admins']
 
     @property
     def restent(self) -> list:
-        return self.data['restent']
+        return self.__data['restent']
 
     def __save(self):
         with open(self.__cfgfile, 'w') as f:
-            dump(self.data, f)
+            dump(self.__data, f)
 
     def __load(self):
         with open(self.__cfgfile, 'r') as f:
-            self.data = load(f)
+            self.__data = load(f)
 
     def __create(self):
-        self.data = {'tgkey': '', 'chkrgx': '(.+VX.+QQ.+)', 'bantime': 60 * 60 * 24 * 1,
-                     'admins': [''], 'restent': ['url', 'text_link', 'mention']}
+        self.__data = {'tgkey': '', 'chkrgx': '(.+VX.+QQ.+)', 'bantime': 60 * 60 * 24 * 1,
+                       'admins': [''], 'restent': ['url', 'text_link', 'mention']}
         dirname = opath.dirname(self.__cfgfile)
         if not opath.exists(dirname):
             makedirs(dirname)
@@ -62,7 +62,7 @@ class Settings:
         raise Exception('Basic configuration created. Now open {} file and set API token.'.format(self.__cfgfile))
 
     def __init__(self):
-        self.data = {}
+        self.__data = {}
         self.__cfgfile = str(opath.join(str(ppath.home()), '.config', 'ecasbot', 'config.json'))
         if not opath.isfile(self.__cfgfile):
             self.__create()

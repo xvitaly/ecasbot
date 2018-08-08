@@ -81,7 +81,7 @@ class ASBot:
             try:
                 if message.entities is not None:
                     for entity in message.entities:
-                        if entity.type in self.settings.data['restent']:
+                        if entity.type in self.settings.restent:
                             # Removing message from restricted member...
                             self.bot.delete_message(message.chat.id, message.message_id)
             except Exception as ex:

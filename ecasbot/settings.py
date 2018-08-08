@@ -40,6 +40,10 @@ class Settings:
     def admins(self):
         return self.data['admins']
 
+    @property
+    def restent(self):
+        return self.data['restent']
+
     def __save(self):
         with open(self.__cfgfile, 'w') as f:
             dump(self.data, f)

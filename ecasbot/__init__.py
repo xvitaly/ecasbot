@@ -27,7 +27,7 @@ from .settings import Settings
 class ASBot:
     def send_report(self, msg):
         finalmsg = '({}) {}'.format(datetime.fromtimestamp(time()).strftime('%d.%m.%Y %H:%M:%S'), msg)
-        for admin in self.settings.data['admins']:
+        for admin in self.settings.admins:
             self.bot.send_message(admin, finalmsg)
 
     def msg_check(self, m):

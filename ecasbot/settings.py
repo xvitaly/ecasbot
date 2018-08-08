@@ -36,6 +36,10 @@ class Settings:
     def bantime(self):
         return self.data['bantime']
 
+    @property
+    def admins(self):
+        return self.data['admins']
+
     def __save(self):
         with open(self.__cfgfile, 'w') as f:
             dump(self.data, f)

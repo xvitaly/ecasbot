@@ -24,6 +24,10 @@ from pathlib import Path as ppath
 
 
 class Settings:
+    @property
+    def tgkey(self):
+        return self.data['tgkey']
+
     def __save(self):
         with open(self.__cfgfile, 'w') as f:
             dump(self.data, f)

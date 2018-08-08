@@ -101,6 +101,6 @@ class ASBot:
             'as_usrid': 'Your Telegram ID is: {}',
             'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!'
         }
-        if not self.settings.data['tgkey']:
+        if not self.settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])
-        self.bot = TeleBot(self.settings.data['tgkey'])
+        self.bot = TeleBot(self.settings.tgkey)

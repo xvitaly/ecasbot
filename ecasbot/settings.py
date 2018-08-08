@@ -32,6 +32,10 @@ class Settings:
     def chkrgx(self):
         return self.data['chkrgx']
 
+    @property
+    def bantime(self):
+        return self.data['bantime']
+
     def __save(self):
         with open(self.__cfgfile, 'w') as f:
             dump(self.data, f)

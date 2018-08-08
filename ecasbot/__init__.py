@@ -52,7 +52,7 @@ class ASBot:
                 # Restrict all new users for specified in config time...
                 try:
                     self.bot.restrict_chat_member(message.chat.id, message.new_chat_member.id,
-                                                  until_date=int(time()) + self.settings.data['bantime'],
+                                                  until_date=int(time()) + self.settings.bantime,
                                                   can_send_messages=True, can_send_media_messages=False,
                                                   can_send_other_messages=False, can_add_web_page_previews=False)
                 except Exception:

@@ -25,23 +25,23 @@ from pathlib import Path as ppath
 
 class Settings:
     @property
-    def tgkey(self):
+    def tgkey(self) -> str:
         return self.data['tgkey']
 
     @property
-    def chkrgx(self):
+    def chkrgx(self) -> str:
         return self.data['chkrgx']
 
     @property
-    def bantime(self):
+    def bantime(self) -> int:
         return self.data['bantime']
 
     @property
-    def admins(self):
+    def admins(self) -> list:
         return self.data['admins']
 
     @property
-    def restent(self):
+    def restent(self) -> list:
         return self.data['restent']
 
     def __save(self):

@@ -26,9 +26,6 @@ from .settings import Settings
 
 
 class ASBot:
-    def log(self, msg):
-        self.logger.info(msg)
-
     def msg_check(self, m):
         usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
         return m.chat.type == 'supergroup' and usr.status == 'restricted'
@@ -55,13 +52,13 @@ class ASBot:
                                                   can_send_messages=True, can_send_media_messages=False,
                                                   can_send_other_messages=False, can_add_web_page_previews=False)
                 except Exception:
-                    self.log(self.__msgs['as_restex'].format(message.from_user.id))
+                    self.logger.exception(self.__msgs['as_restex'].format(message.from_user.id))
 
                 # Find and block chineese bots...
                 if search(self.settings.chkrgx, message.new_chat_member.first_name + message.new_chat_member.last_name, I | M | U):
                     try:
                         # Write user ID to log...
-                        self.log(self.__msgs['as_alog'].format(message.new_chat_member.id))
+                        self.logger.info(self.__msgs['as_alog'].format(message.new_chat_member.id))
                         # Delete join message and ban user permanently...
                         self.bot.delete_message(message.chat.id, message.message_id)
                         self.bot.kick_chat_member(message.chat.id, message.new_chat_member.id)
@@ -71,8 +68,8 @@ class ASBot:
                     except Exception:
                         # We have no admin rights, show message instead...
                         self.bot.reply_to(message, self.__msgs['as_newsr'])
-            except Exception as ex:
-                self.log(ex)
+            except Exception:
+                self.logger.exception(self.__msgs['as_joinhex'])
 
         @self.bot.message_handler(func=self.msg_check)
         @self.bot.edited_message_handler(func=self.msg_check)
@@ -83,8 +80,8 @@ class ASBot:
                         if entity.type in self.settings.restent:
                             # Removing message from restricted member...
                             self.bot.delete_message(message.chat.id, message.message_id)
-            except Exception as ex:
-                self.log(self.__msgs['as_msgex'].format(message.from_user.id, ex))
+            except Exception:
+                self.logger.exception(self.__msgs['as_msgex'].format(message.from_user.id))
 
         # Run bot forever...
         self.bot.polling(none_stop=True)
@@ -98,9 +95,10 @@ class ASBot:
             'as_newsr': 'Похоже, что ты бот. Сейчас у меня нет прав администратора, поэтому я не забаню тебя, а лишь сообщу админам об инциденте.',
             'as_alog': 'Spammer with ID {} detected.',
             'as_restex': 'Cannot restrict a new user with ID {} due to missing admin rights.',
-            'as_msgex': 'Exception detected while handling spam message from {}. Inner exception message was: {}.',
+            'as_msgex': 'Exception detected while handling spam message from {}.',
             'as_usrid': 'Your Telegram ID is: {}',
-            'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!'
+            'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!',
+            'as_joinhex': 'Failed to handle join message.'
         }
         if not self.settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

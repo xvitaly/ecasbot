@@ -18,9 +18,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from json import dump, load
-from os import makedirs, path as opath
-from pathlib import Path as ppath
+import json
+import os
+import pathlib
 
 
 class Settings:
@@ -46,24 +46,24 @@ class Settings:
 
     def __save(self):
         with open(self.__cfgfile, 'w') as f:
-            dump(self.__data, f)
+            json.dump(self.__data, f)
 
     def __load(self):
         with open(self.__cfgfile, 'r') as f:
-            self.__data = load(f)
+            self.__data = json.load(f)
 
     def __create(self):
         self.__data = {'tgkey': '', 'chkrgx': '(.*VX.*QQ.+)', 'bantime': 60 * 60 * 24 * 1,
                        'admins': [], 'restent': ['url', 'text_link', 'mention']}
-        dirname = opath.dirname(self.__cfgfile)
-        if not opath.exists(dirname):
-            makedirs(dirname)
+        dirname = os.path.dirname(self.__cfgfile)
+        if not os.path.exists(dirname):
+            os.makedirs(dirname)
         self.__save()
         raise Exception('Basic configuration created. Now open {} file and set API token.'.format(self.__cfgfile))
 
     def __init__(self):
         self.__data = {}
-        self.__cfgfile = str(opath.join(str(ppath.home()), '.config', 'ecasbot', 'config.json'))
-        if not opath.isfile(self.__cfgfile):
+        self.__cfgfile = str(os.path.join(str(pathlib.Path.home()), '.config', 'ecasbot', 'config.json'))
+        if not os.path.isfile(self.__cfgfile):
             self.__create()
         self.__load()

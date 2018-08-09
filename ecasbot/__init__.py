@@ -17,11 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from logging import basicConfig, getLogger, INFO
-from re import search, I, M, U
-from time import time
+import logging
+import re
+import time
+import telebot
 
-from telebot import TeleBot
 from .settings import Settings
 
 
@@ -48,14 +48,14 @@ class ASBot:
                 # Restrict all new users for specified in config time...
                 try:
                     self.bot.restrict_chat_member(message.chat.id, message.new_chat_member.id,
-                                                  until_date=int(time()) + self.settings.bantime,
+                                                  until_date=int(time.time()) + self.settings.bantime,
                                                   can_send_messages=True, can_send_media_messages=False,
                                                   can_send_other_messages=False, can_add_web_page_previews=False)
                 except Exception:
                     self.logger.exception(self.__msgs['as_restex'].format(message.from_user.id))
 
                 # Find and block chineese bots...
-                if search(self.settings.chkrgx, message.new_chat_member.first_name + message.new_chat_member.last_name, I | M | U):
+                if re.search(self.settings.chkrgx, message.new_chat_member.first_name + message.new_chat_member.last_name, re.I | re.M | re.U):
                     try:
                         # Write user ID to log...
                         self.logger.info(self.__msgs['as_alog'].format(message.new_chat_member.id))
@@ -87,8 +87,8 @@ class ASBot:
         self.bot.polling(none_stop=True)
 
     def __init__(self):
-        basicConfig(level=INFO)
-        self.logger = getLogger(__name__)
+        logging.basicConfig(level=logging.INFO)
+        self.logger = logging.getLogger(__name__)
         self.settings = Settings()
         self.__msgs = {
             'as_welcome': 'Приветствую вас! Этот бот предназначен для борьбы с нежелательными сообщениями рекламного характера в супергруппах. Он автоматически обнаруживает и удаляет спам от недавно вступивших пользователей, а также временно блокирует нарушителей на указанное в настройках время.\n\nБлокировка в защищаемом чате будет снята автоматически по истечении времени.',
@@ -102,4 +102,4 @@ class ASBot:
         }
         if not self.settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])
-        self.bot = TeleBot(self.settings.tgkey)
+        self.bot = telebot.TeleBot(self.settings.tgkey)

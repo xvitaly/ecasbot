@@ -55,7 +55,8 @@ class ASBot:
                     self.logger.exception(self.__msgs['as_restex'].format(message.from_user.id))
 
                 # Find and block chineese bots...
-                if re.search(self.settings.chkrgx, message.new_chat_member.first_name + message.new_chat_member.last_name, re.I | re.M | re.U):
+                username = message.new_chat_member.first_name + message.new_chat_member.last_name if message.new_chat_member.last_name else message.new_chat_member.first_name
+                if re.search(self.settings.chkrgx, username, re.I | re.M | re.U):
                     try:
                         # Write user ID to log...
                         self.logger.info(self.__msgs['as_alog'].format(message.new_chat_member.id))

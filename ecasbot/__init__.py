@@ -25,14 +25,9 @@ from telebot import TeleBot
 from .settings import Settings
 
 class ASBot:
-    def send_report(self, msg):
-        finalmsg = '({}) {}'.format(datetime.fromtimestamp(time()).strftime('%d.%m.%Y %H:%M:%S'), msg)
-        for admin in self.settings.admins:
-            try:
-                if admin:
-                    self.bot.send_message(admin, finalmsg)
-            except Exception:
-                print(finalmsg)
+    @staticmethod
+    def log(msg):
+        print('({}) {}'.format(datetime.fromtimestamp(time()).strftime('%d.%m.%Y %H:%M:%S'), msg))
 
     def msg_check(self, m):
         usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
@@ -60,13 +55,13 @@ class ASBot:
                                                   can_send_messages=True, can_send_media_messages=False,
                                                   can_send_other_messages=False, can_add_web_page_previews=False)
                 except Exception:
-                    self.send_report(self.__msgs['as_restex'].format(message.from_user.id))
+                    self.log(self.__msgs['as_restex'].format(message.from_user.id))
 
                 # Find and block chineese bots...
                 if search(self.settings.chkrgx, message.new_chat_member.first_name + message.new_chat_member.last_name, I | M | U):
                     try:
                         # Write user ID to log...
-                        self.send_report(self.__msgs['as_alog'].format(message.new_chat_member.id))
+                        self.log(self.__msgs['as_alog'].format(message.new_chat_member.id))
                         # Delete join message and ban user permanently...
                         self.bot.delete_message(message.chat.id, message.message_id)
                         self.bot.kick_chat_member(message.chat.id, message.new_chat_member.id)
@@ -77,7 +72,7 @@ class ASBot:
                         # We have no admin rights, show message instead...
                         self.bot.reply_to(message, self.__msgs['as_newsr'])
             except Exception as ex:
-                self.send_report(ex)
+                self.log(ex)
 
         @self.bot.message_handler(func=self.msg_check)
         @self.bot.edited_message_handler(func=self.msg_check)
@@ -89,7 +84,7 @@ class ASBot:
                             # Removing message from restricted member...
                             self.bot.delete_message(message.chat.id, message.message_id)
             except Exception as ex:
-                self.send_report(self.__msgs['as_msgex'].format(message.from_user.id, ex))
+                self.log(self.__msgs['as_msgex'].format(message.from_user.id, ex))
 
         # Run bot forever...
         self.bot.polling(none_stop=True)

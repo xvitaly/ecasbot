@@ -54,7 +54,7 @@ class Settings:
 
     def __create(self):
         self.__data = {'tgkey': '', 'chkrgx': '(.*VX.*QQ.+)', 'bantime': 60 * 60 * 24 * 1,
-                       'admins': [''], 'restent': ['url', 'text_link', 'mention']}
+                       'admins': [], 'restent': ['url', 'text_link', 'mention']}
         dirname = opath.dirname(self.__cfgfile)
         if not opath.exists(dirname):
             makedirs(dirname)

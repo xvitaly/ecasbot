@@ -17,17 +17,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from datetime import datetime
+from logging import basicConfig, getLogger, INFO
 from re import search, I, M, U
 from time import time
-from telebot import TeleBot
 
+from telebot import TeleBot
 from .settings import Settings
 
+
 class ASBot:
-    @staticmethod
-    def log(msg):
-        print('({}) {}'.format(datetime.fromtimestamp(time()).strftime('%d.%m.%Y %H:%M:%S'), msg))
+    def log(self, msg):
+        self.logger.info(msg)
 
     def msg_check(self, m):
         usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
@@ -90,6 +90,8 @@ class ASBot:
         self.bot.polling(none_stop=True)
 
     def __init__(self):
+        basicConfig(level=INFO)
+        self.logger = getLogger(__name__)
         self.settings = Settings()
         self.__msgs = {
             'as_welcome': 'Приветствую вас! Этот бот предназначен для борьбы с нежелательными сообщениями рекламного характера в супергруппах. Он автоматически обнаруживает и удаляет спам от недавно вступивших пользователей, а также временно блокирует нарушителей на указанное в настройках время.\n\nБлокировка в защищаемом чате будет снята автоматически по истечении времени.',

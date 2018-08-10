@@ -48,7 +48,7 @@ class ASBot:
                 # Restrict all new users for specified in config time...
                 try:
                     self.bot.restrict_chat_member(message.chat.id, message.new_chat_member.id,
-                                                  until_date=int(time.time()) + self.settings.bantime,
+                                                  until_date=int(time.time()) + self.__settings.bantime,
                                                   can_send_messages=True, can_send_media_messages=False,
                                                   can_send_other_messages=False, can_add_web_page_previews=False)
                 except Exception:
@@ -56,7 +56,7 @@ class ASBot:
 
                 # Find and block chineese bots...
                 username = '{} {}'.format(message.new_chat_member.first_name, message.new_chat_member.last_name) if message.new_chat_member.last_name else message.new_chat_member.first_name
-                if re.search(self.settings.chkrgx, username, re.I | re.M | re.U):
+                if re.search(self.__settings.chkrgx, username, re.I | re.M | re.U):
                     try:
                         # Write user ID to log...
                         self.logger.info(self.__msgs['as_alog'].format(message.new_chat_member.id))
@@ -78,7 +78,7 @@ class ASBot:
             try:
                 if message.entities is not None:
                     for entity in message.entities:
-                        if entity.type in self.settings.restent:
+                        if entity.type in self.__settings.restent:
                             # Removing message from restricted member...
                             self.bot.delete_message(message.chat.id, message.message_id)
             except Exception:
@@ -90,7 +90,7 @@ class ASBot:
     def __init__(self):
         logging.basicConfig(level=logging.INFO)
         self.logger = logging.getLogger(__name__)
-        self.settings = Settings()
+        self.__settings = Settings()
         self.__msgs = {
             'as_welcome': 'Приветствую вас! Этот бот предназначен для борьбы с нежелательными сообщениями рекламного характера в супергруппах. Он автоматически обнаруживает и удаляет спам от недавно вступивших пользователей, а также временно блокирует нарушителей на указанное в настройках время.\n\nБлокировка в защищаемом чате будет снята автоматически по истечении времени.',
             'as_newsr': 'Похоже, что ты бот. Сейчас у меня нет прав администратора, поэтому я не забаню тебя, а лишь сообщу админам об инциденте.',
@@ -101,6 +101,6 @@ class ASBot:
             'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!',
             'as_joinhex': 'Failed to handle join message.'
         }
-        if not self.settings.tgkey:
+        if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])
-        self.bot = telebot.TeleBot(self.settings.tgkey)
+        self.bot = telebot.TeleBot(self.__settings.tgkey)

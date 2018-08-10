@@ -52,14 +52,14 @@ class ASBot:
                                                   can_send_messages=True, can_send_media_messages=False,
                                                   can_send_other_messages=False, can_add_web_page_previews=False)
                 except Exception:
-                    self.logger.exception(self.__msgs['as_restex'].format(message.from_user.id))
+                    self.__logger.exception(self.__msgs['as_restex'].format(message.from_user.id))
 
                 # Find and block chineese bots...
                 username = '{} {}'.format(message.new_chat_member.first_name, message.new_chat_member.last_name) if message.new_chat_member.last_name else message.new_chat_member.first_name
                 if re.search(self.__settings.chkrgx, username, re.I | re.M | re.U):
                     try:
                         # Write user ID to log...
-                        self.logger.info(self.__msgs['as_alog'].format(message.new_chat_member.id))
+                        self.__logger.info(self.__msgs['as_alog'].format(message.new_chat_member.id))
                         # Delete join message and ban user permanently...
                         self.bot.delete_message(message.chat.id, message.message_id)
                         self.bot.kick_chat_member(message.chat.id, message.new_chat_member.id)
@@ -70,7 +70,7 @@ class ASBot:
                         # We have no admin rights, show message instead...
                         self.bot.reply_to(message, self.__msgs['as_newsr'])
             except Exception:
-                self.logger.exception(self.__msgs['as_joinhex'])
+                self.__logger.exception(self.__msgs['as_joinhex'])
 
         @self.bot.message_handler(func=self.__msg_check)
         @self.bot.edited_message_handler(func=self.__msg_check)
@@ -82,14 +82,14 @@ class ASBot:
                             # Removing message from restricted member...
                             self.bot.delete_message(message.chat.id, message.message_id)
             except Exception:
-                self.logger.exception(self.__msgs['as_msgex'].format(message.from_user.id))
+                self.__logger.exception(self.__msgs['as_msgex'].format(message.from_user.id))
 
         # Run bot forever...
         self.bot.polling(none_stop=True)
 
     def __init__(self):
         logging.basicConfig(level=logging.INFO)
-        self.logger = logging.getLogger(__name__)
+        self.__logger = logging.getLogger(__name__)
         self.__settings = Settings()
         self.__msgs = {
             'as_welcome': 'Приветствую вас! Этот бот предназначен для борьбы с нежелательными сообщениями рекламного характера в супергруппах. Он автоматически обнаруживает и удаляет спам от недавно вступивших пользователей, а также временно блокирует нарушителей на указанное в настройках время.\n\nБлокировка в защищаемом чате будет снята автоматически по истечении времени.',

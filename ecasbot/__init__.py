@@ -59,19 +59,13 @@ class ASBot:
         @self.bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
         def handle_join(message):
             try:
-                # Restrict all new users for specified in config time...
-                try:
-                    self.bot.restrict_chat_member(message.chat.id, message.new_chat_member.id,
-                                                  until_date=int(time.time()) + self.__settings.bantime,
-                                                  can_send_messages=True, can_send_media_messages=False,
-                                                  can_send_other_messages=False, can_add_web_page_previews=False)
-                except Exception:
-                    self.__logger.exception(self.__msgs['as_restex'].format(message.from_user.id))
+                # Check user profile using our score system...
+                score = self.__score_user(message.new_chat_member.first_name, message.new_chat_member.last_name)
+                self.__logger.info(self.__msgs['as_alog'].format(message.new_chat_member.first_name, message.new_chat_member.id, score))
 
-                if self.__score_user(message.new_chat_member.first_name, message.new_chat_member.last_name) >= 100:
+                # If user get score >= 100 - ban him, else - restrict...
+                if score >= 100:
                     try:
-                        # Write user ID to log...
-                        self.__logger.info(self.__msgs['as_alog'].format(message.new_chat_member.id))
                         # Delete join message and ban user permanently...
                         self.bot.delete_message(message.chat.id, message.message_id)
                         self.bot.kick_chat_member(message.chat.id, message.new_chat_member.id)
@@ -81,6 +75,16 @@ class ASBot:
                     except Exception:
                         # We have no admin rights, show message instead...
                         self.bot.reply_to(message, self.__msgs['as_newsr'])
+                else:
+                    try:
+                        # Restrict all new users for specified in config time...
+                        self.bot.restrict_chat_member(message.chat.id, message.new_chat_member.id,
+                                                      until_date=int(time.time()) + self.__settings.bantime,
+                                                      can_send_messages=True, can_send_media_messages=False,
+                                                      can_send_other_messages=False, can_add_web_page_previews=False)
+                    except Exception:
+                        self.__logger.exception(self.__msgs['as_restex'].format(message.from_user.id))
+
             except Exception:
                 self.__logger.exception(self.__msgs['as_joinhex'])
 
@@ -106,7 +110,7 @@ class ASBot:
         self.__msgs = {
             'as_welcome': 'Приветствую вас! Этот бот предназначен для борьбы с нежелательными сообщениями рекламного характера в супергруппах. Он автоматически обнаруживает и удаляет спам от недавно вступивших пользователей, а также временно блокирует нарушителей на указанное в настройках время.\n\nБлокировка в защищаемом чате будет снята автоматически по истечении времени.',
             'as_newsr': 'Похоже, что ты бот. Сейчас у меня нет прав администратора, поэтому я не забаню тебя, а лишь сообщу админам об инциденте.',
-            'as_alog': 'Spammer with ID {} detected.',
+            'as_alog': 'New user {} with ID {} has joined group. Score: {}.',
             'as_restex': 'Cannot restrict a new user with ID {} due to missing admin rights.',
             'as_msgex': 'Exception detected while handling spam message from {}.',
             'as_usrid': 'Your Telegram ID is: {}',

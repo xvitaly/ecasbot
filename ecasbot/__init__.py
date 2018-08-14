@@ -44,7 +44,7 @@ class ASBot:
         # Return result...
         return score
 
-    def runbot(self):
+    def runbot(self) -> None:
         # Initialize command handlers...
         @self.bot.message_handler(commands=['start'])
         def handle_start(message):

@@ -30,6 +30,20 @@ class ASBot:
         usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
         return m.chat.type == 'supergroup' and usr.status == 'restricted'
 
+    def __score_user(self, fname, lname):
+        # Setting default score to 0...
+        score = 0
+
+        # Combining first name with last name...
+        username = '{} {}'.format(fname, lname) if lname else fname
+
+        # Find chineese bots and score them to +100...
+        if re.search(self.__settings.chkrgx, username, re.I | re.M | re.U):
+            score += 100
+
+        # Return result...
+        return score
+
     def runbot(self):
         # Initialize command handlers...
         @self.bot.message_handler(commands=['start', 'help'])
@@ -54,9 +68,7 @@ class ASBot:
                 except Exception:
                     self.__logger.exception(self.__msgs['as_restex'].format(message.from_user.id))
 
-                # Find and block chineese bots...
-                username = '{} {}'.format(message.new_chat_member.first_name, message.new_chat_member.last_name) if message.new_chat_member.last_name else message.new_chat_member.first_name
-                if re.search(self.__settings.chkrgx, username, re.I | re.M | re.U):
+                if self.__score_user(message.new_chat_member.first_name, message.new_chat_member.last_name) >= 100:
                     try:
                         # Write user ID to log...
                         self.__logger.info(self.__msgs['as_alog'].format(message.new_chat_member.id))

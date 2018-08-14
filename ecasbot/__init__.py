@@ -32,15 +32,12 @@ class ASBot:
 
     def __score_user(self, fname, lname) -> int:
         # Setting default score to 0...
-
         score = 0
         # Combining first name with last name...
         username = '{} {}'.format(fname, lname) if lname else fname
-
         # Find chineese bots and score them to +100...
         if re.search(self.__settings.chkrgx, username, re.I | re.M | re.U):
             score += 100
-
         # Return result...
         return score
 
@@ -57,7 +54,6 @@ class ASBot:
                 # Check user profile using our score system...
                 score = self.__score_user(message.new_chat_member.first_name, message.new_chat_member.last_name)
                 self.__logger.info(self.__msgs['as_alog'].format(message.new_chat_member.first_name, message.new_chat_member.id, score))
-
                 try:
                     # If user get score >= 100 - ban him, else - restrict...
                     if score >= 100:
@@ -78,7 +74,6 @@ class ASBot:
                 except Exception:
                     # We have no admin rights, show message instead...
                     self.__logger.exception(self.__msgs['as_restex'].format(message.from_user.id))
-
             except Exception:
                 self.__logger.exception(self.__msgs['as_joinhex'])
 

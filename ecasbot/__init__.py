@@ -46,15 +46,10 @@ class ASBot:
 
     def runbot(self):
         # Initialize command handlers...
-        @self.bot.message_handler(commands=['start', 'help'])
+        @self.bot.message_handler(commands=['start'])
         def handle_start(message):
             if message.chat.type == "private":
                 self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
-
-        @self.bot.message_handler(commands=['id'])
-        def handle_id(message):
-            if message.chat.type == "private":
-                self.bot.send_message(message.chat.id, self.__msgs['as_usrid'].format(message.from_user.id))
 
         @self.bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
         def handle_join(message):
@@ -111,7 +106,6 @@ class ASBot:
             'as_alog': 'New user {} with ID {} has joined group. Score: {}.',
             'as_restex': 'Cannot restrict a new user with ID {} due to missing admin rights.',
             'as_msgex': 'Exception detected while handling spam message from {}.',
-            'as_usrid': 'Your Telegram ID is: {}',
             'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!',
             'as_joinhex': 'Failed to handle join message.',
             'as_banned': 'Permanently banned user with ID: {} (score: {}).'

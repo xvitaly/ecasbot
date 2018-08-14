@@ -72,6 +72,8 @@ class ASBot:
                         # Also ban user who added him...
                         if message.from_user.id != message.new_chat_member.id:
                             self.bot.kick_chat_member(message.chat.id, message.from_user.id)
+                        # Writing information to log...
+                        self.__logger.warning(self.__msgs['as_banned'].format(message.new_chat_member.id, score))
                     else:
                         # Restrict all new users for specified in config time...
                         self.bot.restrict_chat_member(message.chat.id, message.new_chat_member.id,
@@ -111,7 +113,8 @@ class ASBot:
             'as_msgex': 'Exception detected while handling spam message from {}.',
             'as_usrid': 'Your Telegram ID is: {}',
             'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!',
-            'as_joinhex': 'Failed to handle join message.'
+            'as_joinhex': 'Failed to handle join message.',
+            'as_banned': 'Permanently banned user with ID: {} (score: {}).'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

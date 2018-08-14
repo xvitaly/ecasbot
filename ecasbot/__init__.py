@@ -97,7 +97,7 @@ class ASBot:
         self.__logger = logging.getLogger(__name__)
         self.__settings = Settings()
         self.__msgs = {
-            'as_welcome': 'Приветствую вас! Этот бот предназначен для борьбы с нежелательными сообщениями рекламного характера в супергруппах. Он автоматически обнаруживает и удаляет спам от недавно вступивших пользователей, а также временно блокирует нарушителей на указанное в настройках время.\n\nБлокировка в защищаемом чате будет снята автоматически по истечении времени.',
+            'as_welcome': 'Add me to supergroup and give me admin rights. I will try to block spammers automatically.',
             'as_alog': 'New user {} with ID {} has joined group. Score: {}.',
             'as_restex': 'Cannot restrict a new user with ID {} due to missing admin rights.',
             'as_msgex': 'Exception detected while handling spam message from {}.',

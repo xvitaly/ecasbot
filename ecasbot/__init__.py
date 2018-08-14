@@ -26,14 +26,14 @@ from .settings import Settings
 
 
 class ASBot:
-    def __msg_check(self, m):
+    def __msg_check(self, m) -> bool:
         usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
         return m.chat.type == 'supergroup' and usr.status == 'restricted'
 
-    def __score_user(self, fname, lname):
+    def __score_user(self, fname, lname) -> int:
         # Setting default score to 0...
-        score = 0
 
+        score = 0
         # Combining first name with last name...
         username = '{} {}'.format(fname, lname) if lname else fname
 

@@ -86,10 +86,10 @@ class ASBot:
         @self.bot.edited_message_handler(func=self.__msg_check)
         def handle_msg(message):
             try:
+                # Removing messages from restricted members...
                 if message.entities is not None:
                     for entity in message.entities:
                         if entity.type in self.__settings.restent:
-                            # Removing message from restricted member...
                             self.bot.delete_message(message.chat.id, message.message_id)
             except Exception:
                 self.__logger.exception(self.__msgs['as_msgex'].format(message.from_user.id))

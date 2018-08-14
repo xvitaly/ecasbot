@@ -86,6 +86,7 @@ class ASBot:
                     for entity in message.entities:
                         if entity.type in self.__settings.restent:
                             self.bot.delete_message(message.chat.id, message.message_id)
+                            self.__logger.info(self.__msgs['as_msgrest'].format(message.from_user.first_name, message.from_user.id))
             except Exception:
                 self.__logger.exception(self.__msgs['as_msgex'].format(message.from_user.id))
 
@@ -103,7 +104,8 @@ class ASBot:
             'as_msgex': 'Exception detected while handling spam message from {}.',
             'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!',
             'as_joinhex': 'Failed to handle join message.',
-            'as_banned': 'Permanently banned user with ID: {} (score: {}).'
+            'as_banned': 'Permanently banned user with ID {} (score: {}).',
+            'as_msgrest': 'Removed message from restricted user {} with ID {}.'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

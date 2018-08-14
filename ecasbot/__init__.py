@@ -63,27 +63,24 @@ class ASBot:
                 score = self.__score_user(message.new_chat_member.first_name, message.new_chat_member.last_name)
                 self.__logger.info(self.__msgs['as_alog'].format(message.new_chat_member.first_name, message.new_chat_member.id, score))
 
-                # If user get score >= 100 - ban him, else - restrict...
-                if score >= 100:
-                    try:
+                try:
+                    # If user get score >= 100 - ban him, else - restrict...
+                    if score >= 100:
                         # Delete join message and ban user permanently...
                         self.bot.delete_message(message.chat.id, message.message_id)
                         self.bot.kick_chat_member(message.chat.id, message.new_chat_member.id)
                         # Also ban user who added him...
                         if message.from_user.id != message.new_chat_member.id:
                             self.bot.kick_chat_member(message.chat.id, message.from_user.id)
-                    except Exception:
-                        # We have no admin rights, show message instead...
-                        self.bot.reply_to(message, self.__msgs['as_newsr'])
-                else:
-                    try:
+                    else:
                         # Restrict all new users for specified in config time...
                         self.bot.restrict_chat_member(message.chat.id, message.new_chat_member.id,
                                                       until_date=int(time.time()) + self.__settings.bantime,
                                                       can_send_messages=True, can_send_media_messages=False,
                                                       can_send_other_messages=False, can_add_web_page_previews=False)
-                    except Exception:
-                        self.__logger.exception(self.__msgs['as_restex'].format(message.from_user.id))
+                except Exception:
+                    # We have no admin rights, show message instead...
+                    self.__logger.exception(self.__msgs['as_restex'].format(message.from_user.id))
 
             except Exception:
                 self.__logger.exception(self.__msgs['as_joinhex'])
@@ -109,7 +106,6 @@ class ASBot:
         self.__settings = Settings()
         self.__msgs = {
             'as_welcome': 'Приветствую вас! Этот бот предназначен для борьбы с нежелательными сообщениями рекламного характера в супергруппах. Он автоматически обнаруживает и удаляет спам от недавно вступивших пользователей, а также временно блокирует нарушителей на указанное в настройках время.\n\nБлокировка в защищаемом чате будет снята автоматически по истечении времени.',
-            'as_newsr': 'Похоже, что ты бот. Сейчас у меня нет прав администратора, поэтому я не забаню тебя, а лишь сообщу админам об инциденте.',
             'as_alog': 'New user {} with ID {} has joined group. Score: {}.',
             'as_restex': 'Cannot restrict a new user with ID {} due to missing admin rights.',
             'as_msgex': 'Exception detected while handling spam message from {}.',

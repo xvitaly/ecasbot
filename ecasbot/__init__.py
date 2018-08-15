@@ -41,6 +41,9 @@ class ASBot:
         # Score users with very long usernames...
         if len(username) > 75:
             score += 50
+        # Score users with Deleted in username...
+        if 'Deleted' in username:
+            score += 100
         # Return result...
         return score
 

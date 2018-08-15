@@ -38,6 +38,9 @@ class ASBot:
         # Find chineese bots and score them to +100...
         if re.search(self.__settings.chkrgx, username, re.I | re.M | re.U):
             score += 100
+        # Score users with very long usernames...
+        if len(username) > 75:
+            score += 50
         # Return result...
         return score
 

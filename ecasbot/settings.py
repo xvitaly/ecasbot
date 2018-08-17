@@ -53,7 +53,7 @@ class Settings:
             self.__data = json.load(f)
 
     def __create(self):
-        self.__data = {'tgkey': '', 'chkrgx': '(.*VX.*QQ.+)', 'bantime': 60 * 60 * 24 * 1,
+        self.__data = {'tgkey': '', 'chkrgx': '(.*VX.*QQ.+)', 'bantime': 60 * 60 * 24 * 3,
                        'admins': [], 'restent': ['url', 'text_link', 'mention']}
         dirname = os.path.dirname(self.__cfgfile)
         if not os.path.exists(dirname):

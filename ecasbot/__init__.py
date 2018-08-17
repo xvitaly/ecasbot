@@ -39,7 +39,7 @@ class ASBot:
         if re.search(self.__settings.chkrgx, username, re.I | re.M | re.U):
             score += 100
         # Score users with Deleted in username...
-        if 'Deleted' in username:
+        if any(w in username for w in self.__settings.stopwords):
             score += 100
         # Score users with very long usernames...
         if len(username) > self.__settings.maxname:

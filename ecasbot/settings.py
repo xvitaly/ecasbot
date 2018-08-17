@@ -48,6 +48,10 @@ class Settings:
     def maxname(self) -> int:
         return self.__data['maxname']
 
+    @property
+    def stopwords(self) -> list:
+        return self.__data['stopwords']
+
     def __save(self):
         with open(self.__cfgfile, 'w') as f:
             json.dump(self.__data, f)

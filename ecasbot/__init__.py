@@ -42,7 +42,7 @@ class ASBot:
         if 'Deleted' in username:
             score += 100
         # Score users with very long usernames...
-        if len(username) > 75:
+        if len(username) > self.__settings.maxname:
             score += 50
         # Score users with chinese hieroglyphs...
         if re.search('[\u4e00-\u9fff]+', username, re.I | re.M | re.U):

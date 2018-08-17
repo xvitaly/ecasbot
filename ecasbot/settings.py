@@ -44,6 +44,10 @@ class Settings:
     def restent(self) -> list:
         return self.__data['restent']
 
+    @property
+    def maxname(self) -> int:
+        return self.__data['maxname']
+
     def __save(self):
         with open(self.__cfgfile, 'w') as f:
             json.dump(self.__data, f)

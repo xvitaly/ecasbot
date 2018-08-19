@@ -57,6 +57,26 @@ class ASBot:
             if message.chat.type == "private":
                 self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
 
+        @self.bot.message_handler(commands=['remove'])
+        def handle_remove(message):
+            try:
+                # Check if user has admin rights...
+                if message.from_user.id in self.__settings.admins:
+                    # Remove reported message...
+                    if message.reply_to_message:
+                        self.bot.delete_message(message.chat.id, message.reply_to_message.message_id)
+                        self.__logger.warning(
+                            self.__msgs['as_amsgrm'].format(message.from_user.first_name, message.from_user.id,
+                                                            message.reply_to_message.from_user.first_name,
+                                                            message.reply_to_message.from_user.id))
+                    # Remove reporter message with bot command...
+                    self.bot.delete_message(message.chat.id, message.message_id)
+                else:
+                    self.__logger.warning(
+                        self.__msgs['as_rmmsgav'].format(message.from_user.first_name, message.from_user.id))
+            except:
+                self.__logger.exception(self.__msgs['as_admerr'])
+
         @self.bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
         def handle_join(message):
             try:
@@ -114,7 +134,10 @@ class ASBot:
             'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!',
             'as_joinhex': 'Failed to handle join message.',
             'as_banned': 'Permanently banned user with ID {} (score: {}).',
-            'as_msgrest': 'Removed message from restricted user {} with ID {}.'
+            'as_msgrest': 'Removed message from restricted user {} with ID {}.',
+            'as_amsgrm': 'Admin {} ({}) removed message from user {} with ID {}.',
+            'as_rmmsgav': 'User {} with ID {} tried to access restricted zone.',
+            'as_admerr': 'Failed to handle admin command.'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

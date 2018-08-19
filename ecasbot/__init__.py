@@ -52,10 +52,9 @@ class ASBot:
 
     def runbot(self) -> None:
         # Initialize command handlers...
-        @self.bot.message_handler(commands=['start'])
+        @self.bot.message_handler(func=lambda m: m.chat.type == 'private', commands=['start'])
         def handle_start(message):
-            if message.chat.type == "private":
-                self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
+            self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
 
         @self.bot.message_handler(func=lambda m: m.chat.type == 'supergroup', commands=['remove'])
         def handle_remove(message):

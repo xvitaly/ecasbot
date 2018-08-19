@@ -57,7 +57,7 @@ class ASBot:
             if message.chat.type == "private":
                 self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
 
-        @self.bot.message_handler(commands=['remove'])
+        @self.bot.message_handler(func=lambda m: m.chat.type == 'supergroup', commands=['remove'])
         def handle_remove(message):
             try:
                 # Check if user has admin rights...

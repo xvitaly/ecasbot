@@ -68,8 +68,6 @@ class ASBot:
                             self.__msgs['as_amsgrm'].format(message.from_user.first_name, message.from_user.id,
                                                             message.reply_to_message.from_user.first_name,
                                                             message.reply_to_message.from_user.id))
-                    # Remove reporter message with bot command...
-                    self.bot.delete_message(message.chat.id, message.message_id)
                 else:
                     self.__logger.warning(
                         self.__msgs['as_rmmsgav'].format(message.from_user.first_name, message.from_user.id))

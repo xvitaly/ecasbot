@@ -26,7 +26,7 @@ from .settings import Settings
 
 
 class ASBot:
-    def __msg_check(self, m) -> bool:
+    def __check_restricted_user(self, m) -> bool:
         usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
         return m.chat.type == 'supergroup' and usr.status == 'restricted'
 
@@ -101,8 +101,8 @@ class ASBot:
             except Exception:
                 self.__logger.exception(self.__msgs['as_joinhex'])
 
-        @self.bot.message_handler(func=self.__msg_check)
-        @self.bot.edited_message_handler(func=self.__msg_check)
+        @self.bot.message_handler(func=self.__check_restricted_user)
+        @self.bot.edited_message_handler(func=self.__check_restricted_user)
         def handle_msg(message):
             try:
                 # Removing messages from restricted members...

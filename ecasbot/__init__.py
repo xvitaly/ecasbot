@@ -30,6 +30,9 @@ class ASBot:
         usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
         return m.chat.type == 'supergroup' and usr.status == 'restricted'
 
+    def __check_admin_feature(self, m) -> bool:
+        return m.chat.type == 'supergroup' and m.from_user.id in self.__settings.admins
+
     def __score_user(self, fname, lname) -> int:
         # Setting default score to 0...
         score = 0
@@ -56,21 +59,16 @@ class ASBot:
         def handle_start(message):
             self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
 
-        @self.bot.message_handler(func=lambda m: m.chat.type == 'supergroup', commands=['remove'])
+        @self.bot.message_handler(func=self.__check_admin_feature, commands=['remove'])
         def handle_remove(message):
             try:
-                # Check if user has admin rights...
-                if message.from_user.id in self.__settings.admins:
-                    # Remove reported message...
-                    if message.reply_to_message:
-                        self.bot.delete_message(message.chat.id, message.reply_to_message.message_id)
-                        self.__logger.warning(
-                            self.__msgs['as_amsgrm'].format(message.from_user.first_name, message.from_user.id,
-                                                            message.reply_to_message.from_user.first_name,
-                                                            message.reply_to_message.from_user.id))
-                else:
+                # Remove reported message...
+                if message.reply_to_message:
+                    self.bot.delete_message(message.chat.id, message.reply_to_message.message_id)
                     self.__logger.warning(
-                        self.__msgs['as_rmmsgav'].format(message.from_user.first_name, message.from_user.id))
+                        self.__msgs['as_amsgrm'].format(message.from_user.first_name, message.from_user.id,
+                                                        message.reply_to_message.from_user.first_name,
+                                                        message.reply_to_message.from_user.id))
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -133,7 +131,6 @@ class ASBot:
             'as_banned': 'Permanently banned user with ID {} (score: {}).',
             'as_msgrest': 'Removed message from restricted user {} with ID {}.',
             'as_amsgrm': 'Admin {} ({}) removed message from user {} with ID {}.',
-            'as_rmmsgav': 'User {} with ID {} tried to access restricted zone.',
             'as_admerr': 'Failed to handle admin command.'
         }
         if not self.__settings.tgkey:

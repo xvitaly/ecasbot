@@ -74,7 +74,7 @@ class ASBot:
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
-        @self.bot.message_handler(func=self.__check_admin_feature, commands=['unrestrict'])
+        @self.bot.message_handler(func=self.__check_admin_feature, commands=['unrestrict', 'un'])
         def handle_unrestrict(message):
             try:
                 if message.reply_to_message:

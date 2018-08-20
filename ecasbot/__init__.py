@@ -31,7 +31,9 @@ class ASBot:
         return m.chat.type == 'supergroup' and usr.status == 'restricted'
 
     def __check_admin_feature(self, m) -> bool:
-        return m.chat.type == 'supergroup' and m.from_user.id in self.__settings.admins
+        usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
+        return m.chat.type == 'supergroup' and (
+                    m.from_user.id in self.__settings.admins or usr.status == 'administrator')
 
     def __score_user(self, fname, lname) -> int:
         # Setting default score to 0...

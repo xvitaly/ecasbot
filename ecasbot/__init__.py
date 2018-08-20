@@ -61,7 +61,7 @@ class ASBot:
         def handle_start(message):
             self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
 
-        @self.bot.message_handler(func=self.__check_admin_feature, commands=['remove'])
+        @self.bot.message_handler(func=self.__check_admin_feature, commands=['remove', 'rm'])
         def handle_remove(message):
             try:
                 # Remove reported message...

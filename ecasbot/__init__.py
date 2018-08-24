@@ -74,6 +74,20 @@ class ASBot:
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
+        @self.bot.message_handler(func=self.__check_admin_feature, commands=['ban', 'block'])
+        def handle_banuser(message):
+            try:
+                if message.reply_to_message:
+                    username = message.reply_to_message.new_chat_member.first_name if message.reply_to_message.new_chat_member else message.reply_to_message.from_user.first_name
+                    userid = message.reply_to_message.new_chat_member.id if message.reply_to_message.new_chat_member else message.reply_to_message.from_user.id
+                    if message.from_user.id != userid:
+                        self.bot.kick_chat_member(message.chat.id, userid)
+                        self.__logger.warning(
+                            self.__msgs['as_aban'].format(message.from_user.first_name, message.from_user.id, username,
+                                                          userid))
+            except:
+                self.__logger.exception(self.__msgs['as_admerr'])
+
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['unrestrict', 'un'])
         def handle_unrestrict(message):
             try:
@@ -148,6 +162,7 @@ class ASBot:
             'as_msgrest': 'Removed message from restricted user {} with ID {}.',
             'as_amsgrm': 'Admin {} ({}) removed message from user {} with ID {}.',
             'as_aunres': 'Admin {} ({}) removed all restrictions from user {} with ID {}.',
+            'as_aban': 'Admin {} ({}) permanently banned user {} with ID {}.',
             'as_admerr': 'Failed to handle admin command.'
         }
         if not self.__settings.tgkey:

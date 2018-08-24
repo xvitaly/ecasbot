@@ -35,6 +35,12 @@ class ASBot:
         return m.chat.type == 'supergroup' and (
                     m.from_user.id in self.__settings.admins or usr.status == 'administrator')
 
+    def __get_actual_username(self, message):
+        return message.reply_to_message.new_chat_member.first_name if message.reply_to_message.new_chat_member else message.reply_to_message.from_user.first_name
+
+    def __get_actual_userid(self, message):
+        return message.reply_to_message.new_chat_member.id if message.reply_to_message.new_chat_member else message.reply_to_message.from_user.id
+
     def __score_user(self, fname, lname) -> int:
         # Setting default score to 0...
         score = 0
@@ -78,13 +84,29 @@ class ASBot:
         def handle_banuser(message):
             try:
                 if message.reply_to_message:
-                    username = message.reply_to_message.new_chat_member.first_name if message.reply_to_message.new_chat_member else message.reply_to_message.from_user.first_name
-                    userid = message.reply_to_message.new_chat_member.id if message.reply_to_message.new_chat_member else message.reply_to_message.from_user.id
+                    username = self.__get_actual_username(message)
+                    userid = self.__get_actual_userid(message)
                     if message.from_user.id != userid:
                         self.bot.kick_chat_member(message.chat.id, userid)
                         self.__logger.warning(
                             self.__msgs['as_aban'].format(message.from_user.first_name, message.from_user.id, username,
                                                           userid))
+            except:
+                self.__logger.exception(self.__msgs['as_admerr'])
+
+        @self.bot.message_handler(func=self.__check_admin_feature, commands=['restrict', 'mute'])
+        def handle_muteuser(message):
+            try:
+                if message.reply_to_message:
+                    username = self.__get_actual_username(message)
+                    userid = self.__get_actual_userid(message)
+                    if message.from_user.id != userid:
+                        self.bot.restrict_chat_member(message.chat.id, userid, until_date=int(time.time()),
+                                                      can_send_messages=False, can_send_media_messages=False,
+                                                      can_send_other_messages=False, can_add_web_page_previews=False)
+                        self.__logger.warning(
+                            self.__msgs['as_amute'].format(message.from_user.first_name, message.from_user.id, username,
+                                                           userid))
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -161,6 +183,7 @@ class ASBot:
             'as_banned': 'Permanently banned user with ID {} (score: {}).',
             'as_msgrest': 'Removed message from restricted user {} with ID {}.',
             'as_amsgrm': 'Admin {} ({}) removed message from user {} with ID {}.',
+            'as_amute': 'Admin {} ({}) permanently muted user {} with ID {}.',
             'as_aunres': 'Admin {} ({}) removed all restrictions from user {} with ID {}.',
             'as_aban': 'Admin {} ({}) permanently banned user {} with ID {}.',
             'as_admerr': 'Failed to handle admin command.'

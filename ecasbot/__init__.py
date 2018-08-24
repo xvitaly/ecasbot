@@ -51,7 +51,6 @@ class ASBot:
                     return True
         return False
 
-
     def __score_user(self, fname, lname) -> int:
         # Setting default score to 0...
         score = 0

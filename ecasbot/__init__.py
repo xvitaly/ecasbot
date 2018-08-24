@@ -41,6 +41,17 @@ class ASBot:
     def __get_actual_userid(self, message):
         return message.reply_to_message.new_chat_member.id if message.reply_to_message.new_chat_member else message.reply_to_message.from_user.id
 
+    def __check_message_forward(self, message):
+        return message.forward_from or message.forward_from_chat
+
+    def __check_message_entities(self, message):
+        if message.entities:
+            for entity in message.entities:
+                if entity.type in self.__settings.restent:
+                    return True
+        return False
+
+
     def __score_user(self, fname, lname) -> int:
         # Setting default score to 0...
         score = 0
@@ -158,11 +169,9 @@ class ASBot:
         def handle_msg(message):
             try:
                 # Removing messages from restricted members...
-                if message.entities is not None:
-                    for entity in message.entities:
-                        if entity.type in self.__settings.restent:
-                            self.bot.delete_message(message.chat.id, message.message_id)
-                            self.__logger.info(self.__msgs['as_msgrest'].format(message.from_user.first_name, message.from_user.id))
+                if self.__check_message_entities(message) or self.__check_message_forward(message):
+                    self.bot.delete_message(message.chat.id, message.message_id)
+                    self.__logger.info(self.__msgs['as_msgrest'].format(message.from_user.first_name, message.from_user.id))
             except Exception:
                 self.__logger.exception(self.__msgs['as_msgex'].format(message.from_user.id))
 

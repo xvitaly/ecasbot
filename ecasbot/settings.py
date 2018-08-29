@@ -56,18 +56,18 @@ class Settings:
     def stopwords(self) -> list:
         return self.__data['stopwords']
 
-    def __save(self):
+    def __save(self) -> None:
         with open(self.__cfgfile, 'w') as f:
             json.dump(self.__data, f)
 
-    def __load(self):
+    def __load(self) -> None:
         with open(self.__cfgfile, 'r') as f:
             self.__data = json.load(f)
 
-    def __check_schema(self, schid):
+    def __check_schema(self, schid) -> bool:
         return self.__data['schema'] >= schid
 
-    def __create(self):
+    def __create(self) -> None:
         self.__data = {'tgkey': '', 'chkrgx': '(.*VX.*QQ.+)', 'bantime': 60 * 60 * 24 * 3,
                        'admins': [], 'restent': ['url', 'text_link', 'mention'], 'maxname': 75,
                        'stopwords': ['SEO', 'Deleted'], 'urlrgx': '(http|s)', 'schema': 1}

@@ -182,8 +182,9 @@ class ASBot:
 
     def __init__(self):
         logging.basicConfig(level=logging.INFO)
+        self.__schema = 1
         self.__logger = logging.getLogger(__name__)
-        self.__settings = Settings()
+        self.__settings = Settings(self.__schema)
         self.__msgs = {
             'as_welcome': 'Add me to supergroup and give me admin rights. I will try to block spammers automatically.',
             'as_alog': 'New user {} with ID {} has joined group. Score: {}.',

@@ -64,19 +64,24 @@ class Settings:
         with open(self.__cfgfile, 'r') as f:
             self.__data = json.load(f)
 
+    def __check_schema(self, schid):
+        return self.__data['schema'] >= schid
+
     def __create(self):
         self.__data = {'tgkey': '', 'chkrgx': '(.*VX.*QQ.+)', 'bantime': 60 * 60 * 24 * 3,
                        'admins': [], 'restent': ['url', 'text_link', 'mention'], 'maxname': 75,
-                       'stopwords': ['SEO', 'Deleted'], 'urlrgx': '(http|s)'}
+                       'stopwords': ['SEO', 'Deleted'], 'urlrgx': '(http|s)', 'schema': 1}
         dirname = os.path.dirname(self.__cfgfile)
         if not os.path.exists(dirname):
             os.makedirs(dirname)
         self.__save()
         raise Exception('Basic configuration created. Now open {} file and set API token.'.format(self.__cfgfile))
 
-    def __init__(self):
+    def __init__(self, schid):
         self.__data = {}
         self.__cfgfile = str(os.path.join(str(pathlib.Path.home()), '.config', 'ecasbot', 'config.json'))
         if not os.path.isfile(self.__cfgfile):
             self.__create()
         self.__load()
+        if not self.__check_schema(schid):
+            raise Exception('Schema of JSON config {} is outdated! Fix it.'.format(self.__cfgfile))

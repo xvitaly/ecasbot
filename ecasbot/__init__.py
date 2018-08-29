@@ -35,6 +35,9 @@ class ASBot:
         return m.chat.type == 'supergroup' and (
                     m.from_user.id in self.__settings.admins or usr.status == 'administrator')
 
+    def _check_private_chat(self, message) -> bool:
+        return message.chat.type == 'private'
+
     def __get_actual_username(self, message):
         return message.reply_to_message.new_chat_member.first_name if message.reply_to_message.new_chat_member else message.reply_to_message.from_user.first_name
 
@@ -76,7 +79,7 @@ class ASBot:
 
     def runbot(self) -> None:
         # Initialize command handlers...
-        @self.bot.message_handler(func=lambda m: m.chat.type == 'private', commands=['start'])
+        @self.bot.message_handler(func=self._check_private_chat, commands=['start'])
         def handle_start(message):
             self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
 

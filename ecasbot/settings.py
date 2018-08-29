@@ -33,6 +33,10 @@ class Settings:
         return self.__data['chkrgx']
 
     @property
+    def urlrgx(self) -> str:
+        return self.__data['urlrgx']
+
+    @property
     def bantime(self) -> int:
         return self.__data['bantime']
 

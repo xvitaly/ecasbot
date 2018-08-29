@@ -59,6 +59,9 @@ class ASBot:
         # Find chinese bots and score them to +100...
         if re.search(self.__settings.chkrgx, username, re.I | re.M | re.U):
             score += 100
+        # Score users with URLs in username...
+        if re.search(self.__settings.urlrgx, username, re.I | re.M | re.U):
+            score += 100
         # Score users with restricted words in username...
         if any(w in username for w in self.__settings.stopwords):
             score += 100

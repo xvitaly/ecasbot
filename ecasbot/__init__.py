@@ -35,7 +35,7 @@ class ASBot:
         return m.chat.type == 'supergroup' and (
                     m.from_user.id in self.__settings.admins or usr.status == 'administrator')
 
-    def _check_private_chat(self, message) -> bool:
+    def __check_private_chat(self, message) -> bool:
         return message.chat.type == 'private'
 
     def __get_actual_username(self, message):
@@ -79,9 +79,14 @@ class ASBot:
 
     def runbot(self) -> None:
         # Initialize command handlers...
-        @self.bot.message_handler(func=self._check_private_chat, commands=['start'])
+        @self.bot.message_handler(func=self.__check_private_chat, commands=['start'])
         def handle_start(message):
             self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
+
+        @self.bot.message_handler(func=self.__check_private_chat, commands=['checkme'])
+        def handle_checkme(message):
+            score = self.__score_user(message.from_user.first_name, message.from_user.last_name)
+            self.bot.reply_to(message.chat.id, self.__msgs['as_chkme'].format(message.from_user.id, score))
 
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['remove', 'rm'])
         def handle_remove(message):
@@ -201,7 +206,8 @@ class ASBot:
             'as_amute': 'Admin {} ({}) permanently muted user {} with ID {}.',
             'as_aunres': 'Admin {} ({}) removed all restrictions from user {} with ID {}.',
             'as_aban': 'Admin {} ({}) permanently banned user {} with ID {}.',
-            'as_admerr': 'Failed to handle admin command.'
+            'as_admerr': 'Failed to handle admin command.',
+            'as_chkme': 'Checking of account {} successfully completed. Your score is: {}.'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

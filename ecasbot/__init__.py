@@ -81,12 +81,18 @@ class ASBot:
         # Initialize command handlers...
         @self.bot.message_handler(func=self.__check_private_chat, commands=['start'])
         def handle_start(message):
-            self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
+            try:
+                self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
+            except:
+                self.__logger.exception(self.__msgs['as_pmex'])
 
         @self.bot.message_handler(func=self.__check_private_chat, commands=['checkme'])
         def handle_checkme(message):
-            score = self.__score_user(message.from_user.first_name, message.from_user.last_name)
-            self.bot.send_message(message.chat.id, self.__msgs['as_chkme'].format(message.from_user.id, score))
+            try:
+                score = self.__score_user(message.from_user.first_name, message.from_user.last_name)
+                self.bot.send_message(message.chat.id, self.__msgs['as_chkme'].format(message.from_user.id, score))
+            except:
+                self.__logger.exception(self.__msgs['as_pmex'])
 
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['remove', 'rm'])
         def handle_remove(message):
@@ -207,7 +213,8 @@ class ASBot:
             'as_aunres': 'Admin {} ({}) removed all restrictions from user {} with ID {}.',
             'as_aban': 'Admin {} ({}) permanently banned user {} with ID {}.',
             'as_admerr': 'Failed to handle admin command.',
-            'as_chkme': 'Checking of account {} successfully completed. Your score is: {}.'
+            'as_chkme': 'Checking of account {} successfully completed. Your score is: {}.',
+            'as_pmex': 'Failed to handle command in private chat with bot.'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

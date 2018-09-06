@@ -1,5 +1,5 @@
 # About
-EasyCoding AntiSpam bot for [Telegram messenger](https://telegram.org/) will block all multimedia messages and links from new users, block chinese bots and users who added them in supergroups.
+EC AntiSpam bot for [Telegram](https://telegram.org/) messenger will block all multimedia messages and links from new users, block chinese bots and users who added them in supergroups.
 
 # License
 GNU General Public License version 3. You can find it here: [LICENSE](LICENSE). External libraries can use another licenses, compatible with GNU GPLv3.

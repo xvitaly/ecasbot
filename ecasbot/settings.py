@@ -68,7 +68,7 @@ class Settings:
         return self.__data['schema'] >= schid
 
     def __create(self) -> None:
-        self.__data = {'tgkey': '', 'chkrgx': '(.*VX.*QQ.+)', 'bantime': 60 * 60 * 24 * 3,
+        self.__data = {'tgkey': '', 'chkrgx': '(.*VX.*QQ.+)', 'bantime': 60 * 60 * 24 * 14,
                        'admins': [], 'restent': ['url', 'text_link', 'mention'], 'maxname': 75,
                        'stopwords': ['SEO', 'Deleted'], 'urlrgx': '(http|s)', 'schema': 1}
         dirname = os.path.dirname(self.__cfgfile)

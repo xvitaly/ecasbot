@@ -11,6 +11,7 @@ Source0: %{url}/archive/%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: python3-devel
+BuildRequires: python3dist(pytelegrambotapi)
 BuildRequires: python3dist(requests)
 BuildRequires: python3dist(wheel)
 BuildRequires: python3dist(six)
@@ -22,6 +23,7 @@ who added them in supergroups.
 
 %package -n python3-%{appname}
 Summary: EC AntiSpam bot
+Requires: python3dist(pytelegrambotapi)
 Requires: python3dist(requests)
 Requires: python3dist(six)
 %{?python_provide:%python_provide python3-%{appname}}

@@ -8,7 +8,7 @@ Restart=always
 RestartSec=30
 User=ecasbot
 Group=ecasbot
-ExecStart=ecasbot
+ExecStart=/usr/bin/ecasbot
 
 [Install]
 WantedBy=multi-user.target

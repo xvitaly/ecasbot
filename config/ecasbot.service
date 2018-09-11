@@ -1,0 +1,14 @@
+[Unit]
+Description=EC AntiSpam bot
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=30
+User=ecasbot
+Group=ecasbot
+ExecStart=ecasbot
+
+[Install]
+WantedBy=multi-user.target

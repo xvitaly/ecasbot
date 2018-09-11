@@ -26,6 +26,7 @@ Summary: EC AntiSpam bot
 Requires: python3dist(pytelegrambotapi)
 Requires: python3dist(requests)
 Requires: python3dist(six)
+Requires(pre): shadow-utils
 %{?python_provide:%python_provide python3-%{appname}}
 
 %description -n python3-%{appname}
@@ -50,6 +51,13 @@ install -p -m 0644 config/%{appname}.service %{buildroot}%{_unitdir}
 
 %check
 %{__python3} setup.py test
+
+%pre -n python3-%{appname}
+getent group %{appname} >/dev/null || groupadd -r %{appname}
+getent passwd %{appname} >/dev/null || \
+useradd -r -g %{appname} -d /dev/null -s /sbin/nologin \
+  -c "%{appname} service account" %{appname}
+exit 0
 
 %post -n python3-%{appname}
 %systemd_post %{appname}.service

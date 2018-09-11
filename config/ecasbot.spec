@@ -10,6 +10,7 @@ URL: https://github.com/xvitaly/%{appname}
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 BuildArch: noarch
 
+BuildRequires: systemd
 BuildRequires: python3-devel
 BuildRequires: python3dist(pytelegrambotapi)
 BuildRequires: python3dist(requests)
@@ -27,6 +28,7 @@ Requires: python3dist(pytelegrambotapi)
 Requires: python3dist(requests)
 Requires: python3dist(six)
 Requires(pre): shadow-utils
+%{?systemd_requires}
 %{?python_provide:%python_provide python3-%{appname}}
 
 %description -n python3-%{appname}

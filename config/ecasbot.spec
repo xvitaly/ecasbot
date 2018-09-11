@@ -42,13 +42,26 @@ who added them in supergroups.
 %install
 %py3_install
 
+mkdir -p %{buildroot}%{_unitdir}
+install -p -m 0644 config/%{appname}.service %{buildroot}%{_unitdir}/
+
 %check
 %{__python3} setup.py test
+
+%post -n python3-%{appname}
+%systemd_post %{appname}.service
+
+%preun -n python3-%{appname}
+%systemd_preun %{appname}.service
+
+%postun -n python3-%{appname}
+%systemd_postun_with_restart %{appname}.service
 
 %files -n python3-%{appname}
 %license LICENSE
 %doc README.md
 %{python3_sitelib}/*
+%{_unitdir}/%{appname}.service
 
 %changelog
 * Tue Sep 11 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 0-1

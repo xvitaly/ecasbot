@@ -42,8 +42,11 @@ who added them in supergroups.
 %install
 %py3_install
 
+mkdir -p %{buildroot}%{_sysconfdir}
+install -p -m 0644 config/%{appname}.conf %{buildroot}%{_sysconfdir}
+
 mkdir -p %{buildroot}%{_unitdir}
-install -p -m 0644 config/%{appname}.service %{buildroot}%{_unitdir}/
+install -p -m 0644 config/%{appname}.service %{buildroot}%{_unitdir}
 
 %check
 %{__python3} setup.py test
@@ -61,6 +64,7 @@ install -p -m 0644 config/%{appname}.service %{buildroot}%{_unitdir}/
 %license LICENSE
 %doc README.md
 %{python3_sitelib}/*
+%attr(-,%{appname},%{appname}) %config(noreplace) %{_sysconfdir}/%{appname}.conf
 %{_unitdir}/%{appname}.service
 
 %changelog

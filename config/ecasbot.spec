@@ -5,7 +5,7 @@ Version: 0
 Release: 1%{?dist}
 Summary: EC AntiSpam bot
 
-License: GPLv2+
+License: GPLv3+
 URL: https://github.com/xvitaly/%{appname}
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 BuildArch: noarch

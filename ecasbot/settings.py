@@ -24,6 +24,10 @@ import os
 
 class Settings:
     @property
+    def logtofile(self) -> str:
+        return self.__data['logtofile']
+
+    @property
     def tgkey(self) -> str:
         return self.__data['tgkey']
 

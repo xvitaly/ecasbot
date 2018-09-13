@@ -67,6 +67,10 @@ class Settings:
     def __check_schema(self, schid) -> bool:
         return self.__data['schema'] >= schid
 
+    def __find_cfgfile(self):
+        self.__cfgfile = str(os.path.join('/etc', 'ecasbot.conf')) if os.name == 'posix' else str(
+            os.path.join(str(pathlib.Path.home()), 'ecasbot', 'config.json'))
+
     def __create(self) -> None:
         self.__data = {'tgkey': '', 'chkrgx': '(.*VX.*QQ.+)', 'bantime': 60 * 60 * 24 * 14,
                        'admins': [], 'restent': ['url', 'text_link', 'mention'], 'maxname': 75,
@@ -79,7 +83,7 @@ class Settings:
 
     def __init__(self, schid):
         self.__data = {}
-        self.__cfgfile = str(os.path.join(str(pathlib.Path.home()), '.config', 'ecasbot', 'config.json'))
+        self.__find_cfgfile()
         if not os.path.isfile(self.__cfgfile):
             self.__create()
         self.__load()

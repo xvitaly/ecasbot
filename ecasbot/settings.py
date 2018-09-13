@@ -73,7 +73,7 @@ class Settings:
     def __create(self) -> None:
         self.__data = {'tgkey': '', 'chkrgx': '(.*VX.*QQ.+)', 'bantime': 60 * 60 * 24 * 14,
                        'admins': [], 'restent': ['url', 'text_link', 'mention'], 'maxname': 75,
-                       'stopwords': ['SEO', 'Deleted'], 'urlrgx': '(http|s)', 'schema': 1}
+                       'stopwords': ['SEO', 'Deleted'], 'urlrgx': '(https?)', 'schema': 1}
         dirname = os.path.dirname(self.__cfgfile)
         if not os.path.exists(dirname):
             os.makedirs(dirname)

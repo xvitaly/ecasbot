@@ -68,7 +68,7 @@ class Settings:
 
     def __find_cfgfile(self):
         self.__cfgfile = str(os.path.join('/etc', 'ecasbot.conf')) if os.name == 'posix' else str(
-            os.path.join(str(os.getenv('APPDATA')), 'ecasbot', 'config.json'))
+            os.path.join(os.getenv('APPDATA'), 'ecasbot', 'config.json'))
 
     def __create(self) -> None:
         self.__data = {'tgkey': '', 'chkrgx': '(.*VX.*QQ.+)', 'bantime': 60 * 60 * 24 * 14,

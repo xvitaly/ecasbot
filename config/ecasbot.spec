@@ -46,7 +46,7 @@ who added them in supergroups.
 %py3_install
 
 mkdir -p %{buildroot}%{_sysconfdir}
-install -p -m 0644 config/%{appname}.conf %{buildroot}%{_sysconfdir}
+install -p -m 0644 config/%{appname}.json %{buildroot}%{_sysconfdir}
 
 mkdir -p %{buildroot}%{_unitdir}
 install -p -m 0644 config/%{appname}.service %{buildroot}%{_unitdir}
@@ -74,7 +74,7 @@ exit 0
 %license LICENSE
 %doc README.md
 %{python3_sitelib}/*
-%attr(-,%{appname},%{appname}) %config(noreplace) %{_sysconfdir}/%{appname}.conf
+%attr(-,%{appname},%{appname}) %config(noreplace) %{_sysconfdir}/%{appname}.json
 %{_unitdir}/%{appname}.service
 
 %changelog

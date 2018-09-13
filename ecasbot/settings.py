@@ -67,24 +67,14 @@ class Settings:
         return self.__data['schema'] >= schid
 
     def __find_cfgfile(self):
-        self.__cfgfile = str(os.path.join('/etc', 'ecasbot.conf')) if os.name == 'posix' else str(
+        self.__cfgfile = str(os.path.join('/etc', 'ecasbot.json')) if os.name == 'posix' else str(
             os.path.join(os.getenv('APPDATA'), 'ecasbot', 'config.json'))
-
-    def __create(self) -> None:
-        self.__data = {'tgkey': '', 'chkrgx': '(.*VX.*QQ.+)', 'bantime': 60 * 60 * 24 * 14,
-                       'admins': [], 'restent': ['url', 'text_link', 'mention'], 'maxname': 75,
-                       'stopwords': ['SEO', 'Deleted'], 'urlrgx': '(https?)', 'schema': 1}
-        dirname = os.path.dirname(self.__cfgfile)
-        if not os.path.exists(dirname):
-            os.makedirs(dirname)
-        self.__save()
-        raise Exception('Basic configuration created. Now open {} file and set API token.'.format(self.__cfgfile))
 
     def __init__(self, schid):
         self.__data = {}
         self.__find_cfgfile()
         if not os.path.isfile(self.__cfgfile):
-            self.__create()
+            raise Exception('Cannot find JSON config {}! Create it using sample from repo.'.format(self.__cfgfile))
         self.__load()
         if not self.__check_schema(schid):
             raise Exception('Schema of JSON config {} is outdated! Fix it.'.format(self.__cfgfile))

@@ -147,7 +147,7 @@ class ASBot:
                     self.__logger.warning(
                         self.__msgs['as_aunres'].format(message.from_user.first_name, message.from_user.id,
                                                         message.reply_to_message.from_user.first_name,
-                                                        message.reply_to_message.from_user.id))
+                                                        message.reply_to_message.from_user.id, message.chat.id))
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -215,7 +215,7 @@ class ASBot:
             'as_msgrest': 'Removed message from restricted user {} with ID {} in chat {}.',
             'as_amsgrm': 'Admin {} ({}) removed message from user {} with ID {} in chat {}.',
             'as_amute': 'Admin {} ({}) permanently muted user {} with ID {} in chat {}.',
-            'as_aunres': 'Admin {} ({}) removed all restrictions from user {} with ID {}.',
+            'as_aunres': 'Admin {} ({}) removed all restrictions from user {} with ID {} in chat {}.',
             'as_aban': 'Admin {} ({}) permanently banned user {} with ID {}.',
             'as_admerr': 'Failed to handle admin command.',
             'as_chkme': 'Checking of account {} successfully completed. Your score is: {}.',

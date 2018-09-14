@@ -156,7 +156,9 @@ class ASBot:
             try:
                 # Check user profile using our score system...
                 score = self.__score_user(message.new_chat_member.first_name, message.new_chat_member.last_name)
-                self.__logger.info(self.__msgs['as_alog'].format(message.new_chat_member.first_name, message.new_chat_member.id, score))
+                self.__logger.info(
+                    self.__msgs['as_alog'].format(message.new_chat_member.first_name, message.new_chat_member.id,
+                                                  message.chat.id, score))
                 try:
                     # If user get score >= 100 - ban him, else - restrict...
                     if score >= 100:
@@ -201,7 +203,7 @@ class ASBot:
         self.__settings = Settings(self.__schema)
         self.__msgs = {
             'as_welcome': 'Add me to supergroup and give me admin rights. I will try to block spammers automatically.',
-            'as_alog': 'New user {} with ID {} has joined group. Score: {}.',
+            'as_alog': 'New user {} with ID {} has joined group {}. Score: {}.',
             'as_restex': 'Cannot restrict a new user with ID {} due to missing admin rights.',
             'as_msgex': 'Exception detected while handling spam message from {}.',
             'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!',

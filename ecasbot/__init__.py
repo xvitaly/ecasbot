@@ -191,7 +191,7 @@ class ASBot:
                     self.bot.delete_message(message.chat.id, message.message_id)
                     self.__logger.info(self.__msgs['as_msgrest'].format(message.from_user.first_name, message.from_user.id))
             except Exception:
-                self.__logger.exception(self.__msgs['as_msgex'].format(message.from_user.id))
+                self.__logger.exception(self.__msgs['as_msgex'].format(message.from_user.id, message.chat.id))
 
         # Run bot forever...
         self.bot.polling(none_stop=True)
@@ -205,7 +205,7 @@ class ASBot:
             'as_welcome': 'Add me to supergroup and give me admin rights. I will try to block spammers automatically.',
             'as_alog': 'New user {} with ID {} has joined group {}. Score: {}.',
             'as_restex': 'Cannot restrict a new user with ID {} in chat {} due to missing admin rights.',
-            'as_msgex': 'Exception detected while handling spam message from {}.',
+            'as_msgex': 'Exception detected while handling spam message from {} in chat {}.',
             'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!',
             'as_joinhex': 'Failed to handle join message.',
             'as_banned': 'Permanently banned user with ID {} (score: {}).',

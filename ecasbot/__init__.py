@@ -133,7 +133,7 @@ class ASBot:
                                                       can_send_other_messages=False, can_add_web_page_previews=False)
                         self.__logger.warning(
                             self.__msgs['as_amute'].format(message.from_user.first_name, message.from_user.id, username,
-                                                           userid))
+                                                           userid, message.chat.id))
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -214,7 +214,7 @@ class ASBot:
             'as_banned': 'Permanently banned user with ID {} (score: {}) in chat {}.',
             'as_msgrest': 'Removed message from restricted user {} with ID {} in chat {}.',
             'as_amsgrm': 'Admin {} ({}) removed message from user {} with ID {} in chat {}.',
-            'as_amute': 'Admin {} ({}) permanently muted user {} with ID {}.',
+            'as_amute': 'Admin {} ({}) permanently muted user {} with ID {} in chat {}.',
             'as_aunres': 'Admin {} ({}) removed all restrictions from user {} with ID {}.',
             'as_aban': 'Admin {} ({}) permanently banned user {} with ID {}.',
             'as_admerr': 'Failed to handle admin command.',

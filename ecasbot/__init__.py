@@ -117,7 +117,7 @@ class ASBot:
                         self.bot.kick_chat_member(message.chat.id, userid)
                         self.__logger.warning(
                             self.__msgs['as_aban'].format(message.from_user.first_name, message.from_user.id, username,
-                                                          userid))
+                                                          userid, message.chat.id))
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -216,7 +216,7 @@ class ASBot:
             'as_amsgrm': 'Admin {} ({}) removed message from user {} with ID {} in chat {}.',
             'as_amute': 'Admin {} ({}) permanently muted user {} with ID {} in chat {}.',
             'as_aunres': 'Admin {} ({}) removed all restrictions from user {} with ID {} in chat {}.',
-            'as_aban': 'Admin {} ({}) permanently banned user {} with ID {}.',
+            'as_aban': 'Admin {} ({}) permanently banned user {} with ID {} in chat {}.',
             'as_admerr': 'Failed to handle admin command.',
             'as_chkme': 'Checking of account {} successfully completed. Your score is: {}.',
             'as_pmex': 'Failed to handle command in private chat with bot.'

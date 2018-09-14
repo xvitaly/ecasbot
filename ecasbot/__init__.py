@@ -178,7 +178,7 @@ class ASBot:
                                                       can_send_other_messages=False, can_add_web_page_previews=False)
                 except Exception:
                     # We have no admin rights, show message instead...
-                    self.__logger.exception(self.__msgs['as_restex'].format(message.from_user.id))
+                    self.__logger.exception(self.__msgs['as_restex'].format(message.from_user.id, message.chat.id))
             except Exception:
                 self.__logger.exception(self.__msgs['as_joinhex'])
 
@@ -204,7 +204,7 @@ class ASBot:
         self.__msgs = {
             'as_welcome': 'Add me to supergroup and give me admin rights. I will try to block spammers automatically.',
             'as_alog': 'New user {} with ID {} has joined group {}. Score: {}.',
-            'as_restex': 'Cannot restrict a new user with ID {} due to missing admin rights.',
+            'as_restex': 'Cannot restrict a new user with ID {} in chat {} due to missing admin rights.',
             'as_msgex': 'Exception detected while handling spam message from {}.',
             'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!',
             'as_joinhex': 'Failed to handle join message.',

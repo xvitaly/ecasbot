@@ -190,7 +190,9 @@ class ASBot:
                 # Removing messages from restricted members...
                 if self.__check_message_entities(message) or self.__check_message_forward(message):
                     self.bot.delete_message(message.chat.id, message.message_id)
-                    self.__logger.info(self.__msgs['as_msgrest'].format(message.from_user.first_name, message.from_user.id))
+                    self.__logger.info(
+                        self.__msgs['as_msgrest'].format(message.from_user.first_name, message.from_user.id,
+                                                         message.chat.id))
             except Exception:
                 self.__logger.exception(self.__msgs['as_msgex'].format(message.from_user.id, message.chat.id))
 
@@ -210,7 +212,7 @@ class ASBot:
             'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!',
             'as_joinhex': 'Failed to handle join message.',
             'as_banned': 'Permanently banned user with ID {} (score: {}) in chat {}.',
-            'as_msgrest': 'Removed message from restricted user {} with ID {}.',
+            'as_msgrest': 'Removed message from restricted user {} with ID {} in chat {}.',
             'as_amsgrm': 'Admin {} ({}) removed message from user {} with ID {}.',
             'as_amute': 'Admin {} ({}) permanently muted user {} with ID {}.',
             'as_aunres': 'Admin {} ({}) removed all restrictions from user {} with ID {}.',

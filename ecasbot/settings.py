@@ -66,7 +66,8 @@ class Settings:
     def __check_schema(self, schid) -> bool:
         return self.__data['schema'] >= schid
 
-    def __get_cfgdir(self):
+    @staticmethod
+    def get_cfgpath():
         cfgpath = os.getenv('CFGPATH')
         if cfgpath:
             if os.path.exists(cfgpath):
@@ -74,7 +75,7 @@ class Settings:
         return '/etc' if os.name == 'posix' else os.path.join(os.getenv('APPDATA'), 'ecasbot')
 
     def __find_cfgfile(self):
-        self.__cfgfile = os.path.join(self.__get_cfgdir(), 'ecasbot.json')
+        self.__cfgfile = os.path.join(self.get_cfgpath(), 'ecasbot.json')
 
     def __init__(self, schid):
         self.__data = {}

@@ -55,11 +55,11 @@ class Settings:
     def stopwords(self) -> list:
         return self.__data['stopwords']
 
-    def __save(self) -> None:
+    def save(self) -> None:
         with open(self.__cfgfile, 'w') as f:
             json.dump(self.__data, f)
 
-    def __load(self) -> None:
+    def load(self) -> None:
         with open(self.__cfgfile, 'r') as f:
             self.__data = json.load(f)
 
@@ -81,6 +81,6 @@ class Settings:
         self.__find_cfgfile()
         if not os.path.isfile(self.__cfgfile):
             raise Exception('Cannot find JSON config {}! Create it using sample from repo.'.format(self.__cfgfile))
-        self.__load()
+        self.load()
         if not self.__check_schema(schid):
             raise Exception('Schema of JSON config {} is outdated! Fix it.'.format(self.__cfgfile))

@@ -72,10 +72,10 @@ class Settings:
         if cfgpath:
             if os.path.exists(cfgpath):
                 return cfgpath
-        return '/etc' if os.name == 'posix' else os.path.join(os.getenv('APPDATA'), 'ecasbot')
+        return '/etc' if os.name == 'posix' else str(os.path.join(os.getenv('APPDATA'), 'ecasbot'))
 
     def __find_cfgfile(self):
-        self.__cfgfile = os.path.join(self.get_cfgpath(), 'ecasbot.json')
+        self.__cfgfile = str(os.path.join(self.get_cfgpath(), 'ecasbot.json'))
 
     def __init__(self, schid):
         self.__data = {}

@@ -83,4 +83,4 @@ class Settings:
             raise Exception('Cannot find JSON config {}! Create it using sample from repo.'.format(self.__cfgfile))
         self.load()
         if not self.__check_schema(schid):
-            raise Exception('Schema of JSON config {} is outdated! Fix it.'.format(self.__cfgfile))
+            raise Exception('Schema of JSON config {} is outdated! Update config from repo.'.format(self.__cfgfile))

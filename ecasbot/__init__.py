@@ -115,6 +115,7 @@ class ASBot:
                     userid = self.__get_actual_userid(message)
                     if message.from_user.id != userid:
                         self.bot.kick_chat_member(message.chat.id, userid)
+                        self.bot.delete_message(message.chat.id, message.reply_to_message.message_id)
                         self.__logger.warning(
                             self.__msgs['as_aban'].format(message.from_user.first_name, message.from_user.id, username,
                                                           userid, message.chat.id))

@@ -20,6 +20,7 @@
 
 import json
 import os
+import logging
 
 
 class Settings:
@@ -77,6 +78,15 @@ class Settings:
             if os.path.exists(cfgpath):
                 return cfgpath
         return '/etc' if os.name == 'posix' else str(os.path.join(os.getenv('APPDATA'), 'ecasbot'))
+
+    @staticmethod
+    def get_logging_level():
+        try:
+            level_name = os.getenv("LOGLEVEL")
+            return getattr(logging, level_name)
+        except Exception:
+            pass
+        return logging.INFO
 
     def __find_cfgfile(self):
         self.__cfgfile = str(os.path.join(self.get_cfgpath(), 'ecasbot.json'))

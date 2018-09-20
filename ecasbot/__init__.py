@@ -35,7 +35,7 @@ class ASBot:
     def __check_admin_feature(self, m) -> bool:
         usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
         return m.chat.type == 'supergroup' and (
-                    m.from_user.id in self.__settings.admins or usr.status == 'administrator')
+                    m.from_user.id in self.__settings.admins or usr.status in ['creator', 'administrator'])
 
     def __check_private_chat(self, message) -> bool:
         return message.chat.type == 'private'

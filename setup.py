@@ -33,7 +33,7 @@ setup(
         ],
     },
     license='GPLv3',
-    install_requires=['pytelegrambotapi', 'requests', 'six'],
+    install_requires=['pytelegrambotapi', 'requests', 'six', 'emoji'],
     author='Vitaly Zaitsev',
     author_email='vitaly@easycoding.org',
     description='AntiSpam bot for Telegram by EasyCoding Team'

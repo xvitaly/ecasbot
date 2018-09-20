@@ -77,6 +77,10 @@ class ASBot:
         # Return result...
         return score
 
+    def __score_message(self, message):
+        score = 0
+        return score
+
     def runbot(self) -> None:
         # Initialize command handlers...
         @self.bot.message_handler(func=self.__check_private_chat, commands=['start'])

@@ -199,7 +199,8 @@ class ASBot:
         def handle_msg(message):
             try:
                 # Removing messages from restricted members...
-                if self.__check_message_entities(message) or self.__check_message_forward(message):
+                if self.__check_message_entities(message) or self.__check_message_forward(
+                        message) or self.__check_message_spam(message):
                     self.bot.delete_message(message.chat.id, message.message_id)
                     self.__logger.info(
                         self.__msgs['as_msgrest'].format(message.from_user.first_name, message.from_user.id,

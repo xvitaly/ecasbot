@@ -39,23 +39,23 @@ class ASBot:
     def __check_private_chat(self, message) -> bool:
         return message.chat.type == 'private'
 
-    def __get_actual_username(self, message):
+    def __get_actual_username(self, message) -> str:
         return message.reply_to_message.new_chat_member.first_name if message.reply_to_message.new_chat_member else message.reply_to_message.from_user.first_name
 
-    def __get_actual_userid(self, message):
+    def __get_actual_userid(self, message) -> str:
         return message.reply_to_message.new_chat_member.id if message.reply_to_message.new_chat_member else message.reply_to_message.from_user.id
 
-    def __check_message_forward(self, message):
+    def __check_message_forward(self, message) -> bool:
         return message.forward_from or message.forward_from_chat
 
-    def __check_message_entities(self, message):
+    def __check_message_entities(self, message) -> bool:
         if message.entities:
             for entity in message.entities:
                 if entity.type in self.__settings.restent:
                     return True
         return False
 
-    def __check_message_spam(self, message):
+    def __check_message_spam(self, message) -> bool:
         return self.__score_message(message) >= 50
 
     def __score_user(self, fname, lname) -> int:
@@ -81,7 +81,7 @@ class ASBot:
         # Return result...
         return score
 
-    def __score_message(self, message):
+    def __score_message(self, message) -> int:
         score = 0
         if emoji.emoji_count(message.text) >= 10:
             score += 100

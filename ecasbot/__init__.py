@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import emoji
 import logging
 import re
 import time
@@ -82,6 +83,8 @@ class ASBot:
 
     def __score_message(self, message):
         score = 0
+        if emoji.emoji_count(message.text) >= 10:
+            score += 100
         return score
 
     def runbot(self) -> None:

@@ -1,5 +1,5 @@
 {
-  "schema": 1,
+  "schema": 2,
   "tgkey": "",
   "admins": [],
   "restent": ["url", "text_link", "mention"],
@@ -7,5 +7,6 @@
   "bantime": 1209600,
   "maxname": 75,
   "chkrgx": "(.*VX.*QQ.+)",
-  "urlrgx": "(https?)"
+  "urlrgx": "(https?)",
+  "logtofile": ""
 }

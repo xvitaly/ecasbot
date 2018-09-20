@@ -21,6 +21,7 @@ import emoji
 import logging
 import re
 import time
+import sys
 import telebot
 
 from .settings import Settings
@@ -213,7 +214,7 @@ class ASBot:
 
     def __init__(self):
         logging.basicConfig(level=logging.INFO)
-        self.__schema = 1
+        self.__schema = 2
         self.__logger = logging.getLogger(__name__)
         self.__settings = Settings(self.__schema)
         self.__msgs = {
@@ -235,4 +236,7 @@ class ASBot:
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])
+        if self.__settings.logtofile:
+            self.__logger.addHandler(logging.FileHandler(self.__settings.logtofile))
+        self.__logger.addHandler(logging.StreamHandler(sys.stdout))
         self.bot = telebot.TeleBot(self.__settings.tgkey)

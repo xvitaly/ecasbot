@@ -236,6 +236,7 @@ class ASBot:
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])
+        self.__logger.setLevel(self.__settings.get_logging_level())
         if self.__settings.logtofile:
             self.__logger.addHandler(logging.FileHandler(self.__settings.logtofile))
         self.__logger.addHandler(logging.StreamHandler(sys.stdout))

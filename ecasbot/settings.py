@@ -82,8 +82,9 @@ class Settings:
     @staticmethod
     def get_logging_level():
         try:
-            level_name = os.getenv("LOGLEVEL")
-            return getattr(logging, level_name)
+            loglevel = os.getenv("LOGLEVEL")
+            if loglevel:
+                return getattr(logging, loglevel)
         except Exception:
             pass
         return logging.INFO

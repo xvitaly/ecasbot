@@ -84,7 +84,7 @@ class ASBot:
 
     def __score_message(self, message) -> int:
         score = 0
-        if emoji.emoji_count(message.text) >= 10:
+        if emoji.emoji_count(message.text) >= self.__settings.maxemoji:
             score += 100
         return score
 

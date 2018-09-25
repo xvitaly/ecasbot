@@ -9,6 +9,7 @@
   "chkrgx": "(.*VX.*QQ.+)",
   "urlrgx": "(https?)",
   "logtofile": "",
+  "maxemoji": 10,
   "nickgoal": 100,
   "msggoal": 100
 }

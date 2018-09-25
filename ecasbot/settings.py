@@ -61,6 +61,10 @@ class Settings:
         return self.__data['stopwords']
 
     @property
+    def maxemoji(self) -> int:
+        return self.__data['maxemoji']
+
+    @property
     def nickgoal(self) -> int:
         return self.__data['nickgoal']
 

@@ -64,6 +64,10 @@ class Settings:
     def nickgoal(self) -> int:
         return self.__data['nickgoal']
 
+    @property
+    def msggoal(self) -> int:
+        return self.__data['msggoal']
+
     def save(self) -> None:
         with open(self.__cfgfile, 'w') as f:
             json.dump(self.__data, f)

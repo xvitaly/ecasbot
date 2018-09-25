@@ -57,7 +57,7 @@ class ASBot:
         return False
 
     def __check_message_spam(self, message) -> bool:
-        return self.__score_message(message) >= 100
+        return self.__score_message(message) >= self.__settings.msggoal
 
     def __score_user(self, fname, lname) -> int:
         # Setting default score to 0...

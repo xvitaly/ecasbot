@@ -213,7 +213,7 @@ class ASBot:
 
     def __init__(self):
         logging.basicConfig(level=logging.INFO)
-        self.__schema = 2
+        self.__schema = 3
         self.__logger = logging.getLogger(__name__)
         self.__settings = Settings(self.__schema)
         self.__msgs = {

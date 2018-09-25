@@ -190,7 +190,6 @@ class ASBot:
                                                       can_send_messages=True, can_send_media_messages=False,
                                                       can_send_other_messages=False, can_add_web_page_previews=False)
                 except Exception:
-                    # We have no admin rights, show message instead...
                     self.__logger.exception(self.__msgs['as_restex'].format(message.from_user.id, message.chat.id))
             except Exception:
                 self.__logger.exception(self.__msgs['as_joinhex'])

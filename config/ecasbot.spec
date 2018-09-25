@@ -16,6 +16,7 @@ BuildRequires: python3dist(pytelegrambotapi)
 BuildRequires: python3dist(requests)
 BuildRequires: python3dist(wheel)
 BuildRequires: python3dist(six)
+BuildRequires: python3dist(emoji)
 
 %description
 EC AntiSpam bot for Telegram messenger will block all multimedia
@@ -27,6 +28,7 @@ Summary: EC AntiSpam bot
 Requires: python3dist(pytelegrambotapi)
 Requires: python3dist(requests)
 Requires: python3dist(six)
+Requires: python3dist(emoji)
 Requires(pre): shadow-utils
 %{?systemd_requires}
 %{?python_provide:%python_provide python3-%{appname}}

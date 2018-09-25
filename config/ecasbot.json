@@ -8,5 +8,6 @@
   "maxname": 75,
   "chkrgx": "(.*VX.*QQ.+)",
   "urlrgx": "(https?)",
-  "logtofile": ""
+  "logtofile": "",
+  "nickgoal": 100
 }

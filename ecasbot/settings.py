@@ -60,6 +60,10 @@ class Settings:
     def stopwords(self) -> list:
         return self.__data['stopwords']
 
+    @property
+    def nickgoal(self) -> int:
+        return self.__data['nickgoal']
+
     def save(self) -> None:
         with open(self.__cfgfile, 'w') as f:
             json.dump(self.__data, f)

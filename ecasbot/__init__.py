@@ -173,7 +173,7 @@ class ASBot:
                                                   message.chat.id, score))
                 try:
                     # If user get score >= 100 - ban him, else - restrict...
-                    if score >= 100:
+                    if score >= self.__settings.nickgoal:
                         # Delete join message and ban user permanently...
                         self.bot.delete_message(message.chat.id, message.message_id)
                         self.bot.kick_chat_member(message.chat.id, message.new_chat_member.id)

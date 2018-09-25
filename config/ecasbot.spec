@@ -75,7 +75,8 @@ exit 0
 %files -n python3-%{appname}
 %license LICENSE
 %doc README.md
-%{python3_sitelib}/*
+%{python3_sitelib}/%{appname}
+%{python3_sitelib}/%{appname}-*.egg-info
 %attr(-,%{appname},%{appname}) %config(noreplace) %{_sysconfdir}/%{appname}.json
 %{_unitdir}/%{appname}.service
 

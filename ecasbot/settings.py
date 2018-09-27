@@ -84,7 +84,7 @@ class Settings:
         return self.__data['schema'] >= schid
 
     @staticmethod
-    def get_cfgpath():
+    def get_cfgpath() -> str:
         cfgpath = os.getenv('CFGPATH')
         if cfgpath:
             if os.path.exists(cfgpath):

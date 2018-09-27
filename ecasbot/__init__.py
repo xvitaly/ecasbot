@@ -91,14 +91,14 @@ class ASBot:
     def runbot(self) -> None:
         # Initialize command handlers...
         @self.bot.message_handler(func=self.__check_private_chat, commands=['start'])
-        def handle_start(message):
+        def handle_start(message) -> None:
             try:
                 self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
             except:
                 self.__logger.exception(self.__msgs['as_pmex'])
 
         @self.bot.message_handler(func=self.__check_private_chat, commands=['checkme'])
-        def handle_checkme(message):
+        def handle_checkme(message) -> None:
             try:
                 score = self.__score_user(message.from_user.first_name, message.from_user.last_name)
                 self.bot.send_message(message.chat.id, self.__msgs['as_chkme'].format(message.from_user.id, score))
@@ -106,7 +106,7 @@ class ASBot:
                 self.__logger.exception(self.__msgs['as_pmex'])
 
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['remove', 'rm'])
-        def handle_remove(message):
+        def handle_remove(message) -> None:
             try:
                 # Remove reported message...
                 if message.reply_to_message:
@@ -119,7 +119,7 @@ class ASBot:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['ban', 'block'])
-        def handle_banuser(message):
+        def handle_banuser(message) -> None:
             try:
                 if message.reply_to_message:
                     username = self.__get_actual_username(message)
@@ -134,7 +134,7 @@ class ASBot:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['restrict', 'mute'])
-        def handle_muteuser(message):
+        def handle_muteuser(message) -> None:
             try:
                 if message.reply_to_message:
                     username = self.__get_actual_username(message)
@@ -150,7 +150,7 @@ class ASBot:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['unrestrict', 'un'])
-        def handle_unrestrict(message):
+        def handle_unrestrict(message) -> None:
             try:
                 if message.reply_to_message:
                     self.bot.restrict_chat_member(message.chat.id, message.reply_to_message.from_user.id,
@@ -164,7 +164,7 @@ class ASBot:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
         @self.bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
-        def handle_join(message):
+        def handle_join(message) -> None:
             try:
                 # Check user profile using our score system...
                 score = self.__score_user(message.new_chat_member.first_name, message.new_chat_member.last_name)
@@ -196,7 +196,7 @@ class ASBot:
 
         @self.bot.message_handler(func=self.__check_restricted_user)
         @self.bot.edited_message_handler(func=self.__check_restricted_user)
-        def handle_msg(message):
+        def handle_msg(message) -> None:
             try:
                 # Removing messages from restricted members...
                 if self.__check_message_entities(message) or self.__check_message_forward(

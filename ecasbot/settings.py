@@ -101,7 +101,7 @@ class Settings:
             pass
         return logging.INFO
 
-    def __find_cfgfile(self):
+    def __find_cfgfile(self) -> None:
         self.__cfgfile = str(os.path.join(self.get_cfgpath(), 'ecasbot.json'))
 
     def __init__(self, schid):

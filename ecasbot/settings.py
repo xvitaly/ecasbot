@@ -92,7 +92,7 @@ class Settings:
         return '/etc' if os.name == 'posix' else str(os.path.join(os.getenv('APPDATA'), 'ecasbot'))
 
     @staticmethod
-    def get_logging_level():
+    def get_logging_level() -> int:
         try:
             loglevel = os.getenv("LOGLEVEL")
             if loglevel:

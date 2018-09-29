@@ -21,25 +21,30 @@ import re
 
 
 class Validators:
-    def __nickname_chinese_bots(self, username):
+    def __find_methods(self):
+        return {s for s in self.__dict__.keys() if s.startswith(self.__prefix)}
+
+    def __nickname_chinese_bots(self):
         # Find chinese bots and score them to +100...
-        return 100 if re.search(self.__settings.chkrgx, username, re.I | re.M | re.U) else 0
+        return 100 if re.search(self.__settings.chkrgx, self.__username, re.I | re.M | re.U) else 0
 
-    def __nickname_with_url(self, username):
+    def __nickname_with_url(self):
         # Score users with URLs in username...
-        return 100 if re.search(self.__settings.urlrgx, username, re.I | re.M | re.U) else 0
+        return 100 if re.search(self.__settings.urlrgx, self.__username, re.I | re.M | re.U) else 0
 
-    def __nickname_restricted_words(self, username):
+    def __nickname_restricted_words(self):
         # Score users with restricted words in username...
-        return 100 if any(w in username for w in self.__settings.stopwords) else 0
+        return 100 if any(w in self.__username for w in self.__settings.stopwords) else 0
 
-    def __nickname_too_long(self, username):
+    def __nickname_too_long(self):
         # Score users with very long usernames...
-        return 50 if len(username) > self.__settings.maxname else 0
+        return 50 if len(self.__username) > self.__settings.maxname else 0
 
-    def __nickname_hieroglyphs(self, username):
+    def __nickname_hieroglyphs(self):
         # Score users with chinese hieroglyphs...
-        return 50 if re.search('[\u4e00-\u9fff]+', username, re.I | re.M | re.U) else 0
+        return 50 if re.search('[\u4e00-\u9fff]+', self.__username, re.I | re.M | re.U) else 0
 
-    def __init__(self, settings):
+    def __init__(self, username, settings, prefix):
+        self.__username = username
         self.__settings = settings
+        self.__prefix = prefix

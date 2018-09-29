@@ -20,7 +20,7 @@
 import re
 
 
-class Validators:
+class CheckUsername:
     def __find_methods(self):
         return {s for s in self.__dict__.keys() if s.startswith(self.__prefix)}
 
@@ -50,7 +50,7 @@ class Validators:
             score += val()
         return score
 
-    def __init__(self, username, settings, prefix):
-        self.__username = username
+    def __init__(self, fname, lname, settings):
+        self.__username = '{} {}'.format(fname, lname) if lname else fname
         self.__settings = settings
-        self.__prefix = prefix
+        self.__prefix = '__nickname'

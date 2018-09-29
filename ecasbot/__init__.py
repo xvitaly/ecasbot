@@ -25,6 +25,7 @@ import sys
 import telebot
 
 from .settings import Settings
+from .validators import CheckUsername
 
 
 class ASBot:
@@ -60,27 +61,8 @@ class ASBot:
         return self.__score_message(message) >= self.__settings.msggoal
 
     def __score_user(self, fname, lname) -> int:
-        # Setting default score to 0...
-        score = 0
-        # Combining first name with last name...
-        username = '{} {}'.format(fname, lname) if lname else fname
-        # Find chinese bots and score them to +100...
-        if re.search(self.__settings.chkrgx, username, re.I | re.M | re.U):
-            score += 100
-        # Score users with URLs in username...
-        if re.search(self.__settings.urlrgx, username, re.I | re.M | re.U):
-            score += 100
-        # Score users with restricted words in username...
-        if any(w in username for w in self.__settings.stopwords):
-            score += 100
-        # Score users with very long usernames...
-        if len(username) > self.__settings.maxname:
-            score += 50
-        # Score users with chinese hieroglyphs...
-        if re.search('[\u4e00-\u9fff]+', username, re.I | re.M | re.U):
-            score += 50
-        # Return result...
-        return score
+        score = CheckUsername(fname, lname, self.__settings)
+        return score.get_score()
 
     def __score_message(self, message) -> int:
         score = 0

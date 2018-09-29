@@ -61,8 +61,8 @@ class ASBot:
         return self.__score_message(message) >= self.__settings.msggoal
 
     def __score_user(self, fname, lname) -> int:
-        score = CheckUsername(fname, lname, self.__settings)
-        return score.get_score()
+        checker = CheckUsername(fname, lname, self.__settings)
+        return checker.score
 
     def __score_message(self, message) -> int:
         score = 0

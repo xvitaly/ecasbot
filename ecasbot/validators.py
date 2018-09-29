@@ -44,6 +44,12 @@ class Validators:
         # Score users with chinese hieroglyphs...
         return 50 if re.search('[\u4e00-\u9fff]+', self.__username, re.I | re.M | re.U) else 0
 
+    def get_score(self):
+        score = 0
+        for val in self.__find_methods():
+            score += val()
+        return score
+
     def __init__(self, username, settings, prefix):
         self.__username = username
         self.__settings = settings

@@ -17,3 +17,29 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
+
+
+class Validators:
+    def __nickname_chinese_bots(self, username):
+        # Find chinese bots and score them to +100...
+        return 100 if re.search(self.__settings.chkrgx, username, re.I | re.M | re.U) else 0
+
+    def __nickname_with_url(self, username):
+        # Score users with URLs in username...
+        return 100 if re.search(self.__settings.urlrgx, username, re.I | re.M | re.U) else 0
+
+    def __nickname_restricted_words(self, username):
+        # Score users with restricted words in username...
+        return 100 if any(w in username for w in self.__settings.stopwords) else 0
+
+    def __nickname_too_long(self, username):
+        # Score users with very long usernames...
+        return 50 if len(username) > self.__settings.maxname else 0
+
+    def __nickname_hieroglyphs(self, username):
+        # Score users with chinese hieroglyphs...
+        return 50 if re.search('[\u4e00-\u9fff]+', username, re.I | re.M | re.U) else 0
+
+    def __init__(self, settings):
+        self.__settings = settings

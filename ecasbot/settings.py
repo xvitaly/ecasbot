@@ -152,6 +152,10 @@ class Settings:
 
     @staticmethod
     def get_cfgpath() -> str:
+        """
+        Get directory where bot's configuration are stored.
+        :return: Full directory path.
+        """
         cfgpath = os.getenv('CFGPATH')
         if cfgpath:
             if os.path.exists(cfgpath):

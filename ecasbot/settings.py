@@ -58,6 +58,10 @@ class Settings:
 
     @property
     def bantime(self) -> int:
+        """
+        Get user ban time (in seconds).
+        :return:
+        """
         return self.__data['bantime']
 
     @property

@@ -50,6 +50,10 @@ class Settings:
 
     @property
     def urlrgx(self) -> str:
+        """
+        Get regular expression for checking if string contains any URLs.
+        :return:
+        """
         return self.__data['urlrgx']
 
     @property

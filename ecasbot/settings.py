@@ -26,6 +26,10 @@ import logging
 class Settings:
     @property
     def logtofile(self) -> str:
+        """
+        Return log file name. If not set or empty, stderr will be used.
+        :return:
+        """
         return self.__data['logtofile']
 
     @property

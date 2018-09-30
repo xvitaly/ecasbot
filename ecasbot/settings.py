@@ -103,6 +103,11 @@ class Settings:
 
     @property
     def maxemoji(self) -> int:
+        """
+        Get maximum allowed emoji count in messages of new users. Bot
+        will remove messages exceeding this limit.
+        :return:
+        """
         return self.__data['maxemoji']
 
     @property

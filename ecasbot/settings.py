@@ -59,7 +59,8 @@ class Settings:
     @property
     def bantime(self) -> int:
         """
-        Get user ban time (in seconds).
+        Get user ban time (in seconds). Bot will restrict new users for
+        this time.
         :return:
         """
         return self.__data['bantime']
@@ -75,6 +76,11 @@ class Settings:
 
     @property
     def restent(self) -> list:
+        """
+        Get list of forbidden entitles for new users. Bot will remove any
+        messages from restricted users contains any of it.
+        :return:
+        """
         return self.__data['restent']
 
     @property

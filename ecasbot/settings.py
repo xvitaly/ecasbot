@@ -180,6 +180,9 @@ class Settings:
         return logging.INFO
 
     def __find_cfgfile(self) -> None:
+        """
+        Get fully-qualified path to main configuration file.
+        """
         self.__cfgfile = str(os.path.join(self.get_cfgpath(), 'ecasbot.json'))
 
     def __init__(self, schid):

@@ -112,6 +112,10 @@ class Settings:
 
     @property
     def nickgoal(self) -> int:
+        """
+        Get number of score points required to block new joined user.
+        :return:
+        """
         return self.__data['nickgoal']
 
     @property

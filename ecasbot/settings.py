@@ -27,13 +27,17 @@ class Settings:
     @property
     def logtofile(self) -> str:
         """
-        Return log file name. If not set or empty, stderr will be used.
+        Get log file name. If not set or empty, stderr will be used.
         :return:
         """
         return self.__data['logtofile']
 
     @property
     def tgkey(self) -> str:
+        """
+        Get Telegram Bot API token.
+        :return:
+        """
         return self.__data['tgkey']
 
     @property

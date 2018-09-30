@@ -66,6 +66,11 @@ class Settings:
 
     @property
     def admins(self) -> list:
+        """
+        Get bot admins list. This users can execute any bot command and even
+        control supergroups using special bot actions.
+        :return:
+        """
         return self.__data['admins']
 
     @property

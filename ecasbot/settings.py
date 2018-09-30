@@ -154,6 +154,8 @@ class Settings:
     def get_cfgpath() -> str:
         """
         Get directory where bot's configuration are stored.
+        User can override this setting by exporting CFGPATH
+        environment option.
         :return: Full directory path.
         """
         cfgpath = os.getenv('CFGPATH')
@@ -164,6 +166,11 @@ class Settings:
 
     @staticmethod
     def get_logging_level() -> int:
+        """
+        Get current log level. User can override this setting by exporting
+        LOGLEVEL environment option.
+        :return:
+        """
         try:
             loglevel = os.getenv("LOGLEVEL")
             if loglevel:

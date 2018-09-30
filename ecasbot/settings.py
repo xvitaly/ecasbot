@@ -185,7 +185,11 @@ class Settings:
         """
         self.__cfgfile = str(os.path.join(self.get_cfgpath(), 'ecasbot.json'))
 
-    def __init__(self, schid):
+    def __init__(self, schid) -> None:
+        """
+        Main constructor of Settings class.
+        :param schid: Required schema version.
+        """
         self.__data = {}
         self.__find_cfgfile()
         if not os.path.isfile(self.__cfgfile):

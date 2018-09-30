@@ -85,6 +85,11 @@ class Settings:
 
     @property
     def maxname(self) -> int:
+        """
+        Get maximum allowed length of name. Bot will score users with
+        very long names.
+        :return:
+        """
         return self.__data['maxname']
 
     @property

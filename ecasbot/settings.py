@@ -129,6 +129,9 @@ class Settings:
         return self.__data['msggoal']
 
     def save(self) -> None:
+        """
+        Save current settings to JSON file.
+        """
         with open(self.__cfgfile, 'w') as f:
             json.dump(self.__data, f)
 

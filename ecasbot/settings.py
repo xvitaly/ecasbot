@@ -143,6 +143,11 @@ class Settings:
             self.__data = json.load(f)
 
     def __check_schema(self, schid) -> bool:
+        """
+        Check JSON config schema version.
+        :param schid: New schema version.
+        :return: True if equal.
+        """
         return self.__data['schema'] >= schid
 
     @staticmethod

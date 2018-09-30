@@ -113,13 +113,19 @@ class Settings:
     @property
     def nickgoal(self) -> int:
         """
-        Get number of score points required to block new joined user.
+        Get number of score points after nickname checks required to
+        block new joined user.
         :return:
         """
         return self.__data['nickgoal']
 
     @property
     def msggoal(self) -> int:
+        """
+        Get number of score points after message checks required to
+        delete it.
+        :return:
+        """
         return self.__data['msggoal']
 
     def save(self) -> None:

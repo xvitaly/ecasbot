@@ -94,6 +94,11 @@ class Settings:
 
     @property
     def stopwords(self) -> list:
+        """
+        Get list of forbidden words in nicknames of new users. Bot will
+        score such users.
+        :return:
+        """
         return self.__data['stopwords']
 
     @property

@@ -136,6 +136,9 @@ class Settings:
             json.dump(self.__data, f)
 
     def load(self) -> None:
+        """
+        Load settings from JSON file.
+        """
         with open(self.__cfgfile, 'r') as f:
             self.__data = json.load(f)
 

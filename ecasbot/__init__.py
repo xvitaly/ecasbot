@@ -220,5 +220,4 @@ class ASBot:
         self.__logger.setLevel(self.__settings.get_logging_level())
         if self.__settings.logtofile:
             self.__logger.addHandler(logging.FileHandler(self.__settings.logtofile))
-        self.__logger.addHandler(logging.StreamHandler(sys.stdout))
         self.bot = telebot.TeleBot(self.__settings.tgkey)

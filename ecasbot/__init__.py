@@ -218,5 +218,11 @@ class ASBot:
             raise Exception(self.__msgs['as_notoken'])
         self.__logger.setLevel(self.__settings.get_logging_level())
         if self.__settings.logtofile:
-            self.__logger.addHandler(logging.FileHandler(self.__settings.logtofile))
+            f_handler = logging.FileHandler(self.__settings.logtofile)
+            f_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
+            self.__logger.addHandler(f_handler)
+        else:
+            e_handler = logging.StreamHandler(sys.stdout)
+            e_handler.setFormatter(logging.Formatter('%(levelname)s:%(name)s:%(message)s'))
+            self.__logger.addHandler(e_handler)
         self.bot = telebot.TeleBot(self.__settings.tgkey)

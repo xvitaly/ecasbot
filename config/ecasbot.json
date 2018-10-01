@@ -11,5 +11,7 @@
   "logtofile": "",
   "maxemoji": 10,
   "nickgoal": 100,
-  "msggoal": 100
+  "msggoal": 100,
+  "logfilefmt": "%(asctime)s - %(levelname)s - %(name)s - %(message)s",
+  "stderrfmt": "%(levelname)s:%(name)s:%(message)s"
 }

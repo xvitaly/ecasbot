@@ -194,7 +194,6 @@ class ASBot:
         self.bot.polling(none_stop=True)
 
     def __init__(self):
-        logging.basicConfig(level=logging.INFO)
         self.__schema = 3
         self.__logger = logging.getLogger(__name__)
         self.__settings = Settings(self.__schema)

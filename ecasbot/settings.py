@@ -128,6 +128,22 @@ class Settings:
         """
         return self.__data['msggoal']
 
+    @property
+    def fmtlog(self) -> int:
+        """
+        Get custom formatter for file logs.
+        :return:
+        """
+        return self.__data['logfilefmt']
+
+    @property
+    def fmterr(self) -> int:
+        """
+        Get custom formatter for stderr (journald) logs.
+        :return:
+        """
+        return self.__data['stderrfmt']
+
     def save(self) -> None:
         """
         Save current settings to JSON file.

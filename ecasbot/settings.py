@@ -28,7 +28,7 @@ class Settings:
     def logtofile(self) -> str:
         """
         Get log file name. If not set or empty, stderr will be used.
-        :return:
+        :return: Log file name.
         """
         return self.__data['logtofile']
 

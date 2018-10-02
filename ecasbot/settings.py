@@ -44,7 +44,7 @@ class Settings:
     def chkrgx(self) -> str:
         """
         Get regular expression for checking user names on joining supergroups.
-        :return:
+        :return: Regex for user names checking.
         """
         return self.__data['chkrgx']
 

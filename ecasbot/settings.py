@@ -52,7 +52,7 @@ class Settings:
     def urlrgx(self) -> str:
         """
         Get regular expression for checking if string contains any URLs.
-        :return:
+        :return: Regex for URL checking.
         """
         return self.__data['urlrgx']
 

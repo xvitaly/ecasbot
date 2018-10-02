@@ -106,7 +106,7 @@ class Settings:
         """
         Get maximum allowed emoji count in messages of new users. Bot
         will remove messages exceeding this limit.
-        :return:
+        :return: Maximum emoji count in messages.
         """
         return self.__data['maxemoji']
 

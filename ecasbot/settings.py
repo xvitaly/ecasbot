@@ -140,7 +140,7 @@ class Settings:
     def fmterr(self) -> int:
         """
         Get custom formatter for stderr (journald) logs.
-        :return:
+        :return: Custom formatter for stderr logs.
         """
         return self.__data['stderrfmt']
 

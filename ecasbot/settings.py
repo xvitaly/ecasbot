@@ -132,7 +132,7 @@ class Settings:
     def fmtlog(self) -> int:
         """
         Get custom formatter for file logs.
-        :return:
+        :return: Custom formatter for text logs.
         """
         return self.__data['logfilefmt']
 

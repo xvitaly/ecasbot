@@ -36,7 +36,7 @@ class Settings:
     def tgkey(self) -> str:
         """
         Get Telegram Bot API token.
-        :return:
+        :return: Bot API token.
         """
         return self.__data['tgkey']
 

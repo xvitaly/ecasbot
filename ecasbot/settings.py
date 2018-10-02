@@ -115,7 +115,7 @@ class Settings:
         """
         Get number of score points after nickname checks required to
         block new joined user.
-        :return:
+        :return: Maximum score points required.
         """
         return self.__data['nickgoal']
 

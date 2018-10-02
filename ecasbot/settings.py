@@ -70,7 +70,7 @@ class Settings:
         """
         Get bot admins list. This users can execute any bot command and even
         control supergroups using special bot actions.
-        :return:
+        :return: Bot admins list.
         """
         return self.__data['admins']
 

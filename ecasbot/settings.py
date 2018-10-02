@@ -97,7 +97,7 @@ class Settings:
         """
         Get list of forbidden words in nicknames of new users. Bot will
         score such users.
-        :return:
+        :return: List of forbidden words in user names.
         """
         return self.__data['stopwords']
 

@@ -79,7 +79,7 @@ class Settings:
         """
         Get list of forbidden entitles for new users. Bot will remove any
         messages from restricted users contains any of it.
-        :return:
+        :return: List of forbidden entitles.
         """
         return self.__data['restent']
 

@@ -124,7 +124,7 @@ class Settings:
         """
         Get number of score points after message checks required to
         delete it.
-        :return:
+        :return: Maximum score points required.
         """
         return self.__data['msggoal']
 

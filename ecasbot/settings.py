@@ -88,7 +88,7 @@ class Settings:
         """
         Get maximum allowed length of name. Bot will score users with
         very long names.
-        :return:
+        :return: Maximum username length.
         """
         return self.__data['maxname']
 

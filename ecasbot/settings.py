@@ -61,7 +61,7 @@ class Settings:
         """
         Get user ban time (in seconds). Bot will restrict new users for
         this time.
-        :return:
+        :return: Restriction time.
         """
         return self.__data['bantime']
 

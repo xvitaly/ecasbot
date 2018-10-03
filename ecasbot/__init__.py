@@ -246,7 +246,10 @@ class ASBot:
         # Run bot forever...
         self.bot.polling(none_stop=True)
 
-    def __init__(self):
+    def __init__(self) -> None:
+        """
+        Main constructor of ASBot class.
+        """
         self.__schema = 4
         self.__logger = logging.getLogger(__name__)
         self.__settings = Settings(self.__schema)

@@ -30,6 +30,11 @@ from .validators import CheckUsername
 
 class ASBot:
     def __check_restricted_user(self, m) -> bool:
+        """
+        Check if message was sent by a restricted user in supergroup.
+        :param m: Message to check.
+        :return: Check results.
+        """
         usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
         return m.chat.type == 'supergroup' and usr.status == 'restricted'
 

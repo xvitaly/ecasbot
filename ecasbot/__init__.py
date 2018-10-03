@@ -72,6 +72,11 @@ class ASBot:
         return message.reply_to_message.new_chat_member.id if message.reply_to_message.new_chat_member else message.reply_to_message.from_user.id
 
     def __check_message_forward(self, message) -> bool:
+        """
+        Check if current message was forwarded from another chat.
+        :param message: Message to check.
+        :return: Check results.
+        """
         return message.forward_from or message.forward_from_chat
 
     def __check_message_entities(self, message) -> bool:

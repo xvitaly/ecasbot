@@ -80,6 +80,11 @@ class ASBot:
         return message.forward_from or message.forward_from_chat
 
     def __check_message_entities(self, message) -> bool:
+        """
+        Check if current message contains restricted entitles.
+        :param message: Message to check.
+        :return: Check results.
+        """
         if message.entities:
             for entity in message.entities:
                 if entity.type in self.__settings.restent:

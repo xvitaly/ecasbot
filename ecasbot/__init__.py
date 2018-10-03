@@ -92,6 +92,11 @@ class ASBot:
         return False
 
     def __check_message_spam(self, message) -> bool:
+        """
+        Check if current message contains spam.
+        :param message: Message to check.
+        :return: Check results.
+        """
         return self.__score_message(message) >= self.__settings.msggoal
 
     def __score_user(self, fname, lname) -> int:

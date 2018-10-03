@@ -110,6 +110,11 @@ class ASBot:
         return checker.score
 
     def __score_message(self, message) -> int:
+        """
+        Check current message and score it.
+        :param message: Message to check.
+        :return: Score results.
+        """
         score = 0
         if emoji.emoji_count(message.text) >= self.__settings.maxemoji:
             score += 100

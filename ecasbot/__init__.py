@@ -49,6 +49,11 @@ class ASBot:
                     m.from_user.id in self.__settings.admins or usr.status in ['creator', 'administrator'])
 
     def __check_private_chat(self, message) -> bool:
+        """
+        Check if message was sent in private chat.
+        :param message: Message to check.
+        :return: Check results.
+        """
         return message.chat.type == 'private'
 
     def __get_actual_username(self, message) -> str:

@@ -28,14 +28,14 @@ from .validators import CheckUsername
 
 
 class ASBot:
-    def __check_restricted_user(self, m) -> bool:
+    def __check_restricted_user(self, message) -> bool:
         """
         Check if message was sent by a restricted user in supergroup.
         :param m: Message to check.
         :return: Check results.
         """
-        usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
-        return m.chat.type == 'supergroup' and usr.status == 'restricted'
+        usr = self.bot.get_chat_member(message.chat.id, message.from_user.id)
+        return message.chat.type == 'supergroup' and usr.status == 'restricted'
 
     def __check_admin_feature(self, m) -> bool:
         """

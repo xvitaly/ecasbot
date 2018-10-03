@@ -39,6 +39,11 @@ class ASBot:
         return m.chat.type == 'supergroup' and usr.status == 'restricted'
 
     def __check_admin_feature(self, m) -> bool:
+        """
+        Check if message was sent by user with admin rights in supergroup.
+        :param m: Message to check.
+        :return: Check results.
+        """
         usr = self.bot.get_chat_member(m.chat.id, m.from_user.id)
         return m.chat.type == 'supergroup' and (
                     m.from_user.id in self.__settings.admins or usr.status in ['creator', 'administrator'])

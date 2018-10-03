@@ -121,6 +121,9 @@ class ASBot:
         return score
 
     def runbot(self) -> None:
+        """
+        Run bot forever.
+        """
         # Initialize command handlers...
         @self.bot.message_handler(func=self.__check_private_chat, commands=['start'])
         def handle_start(message) -> None:

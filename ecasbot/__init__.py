@@ -100,6 +100,12 @@ class ASBot:
         return self.__score_message(message) >= self.__settings.msggoal
 
     def __score_user(self, fname, lname) -> int:
+        """
+        Check current user's profile and score him.
+        :param fname: First name (from API).
+        :param lname: Last name (from API).
+        :return: Score results.
+        """
         checker = CheckUsername(fname, lname, self.__settings)
         return checker.score
 

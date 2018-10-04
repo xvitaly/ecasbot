@@ -127,6 +127,10 @@ class ASBot:
         # Initialize command handlers...
         @self.bot.message_handler(func=self.__check_private_chat, commands=['start'])
         def handle_start(message) -> None:
+            """
+            Handle /start command in private chats.
+            :param message: Message, triggered this event.
+            """
             try:
                 self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
             except:

@@ -209,6 +209,11 @@ class ASBot:
 
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['unrestrict', 'un'])
         def handle_unrestrict(message) -> None:
+            """
+            Handle /unrestrict command in supergroups. Admin feature.
+            Remove all restrictions on sender of message replied by this command.
+            :param message: Message, triggered this event.
+            """
             try:
                 if message.reply_to_message:
                     self.bot.restrict_chat_member(message.chat.id, message.reply_to_message.from_user.id,

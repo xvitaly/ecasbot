@@ -265,6 +265,11 @@ class ASBot:
         @self.bot.message_handler(func=self.__check_restricted_user)
         @self.bot.edited_message_handler(func=self.__check_restricted_user)
         def handle_msg(message) -> None:
+            """
+            Listen and handle all messages in supergroup (including edited events).
+            Find and remove messages with restricted entitles sent by restricted users.
+            :param message: Message, triggered this event.
+            """
             try:
                 # Removing messages from restricted members...
                 if self.__check_message_entities(message) or self.__check_message_forward(

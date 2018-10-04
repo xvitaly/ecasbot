@@ -188,6 +188,11 @@ class ASBot:
 
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['restrict', 'mute'])
         def handle_muteuser(message) -> None:
+            """
+            Handle /restrict command in supergroups. Admin feature.
+            Permanently restrict sender of message replied by this command.
+            :param message: Message, triggered this event.
+            """
             try:
                 if message.reply_to_message:
                     username = self.__get_actual_username(message)

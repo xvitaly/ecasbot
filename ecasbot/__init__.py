@@ -228,6 +228,11 @@ class ASBot:
 
         @self.bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
         def handle_join(message) -> None:
+            """
+            Handle join messages in supergroups. Perform some actions
+            on newly joined users.
+            :param message: Message, triggered this event.
+            """
             try:
                 # Check user profile using our score system...
                 score = self.__score_user(message.new_chat_member.first_name, message.new_chat_member.last_name)

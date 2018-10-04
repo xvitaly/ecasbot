@@ -153,7 +153,7 @@ class ASBot:
             """
             Handle /remove command in supergroups. Admin feature.
             Remove message replied by this command.
-            :param message:
+            :param message: Message, triggered this event.
             """
             try:
                 # Remove reported message...
@@ -168,6 +168,11 @@ class ASBot:
 
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['ban', 'block'])
         def handle_banuser(message) -> None:
+            """
+            Handle /ban command in supergroups. Admin feature.
+            Remove message replied by this command and permanently ban it's sender.
+            :param message: Message, triggered this event.
+            """
             try:
                 if message.reply_to_message:
                     username = self.__get_actual_username(message)

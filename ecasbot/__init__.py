@@ -138,6 +138,10 @@ class ASBot:
 
         @self.bot.message_handler(func=self.__check_private_chat, commands=['checkme'])
         def handle_checkme(message) -> None:
+            """
+            Handle /checkme command in private chats. Check username of sender.
+            :param message: Message, triggered this event.
+            """
             try:
                 score = self.__score_user(message.from_user.first_name, message.from_user.last_name)
                 self.bot.send_message(message.chat.id, self.__msgs['as_chkme'].format(message.from_user.id, score))

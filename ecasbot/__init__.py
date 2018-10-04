@@ -150,6 +150,11 @@ class ASBot:
 
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['remove', 'rm'])
         def handle_remove(message) -> None:
+            """
+            Handle /remove command in supergroups. Admin feature.
+            Remove message replied by this command.
+            :param message:
+            """
             try:
                 # Remove reported message...
                 if message.reply_to_message:

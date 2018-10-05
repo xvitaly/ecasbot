@@ -249,8 +249,9 @@ class ASBot:
                         if message.from_user.id != message.new_chat_member.id:
                             self.bot.kick_chat_member(message.chat.id, message.from_user.id)
                         # Writing information to log...
-                        self.__logger.warning(
-                            self.__msgs['as_banned'].format(message.new_chat_member.id, score, message.chat.id))
+                        self.__logger.warning(self.__msgs['as_banned'].format(message.new_chat_member.first_name,
+                                                                              message.new_chat_member.id, score,
+                                                                              message.chat.id))
                     else:
                         # Restrict all new users for specified in config time...
                         self.bot.restrict_chat_member(message.chat.id, message.new_chat_member.id,
@@ -298,7 +299,7 @@ class ASBot:
             'as_msgex': 'Exception detected while handling spam message from {} in chat {}.',
             'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!',
             'as_joinhex': 'Failed to handle join message.',
-            'as_banned': 'Permanently banned user with ID {} (score: {}) in chat {}.',
+            'as_banned': 'Permanently banned user {} ({}) (score: {}) in chat {}.',
             'as_msgrest': 'Removed message from restricted user {} with ID {} in chat {}.',
             'as_amsgrm': 'Admin {} ({}) removed message from user {} ({}) in chat {}.',
             'as_amute': 'Admin {} ({}) permanently muted user {} with ID {} in chat {}.',

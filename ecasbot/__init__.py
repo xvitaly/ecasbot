@@ -293,7 +293,7 @@ class ASBot:
         self.__settings = Settings(self.__schema)
         self.__msgs = {
             'as_welcome': 'Add me to supergroup and give me admin rights. I will try to block spammers automatically.',
-            'as_alog': 'New user {} with ID {} has joined group {}. Score: {}.',
+            'as_alog': 'New user {} ({}) has joined group {}. Score: {}.',
             'as_restex': 'Cannot restrict a new user with ID {} in chat {} due to missing admin rights.',
             'as_msgex': 'Exception detected while handling spam message from {} in chat {}.',
             'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!',

@@ -304,7 +304,7 @@ class ASBot:
             'as_amsgrm': 'Admin {} ({}) removed message from user {} ({}) in chat {}.',
             'as_amute': 'Admin {} ({}) permanently muted user {} ({}) in chat {}.',
             'as_aunres': 'Admin {} ({}) removed all restrictions from user {} ({}) in chat {}.',
-            'as_aban': 'Admin {} ({}) permanently banned user {} with ID {} in chat {}.',
+            'as_aban': 'Admin {} ({}) permanently banned user {} ({}) in chat {}.',
             'as_admerr': 'Failed to handle admin command.',
             'as_chkme': 'Checking of account {} successfully completed. Your score is: {}.',
             'as_pmex': 'Failed to handle command in private chat with bot.'

@@ -300,7 +300,7 @@ class ASBot:
             'as_joinhex': 'Failed to handle join message.',
             'as_banned': 'Permanently banned user with ID {} (score: {}) in chat {}.',
             'as_msgrest': 'Removed message from restricted user {} with ID {} in chat {}.',
-            'as_amsgrm': 'Admin {} ({}) removed message from user {} with ID {} in chat {}.',
+            'as_amsgrm': 'Admin {} ({}) removed message from user {} ({}) in chat {}.',
             'as_amute': 'Admin {} ({}) permanently muted user {} with ID {} in chat {}.',
             'as_aunres': 'Admin {} ({}) removed all restrictions from user {} with ID {} in chat {}.',
             'as_aban': 'Admin {} ({}) permanently banned user {} with ID {} in chat {}.',

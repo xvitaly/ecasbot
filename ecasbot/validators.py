@@ -110,7 +110,11 @@ class CheckMessage:
             score += getattr(self, chk)()
         return score
 
-    def check_emoji_count(self):
+    def check_emoji_count(self) -> int:
+        """
+        Check and score messages contains lots of emojis.
+        :return: Score result.
+        """
         return 100 if emoji.emoji_count(self.__message.text) >= self.__settings.maxemoji else 0
 
     def __init__(self, message, settings) -> None:

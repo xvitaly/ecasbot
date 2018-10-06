@@ -89,5 +89,14 @@ class CheckUsername:
 
 
 class CheckMessage:
+    @classmethod
+    def __find_methods(cls, prefix: str) -> set:
+        """
+        Find available check methods to call them dynamically later.
+        :param prefix: Prefix for check methods.
+        :return: Set with available methods.
+        """
+        return {s for s in cls.__dict__.keys() if s.startswith(prefix)}
+
     def __init__(self):
         pass

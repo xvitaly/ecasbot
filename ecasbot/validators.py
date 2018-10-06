@@ -86,3 +86,8 @@ class CheckUsername:
         self.__username = '{} {}'.format(fname, lname) if lname else fname
         self.__settings = settings
         self.__scorers = self.__find_methods('check')
+
+
+class CheckMessage:
+    def __init__(self):
+        pass

@@ -17,14 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import emoji
 import logging
 import time
 import sys
 import telebot
 
 from .settings import Settings
-from .validators import CheckUsername
+from .validators import CheckMessage, CheckUsername
 
 
 class ASBot:
@@ -115,10 +114,8 @@ class ASBot:
         :param message: Message to check.
         :return: Score results.
         """
-        score = 0
-        if emoji.emoji_count(message.text) >= self.__settings.maxemoji:
-            score += 100
-        return score
+        checker = CheckMessage(message, self.__settings)
+        return checker.score
 
     def runbot(self) -> None:
         """

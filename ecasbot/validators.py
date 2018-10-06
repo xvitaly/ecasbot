@@ -98,5 +98,5 @@ class CheckMessage:
         """
         return {s for s in cls.__dict__.keys() if s.startswith(prefix)}
 
-    def __init__(self):
+    def __init__(self, message, settings) -> None:
         pass

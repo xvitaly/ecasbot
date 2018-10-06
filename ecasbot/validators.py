@@ -125,6 +125,11 @@ class CheckMessage:
         return 100 if emoji.emoji_count(self.__message.text) >= 1 and len(self.__message.text) <= 5 else 0
 
     def __init__(self, message, settings) -> None:
+        """
+        Main constructor of CheckMessage class.
+        :param message: Message to check.
+        :param settings: Object of Settings class.
+        """
         self.__message = message
         self.__settings = settings
         self.__scorers = self.__find_methods('check')

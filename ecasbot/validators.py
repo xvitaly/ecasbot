@@ -117,6 +117,13 @@ class CheckMessage:
         """
         return 100 if emoji.emoji_count(self.__message.text) >= self.__settings.maxemoji else 0
 
+    def check_emoji_bot(self) -> int:
+        """
+        Check and score messages contains 1-5 emojis and no other text.
+        :return:
+        """
+        return 100 if emoji.emoji_count(self.__message.text) >= 1 and len(self.__message.text) <= 5 else 0
+
     def __init__(self, message, settings) -> None:
         self.__message = message
         self.__settings = settings

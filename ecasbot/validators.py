@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import emoji
 import re
 
 
@@ -108,6 +109,9 @@ class CheckMessage:
         for chk in self.__scorers:
             score += getattr(self, chk)()
         return score
+
+    def check_emoji_count(self):
+        return 100 if emoji.emoji_count(self.__message.text) >= self.__settings.maxemoji else 0
 
     def __init__(self, message, settings) -> None:
         self.__message = message

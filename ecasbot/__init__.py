@@ -78,7 +78,7 @@ class ASBot:
         """
         return message.forward_from or message.forward_from_chat
 
-    def __get_chat_link(self, message) -> str:
+    def __get_message_link(self, message) -> str:
         """
         Generate full URL to specified message.
         :param message: Message to process.
@@ -246,7 +246,7 @@ class ASBot:
                         if message.chat.id in admin[1]:
                             try:
                                 self.bot.send_message(admin[0], self.__msgs['as_repmsg'].format(username, userid,
-                                                                                                self.__get_chat_link(
+                                                                                                self.__get_message_link(
                                                                                                     message)),
                                                       parse_mode='Markdown')
                             except:

@@ -144,6 +144,14 @@ class Settings:
         """
         return self.__data['stderrfmt']
 
+    @property
+    def watches(self) -> list:
+        """
+        Get watch list for reports feature.
+        :return: Watch list.
+        """
+        return self.__data['watchlist']
+
     def save(self) -> None:
         """
         Save current settings to JSON file.

@@ -161,7 +161,8 @@ class Settings:
         if any(userid in x for x in self.__data['watchlist']):
             for watch in self.__data['watchlist']:
                 if watch[0] == userid:
-                    watch[1].append(chatid)
+                    if chatid not in watch[1]:
+                        watch[1].append(chatid)
         else:
             self.__data['watchlist'].append([userid, [chatid]])
 

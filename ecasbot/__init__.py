@@ -356,7 +356,7 @@ class ASBot:
             'as_repns': 'Cannot send message to admin {} due to Telegram Bot API restrictions.',
             'as_repex': 'Failed to handle report command.',
             'as_repsub': 'Successfully subscribed to reports in {} chat.',
-            'as_replim': 'I cannot send you direct messages due to API restriction. Please send me PM first.',
+            'as_replim': 'I cannot send you direct messages due to API restrictions. PM me first, then try again.',
             'as_repsblg': 'Admin {} ({}) subscribed to events in chat {}.'
         }
         if not self.__settings.tgkey:

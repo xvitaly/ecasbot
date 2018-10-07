@@ -245,7 +245,7 @@ class ASBot:
                                                                                                     message)),
                                                       parse_mode='Markdown')
                             except:
-                                self.__logger.exception(self.__msgs['as_repns'].format(admin[0]))
+                                self.__logger.warning(self.__msgs['as_repns'].format(admin[0]))
             except:
                 self.__logger.exception(self.__msgs['as_repex'])
 

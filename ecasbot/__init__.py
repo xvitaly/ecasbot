@@ -79,6 +79,11 @@ class ASBot:
         return message.forward_from or message.forward_from_chat
 
     def __get_chat_link(self, message) -> str:
+        """
+        Generate full URL to specified message.
+        :param message: Message to process.
+        :return: Full URL.
+        """
         return 'https://t.me/{}/{}'.format(message.chat.username, message.reply_to_message.message_id)
 
     def __check_message_entities(self, message) -> bool:

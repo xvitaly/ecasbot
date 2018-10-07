@@ -78,6 +78,9 @@ class ASBot:
         """
         return message.forward_from or message.forward_from_chat
 
+    def __get_chat_link(self, message) -> str:
+        return 'https://t.me/{}/{}'.format(message.chat.username, message.reply_to_message.message_id)
+
     def __check_message_entities(self, message) -> bool:
         """
         Check if current message contains restricted entitles.
@@ -223,6 +226,28 @@ class ASBot:
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
+        @self.bot.message_handler(func=lambda m: True, commands=['report'])
+        def handle_report(message) -> None:
+            """
+            Handle /report command in supergroups. Send message to admins,
+            subscribed to this chat.
+            :param message: Message, triggered this event.
+            """
+            try:
+                if message.reply_to_message:
+                    username = self.__get_actual_username(message)
+                    userid = self.__get_actual_userid(message)
+                    for admin in self.__settings.watches:
+                        if message.chat.id in admin[1]:
+                            try:
+                                self.bot.send_message(admin[0], self.__msgs['as_repmsg'].format(username, userid,
+                                                                                                self.__get_chat_link(
+                                                                                                    message)))
+                            except:
+                                self.__logger.exception(self.__msgs['as_repns'].format(admin[0]))
+            except:
+                self.__logger.exception(self.__msgs['as_repex'])
+
         @self.bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
         def handle_join(message) -> None:
             """
@@ -304,7 +329,10 @@ class ASBot:
             'as_aban': 'Admin {} ({}) permanently banned user {} ({}) in chat {}.',
             'as_admerr': 'Failed to handle admin command.',
             'as_chkme': 'Checking of account {} successfully completed. Your score is: {}.',
-            'as_pmex': 'Failed to handle command in private chat with bot.'
+            'as_pmex': 'Failed to handle command in private chat with bot.',
+            'as_repmsg': 'You have a new report from user {} ({}).\nMessage link: {}.',
+            'as_repns': 'Cannot send message to admin {} due to Telegram Bot API restrictions.',
+            'as_repex': 'Failed to handle report command.'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

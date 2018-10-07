@@ -152,6 +152,19 @@ class Settings:
         """
         return self.__data['watchlist']
 
+    def add_watch(self, userid: str, chatid: str) -> None:
+        """
+        Add new watch for reports feature.
+        :param userid: User ID.
+        :param chatid: Chat ID.
+        """
+        if any(userid in x for x in self.__data['watchlist']):
+            for watch in self.__data['watchlist']:
+                if watch[0] == userid:
+                    watch[1].append(chatid)
+        else:
+            self.__data['watchlist'].append([userid, [chatid]])
+
     def save(self) -> None:
         """
         Save current settings to JSON file.

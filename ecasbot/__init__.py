@@ -231,6 +231,19 @@ class ASBot:
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
+        @self.bot.message_handler(func=self.__check_admin_feature, commands=['subscribe'])
+        def handle_subscribe(message) -> None:
+            """
+            Handle /subscribe command in supergroups. Admin feature.
+            Subscribe to specified chat to receive user reports.
+            :param message: Message, triggered this event.
+            """
+            try:
+                self.__settings.add_watch(message.from_user.id, message.chat.id)
+                self.__settings.save()
+            except:
+                self.__logger.exception(self.__msgs['as_admerr'])
+
         @self.bot.message_handler(func=lambda m: True, commands=['report'])
         def handle_report(message) -> None:
             """

@@ -239,10 +239,13 @@ class ASBot:
             :param message: Message, triggered this event.
             """
             try:
+                self.bot.send_message(message.from_user.id, self.__msgs['as_repsub'].format(message.chat.id))
                 self.__settings.add_watch(message.from_user.id, message.chat.id)
                 self.__settings.save()
+                self.__logger.info(self.__msgs['as_repsblg'].format(message.from_user.first_name, message.from_user.id,
+                                                                    message.chat.id))
             except:
-                self.__logger.exception(self.__msgs['as_admerr'])
+                self.bot.reply_to(message, self.__msgs['as_replim'])
 
         @self.bot.message_handler(func=lambda m: True, commands=['report'])
         def handle_report(message) -> None:
@@ -351,7 +354,10 @@ class ASBot:
             'as_pmex': 'Failed to handle command in private chat with bot.',
             'as_repmsg': 'You have a new report from user *{}* ({}).\n\nMessage link: {}.',
             'as_repns': 'Cannot send message to admin {} due to Telegram Bot API restrictions.',
-            'as_repex': 'Failed to handle report command.'
+            'as_repex': 'Failed to handle report command.',
+            'as_repsub': 'Successfully subscribed to reports in {} chat.',
+            'as_replim': 'I cannot send you direct messages due to API restriction. Please send me PM first.',
+            'as_repsblg': 'Admin {} ({}) subscribed to events in chat {}.'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

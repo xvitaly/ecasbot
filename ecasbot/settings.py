@@ -152,13 +152,16 @@ class Settings:
         """
         return self.__data['watchlist']
 
+    def __check_watch_user(self, userid: str) -> bool:
+        return any(userid in x for x in self.__data['watchlist'])
+
     def add_watch(self, userid: str, chatid: str) -> None:
         """
         Add new watch for reports feature.
         :param userid: User ID.
         :param chatid: Chat ID.
         """
-        if any(userid in x for x in self.__data['watchlist']):
+        if self.__check_watch_user(userid):
             for watch in self.__data['watchlist']:
                 if watch[0] == userid:
                     if chatid not in watch[1]:

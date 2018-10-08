@@ -174,6 +174,13 @@ class Settings:
         else:
             self.__data['watchlist'].append([userid, [chatid]])
 
+    def remove_watch(self, userid: str, chatid: str) -> None:
+        if self.__check_watch_user(userid):
+            for watch in self.__data['watchlist']:
+                if watch[0] == userid:
+                    if chatid in watch[1]:
+                        watch[1].remove(chatid)
+
     def save(self) -> None:
         """
         Save current settings to JSON file.

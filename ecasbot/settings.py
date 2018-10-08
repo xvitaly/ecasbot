@@ -153,6 +153,11 @@ class Settings:
         return self.__data['watchlist']
 
     def __check_watch_user(self, userid: str) -> bool:
+        """
+        Check if user ID exists in watch list.
+        :param userid: User ID.
+        :return: Check results.
+        """
         return any(userid in x for x in self.__data['watchlist'])
 
     def add_watch(self, userid: str, chatid: str) -> None:

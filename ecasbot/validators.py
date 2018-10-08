@@ -99,17 +99,6 @@ class CheckMessage:
         """
         return {s for s in cls.__dict__.keys() if s.startswith(prefix)}
 
-    @property
-    def score(self) -> int:
-        """
-        Return final score after running checks.
-        :return: Final score.
-        """
-        score = 0
-        for chk in self.__scorers:
-            score += getattr(self, chk)()
-        return score
-
     def check_emoji_count(self) -> int:
         """
         Check and score messages contains lots of emojis.
@@ -123,6 +112,17 @@ class CheckMessage:
         :return:
         """
         return 100 if emoji.emoji_count(self.__message.text) >= 1 and len(self.__message.text) <= 5 else 0
+
+    @property
+    def score(self) -> int:
+        """
+        Return final score after running checks.
+        :return: Final score.
+        """
+        score = 0
+        for chk in self.__scorers:
+            score += getattr(self, chk)()
+        return score
 
     def __init__(self, message, settings) -> None:
         """

@@ -247,6 +247,22 @@ class ASBot:
             except:
                 self.bot.reply_to(message, self.__msgs['as_replim'])
 
+        @self.bot.message_handler(func=self.__check_admin_feature, commands=['unsubscribe'])
+        def handle_unsubscribe(message) -> None:
+            """
+            Handle /unsubscribe command in supergroups. Admin feature.
+            Unsubscribe from specified chat.
+            :param message: Message, triggered this event.
+            """
+            try:
+                self.__settings.remove_watch(message.from_user.id, message.chat.id)
+                self.__settings.save()
+                self.__logger.info(self.__msgs['as_repusblg'].format(message.from_user.first_name, message.from_user.id,
+                                                                     message.chat.id))
+                self.bot.send_message(message.from_user.id, self.__msgs['as_repunsb'].format(message.chat.id))
+            except:
+                self.__logger.exception(self.__msgs['as_admerr'])
+
         @self.bot.message_handler(func=lambda m: True, commands=['report'])
         def handle_report(message) -> None:
             """
@@ -357,7 +373,9 @@ class ASBot:
             'as_repex': 'Failed to handle report command.',
             'as_repsub': 'Successfully subscribed to reports in {} chat.',
             'as_replim': 'I cannot send you direct messages due to API restrictions. PM me first, then try again.',
-            'as_repsblg': 'Admin {} ({}) subscribed to events in chat {}.'
+            'as_repsblg': 'Admin {} ({}) subscribed to events in chat {}.',
+            'as_repunsb': 'Successfully unsubscribed from reports in {} chat.',
+            'as_repusblg': 'Admin {} ({}) unsubscribed from events in chat {}.'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

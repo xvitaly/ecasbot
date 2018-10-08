@@ -18,12 +18,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-import time
 import sys
+import time
 import telebot
 
+from .chkmsg import CheckMessage
+from .chkusr import CheckUsername
 from .settings import Settings
-from .validators import CheckMessage, CheckUsername
 
 
 class ASBot:

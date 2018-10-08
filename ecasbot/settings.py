@@ -175,6 +175,11 @@ class Settings:
             self.__data['watchlist'].append([userid, [chatid]])
 
     def remove_watch(self, userid: str, chatid: str) -> None:
+        """
+        Add watch for reports feature.
+        :param userid: User ID.
+        :param chatid: Chat ID.
+        """
         if self.__check_watch_user(userid):
             for watch in self.__data['watchlist']:
                 if watch[0] == userid:

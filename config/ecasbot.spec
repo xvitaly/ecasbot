@@ -82,6 +82,7 @@ exit 0
 %{python3_sitelib}/%{appname}-*.egg-info
 %attr(-,%{appname},%{appname}) %config(noreplace) %{_sysconfdir}/%{appname}.json
 %dir %attr(-,minidlna,minidlna) %{_localstatedir}/log/%{name}
+%ghost %{_localstatedir}/log/%{name}/*.log
 %{_unitdir}/%{appname}.service
 
 %changelog

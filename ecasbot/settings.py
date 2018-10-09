@@ -248,6 +248,7 @@ class Settings:
         Main constructor of Settings class.
         :param schid: Required schema version.
         """
+        self.__appname = 'ecasbot'
         self.__data = {}
         self.__find_cfgfile()
         if not os.path.isfile(self.__cfgfile):

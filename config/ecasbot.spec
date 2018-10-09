@@ -49,6 +49,7 @@ who added them in supergroups.
 
 mkdir -p %{buildroot}%{_sysconfdir}/%{appname}
 install -p -m 0644 config/%{appname}.json %{buildroot}%{_sysconfdir}/%{appname}
+install -p -m 0644 config/%{appname}-env.conf %{buildroot}%{_sysconfdir}/%{appname}
 
 mkdir -p %{buildroot}%{_unitdir}
 install -p -m 0644 config/%{appname}.service %{buildroot}%{_unitdir}
@@ -81,6 +82,7 @@ exit 0
 %{python3_sitelib}/%{appname}
 %{python3_sitelib}/%{appname}-*.egg-info
 %attr(-,%{appname},%{appname}) %config(noreplace) %{_sysconfdir}/%{appname}/*.json
+%config(noreplace) %{_sysconfdir}/%{appname}/*.conf
 %dir %attr(-,%{appname},%{appname}) %{_localstatedir}/log/%{name}
 %ghost %{_localstatedir}/log/%{name}/*.log
 %{_unitdir}/%{appname}.service

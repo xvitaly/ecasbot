@@ -241,7 +241,7 @@ class Settings:
         """
         Get fully-qualified path to main configuration file.
         """
-        self.__cfgfile = str(os.path.join(self.get_cfgpath(), 'ecasbot.json'))
+        self.__cfgfile = str(os.path.join(self.get_cfgpath(), '{}.json'.format(self.__appname)))
 
     def __init__(self, schid) -> None:
         """

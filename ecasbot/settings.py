@@ -208,8 +208,7 @@ class Settings:
         """
         return self.__data['schema'] >= schid
 
-    @staticmethod
-    def get_cfgpath() -> str:
+    def get_cfgpath(self) -> str:
         """
         Get directory where bot's configuration are stored.
         User can override this setting by exporting CFGPATH
@@ -220,7 +219,8 @@ class Settings:
         if cfgpath:
             if os.path.exists(cfgpath):
                 return cfgpath
-        return '/etc' if os.name == 'posix' else str(os.path.join(os.getenv('APPDATA'), 'ecasbot'))
+        return os.path.join('/etc', self.__appname) if os.name == 'posix' else str(
+            os.path.join(os.getenv('APPDATA'), self.__appname))
 
     @staticmethod
     def get_logging_level() -> int:

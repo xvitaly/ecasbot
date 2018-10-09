@@ -53,6 +53,9 @@ install -p -m 0644 config/%{appname}.json %{buildroot}%{_sysconfdir}
 mkdir -p %{buildroot}%{_unitdir}
 install -p -m 0644 config/%{appname}.service %{buildroot}%{_unitdir}
 
+mkdir -p %{buildroot}%{_localstatedir}/log
+install -d -m 0755 %{buildroot}%{_localstatedir}/log/%{name}
+
 %check
 %{__python3} setup.py test
 

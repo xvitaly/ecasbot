@@ -65,6 +65,13 @@ class CheckUsername:
         """
         return 50 if re.search('[\u4e00-\u9fff]+', self.__username, re.I | re.M | re.U) else 0
 
+    def check_fresh_userid(self) -> int:
+        """
+        Check and score newly registered users.
+        :return: Score result.
+        """
+        return 50 if self.__userid > 600000000 else 0
+
     @property
     def score(self) -> int:
         """

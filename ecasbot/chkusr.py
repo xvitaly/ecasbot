@@ -86,4 +86,5 @@ class CheckUsername:
         """
         self.__username = '{} {}'.format(fname, lname) if lname else fname
         self.__settings = settings
+        self.__userid = uid
         self.__scorers = self.__find_methods('check')

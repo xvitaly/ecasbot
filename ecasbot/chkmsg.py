@@ -35,14 +35,14 @@ class CheckMessage:
         Check and score messages contains lots of emojis.
         :return: Score result.
         """
-        return 100 if emoji.emoji_count(self.__message.text) >= self.__settings.maxemoji else 0
+        return 100 if self.__emojicnt >= self.__settings.maxemoji else 0
 
     def check_emoji_bot(self) -> int:
         """
         Check and score messages contains 1-5 emojis and no other text.
         :return:
         """
-        return 100 if emoji.emoji_count(self.__message.text) >= 1 and len(self.__message.text) <= 5 else 0
+        return 100 if self.__emojicnt >= 1 and len(self.__message.text) <= 5 else 0
 
     @property
     def score(self) -> int:
@@ -63,4 +63,5 @@ class CheckMessage:
         """
         self.__message = message
         self.__settings = settings
+        self.__emojicnt = emoji.emoji_count(self.__message.text)
         self.__scorers = self.__find_methods('check')

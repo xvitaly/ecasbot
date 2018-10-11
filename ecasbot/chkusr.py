@@ -76,11 +76,12 @@ class CheckUsername:
             score += getattr(self, chk)()
         return score
 
-    def __init__(self, fname, lname, settings) -> None:
+    def __init__(self, fname, lname, uid, settings) -> None:
         """
         Main constructor of CheckUsername class.
         :param fname: First name.
         :param lname: Last name.
+        :param uid: User ID.
         :param settings: Object of Settings class.
         """
         self.__username = '{} {}'.format(fname, lname) if lname else fname

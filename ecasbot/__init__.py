@@ -107,14 +107,15 @@ class ASBot:
         """
         return self.__score_message(message) >= self.__settings.msggoal
 
-    def __score_user(self, fname, lname) -> int:
+    def __score_user(self, fname, lname, uid) -> int:
         """
         Check current user's profile and score him.
         :param fname: First name (from API).
         :param lname: Last name (from API).
+        :param uid: User ID (from API).
         :return: Score results.
         """
-        checker = CheckUsername(fname, lname, self.__settings)
+        checker = CheckUsername(fname, lname, uid, self.__settings)
         return checker.score
 
     def __score_message(self, message) -> int:
@@ -149,7 +150,7 @@ class ASBot:
             :param message: Message, triggered this event.
             """
             try:
-                score = self.__score_user(message.from_user.first_name, message.from_user.last_name)
+                score = self.__score_user(message.from_user.first_name, message.from_user.last_name, message.from_user.id)
                 self.bot.send_message(message.chat.id, self.__msgs['as_chkme'].format(message.from_user.id, score))
             except:
                 self.__logger.exception(self.__msgs['as_pmex'])
@@ -296,7 +297,8 @@ class ASBot:
             """
             try:
                 # Check user profile using our score system...
-                score = self.__score_user(message.new_chat_member.first_name, message.new_chat_member.last_name)
+                score = self.__score_user(message.new_chat_member.first_name, message.new_chat_member.last_name,
+                                          message.new_chat_member.id)
                 self.__logger.info(
                     self.__msgs['as_alog'].format(message.new_chat_member.first_name, message.new_chat_member.id,
                                                   message.chat.id, score))

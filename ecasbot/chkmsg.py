@@ -46,6 +46,10 @@ class CheckMessage:
         return 100 if self.__emojicnt >= 1 and len(self.__message.text) <= 5 else 0
 
     def check_url_as_text(self) -> int:
+        """
+        Check and score messages contains URLs stored as text.
+        :return: Score result.
+        """
         return 100 if re.search(self.__settings.urlrgx, self.__message.text, re.I | re.M | re.U) else 0
 
     @property

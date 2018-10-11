@@ -18,6 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import emoji
+import re
 
 
 class CheckMessage:
@@ -43,6 +44,9 @@ class CheckMessage:
         :return:
         """
         return 100 if self.__emojicnt >= 1 and len(self.__message.text) <= 5 else 0
+
+    def check_url_as_text(self) -> int:
+        return 100 if re.search(self.__settings.urlrgx, self.__message.text, re.I | re.M | re.U) else 0
 
     @property
     def score(self) -> int:

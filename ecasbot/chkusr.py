@@ -86,7 +86,7 @@ class CheckUsername:
     def __init__(self, account, settings) -> None:
         """
         Main constructor of CheckUsername class.
-        :param account: Object of telebot.User class.
+        :param account: Object of telebot.User class to check.
         :param settings: Object of Settings class.
         """
         self.__username = '{} {}'.format(account.first_name,

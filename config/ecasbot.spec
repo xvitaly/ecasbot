@@ -50,6 +50,8 @@ who added them in supergroups.
 mkdir -p %{buildroot}%{_sysconfdir}/%{appname}
 install -p -m 0644 config/%{appname}.json %{buildroot}%{_sysconfdir}/%{appname}
 install -p -m 0644 config/%{appname}-env.conf %{buildroot}%{_sysconfdir}/%{appname}
+
+mkdir -p %{buildroot}%{_sysconfdir}/logrotate.d
 install -p -m 0644 config/%{appname}.logrotate %{buildroot}%{_sysconfdir}/logrotate.d/%{appname}
 
 mkdir -p %{buildroot}%{_unitdir}

@@ -85,7 +85,7 @@ exit 0
 %attr(-,%{appname},%{appname}) %config(noreplace) %{_sysconfdir}/%{appname}/*.json
 %config(noreplace) %{_sysconfdir}/%{appname}/*.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{appname}
-%dir %attr(-,%{appname},%{appname}) %{_localstatedir}/log/%{name}
+%attr(-,%{appname},%{appname}) %dir %{_localstatedir}/log/%{name}
 %ghost %{_localstatedir}/log/%{name}/*.log
 %{_unitdir}/%{appname}.service
 

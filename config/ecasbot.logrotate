@@ -1,0 +1,9 @@
+/var/log/ecasbot/*.log {
+    create 0664 ecasbot ecasbot
+    weekly
+    rotate 4
+    missingok
+    notifempty
+    compress
+    sharedscripts
+}

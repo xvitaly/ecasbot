@@ -84,6 +84,7 @@ exit 0
 %{python3_sitelib}/%{appname}-*.egg-info
 %attr(-,%{appname},%{appname}) %config(noreplace) %{_sysconfdir}/%{appname}/*.json
 %config(noreplace) %{_sysconfdir}/%{appname}/*.conf
+%config(noreplace) %{_sysconfdir}/logrotate.d/%{appname}
 %dir %attr(-,%{appname},%{appname}) %{_localstatedir}/log/%{name}
 %ghost %{_localstatedir}/log/%{name}/*.log
 %{_unitdir}/%{appname}.service

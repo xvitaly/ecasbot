@@ -72,6 +72,13 @@ class CheckUsername:
         """
         return 50 if self.__userid > 600000000 else 0
 
+    def check_user_language(self) -> int:
+        """
+        Check and score client's languages.
+        :return: Score result.
+        """
+        return 50 if self.__account.language_code in self.__settings.restricted_languages else 0
+
     @property
     def score(self) -> int:
         """

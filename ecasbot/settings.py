@@ -154,6 +154,10 @@ class Settings:
 
     @property
     def banned_languages(self) -> list:
+        """
+        Get list of blocked languages.
+        :return: Blocked langs list.
+        """
         return self.__data['bannedlangs']
 
     def __check_watch_user(self, userid: str) -> bool:

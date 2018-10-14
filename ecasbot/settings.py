@@ -153,12 +153,12 @@ class Settings:
         return self.__data['watchlist']
 
     @property
-    def banned_languages(self) -> list:
+    def restricted_languages(self) -> list:
         """
-        Get list of blocked languages.
+        Get list of restricted languages.
         :return: Blocked langs list.
         """
-        return self.__data['bannedlangs']
+        return self.__data['restlangs']
 
     def __check_watch_user(self, userid: str) -> bool:
         """

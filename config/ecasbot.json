@@ -1,5 +1,5 @@
 {
-  "schema": 5,
+  "schema": 6,
   "tgkey": "",
   "admins": [],
   "restent": ["url", "text_link", "mention"],

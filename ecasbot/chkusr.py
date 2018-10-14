@@ -89,6 +89,7 @@ class CheckUsername:
         :param account: Object of telebot.User class to check.
         :param settings: Object of Settings class.
         """
+        self.__account = account
         self.__username = '{} {}'.format(account.first_name,
                                          account.last_name) if account.last_name else account.first_name
         self.__settings = settings

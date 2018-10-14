@@ -90,8 +90,8 @@ class CheckUsername:
         :param settings: Object of Settings class.
         """
         self.__account = account
-        self.__username = '{} {}'.format(account.first_name,
-                                         account.last_name) if account.last_name else account.first_name
+        self.__username = '{} {}'.format(self.__account.first_name, self.__account.last_name) \
+            if self.__account.last_name else self.__account.first_name
         self.__settings = settings
-        self.__userid = account.id
+        self.__userid = self.__account.id
         self.__scorers = self.__find_methods('check')

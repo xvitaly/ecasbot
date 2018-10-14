@@ -152,6 +152,10 @@ class Settings:
         """
         return self.__data['watchlist']
 
+    @property
+    def banned_languages(self) -> list:
+        return self.__data['bannedlangs']
+
     def __check_watch_user(self, userid: str) -> bool:
         """
         Check if user ID exists in watch list.

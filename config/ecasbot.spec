@@ -82,7 +82,7 @@ exit 0
 %config(noreplace) %{_sysconfdir}/%{name}/*.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %attr(-,%{name},root) %dir %{_localstatedir}/log/%{name}
-%ghost %{_localstatedir}/log/%{name}/*.log
+%ghost %{_localstatedir}/log/%{name}/*.log*
 %{_unitdir}/%{name}.service
 
 %changelog

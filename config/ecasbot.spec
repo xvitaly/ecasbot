@@ -40,6 +40,7 @@ who added them in supergroups.
 
 %prep
 %autosetup -n %{appname}-%{version} -p1
+sed -e 's@"logtofile": "",@"logtofile": "%{_localstatedir}/log/%{name}/%{name}.log",@g' -i config/%{name}.json
 
 %build
 %py3_build

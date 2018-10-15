@@ -12,6 +12,10 @@ EC AntiSpam bot for [Telegram](https://telegram.org/) messenger will block all m
 GNU General Public License version 3. You can find it here: [LICENSE](LICENSE). External libraries can use another licenses, compatible with GNU GPLv3.
 
 # Requirements
- * Python 2.7 or Python 3.x;
+ * Python 3.x;
  * python-pytelegrambotapi;
  * python-requests.
+
+# Documentation
+ * [Installation in Python virtual environment](docs/controling-with-systemd.md).
+ * [Controling this bot using systemd](docs/controling-with-systemd.md).

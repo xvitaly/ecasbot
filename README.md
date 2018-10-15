@@ -17,5 +17,5 @@ GNU General Public License version 3. You can find it here: [LICENSE](LICENSE). 
  * python-requests.
 
 # Documentation
- * [Installation in Python virtual environment](docs/controling-with-systemd.md).
+ * [Installation in Python virtual environment](docs/virtualenv-installation.md).
  * [Controling this bot using systemd](docs/controling-with-systemd.md).

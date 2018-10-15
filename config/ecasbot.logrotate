@@ -1,5 +1,5 @@
 /var/log/ecasbot/*.log {
-    create 0664 ecasbot ecasbot
+    create 0664 ecasbot root
     weekly
     rotate 4
     missingok

@@ -40,7 +40,7 @@ who added them in supergroups.
 
 %prep
 %autosetup -n %{appname}-%{version} -p1
-sed -e 's@"logtofile": "",@"logtofile": "%{_localstatedir}/log/%{name}/%{name}.log",@g' -i config/%{name}.json
+sed -e 's@"logtofile": "",@"logtofile": "%{_localstatedir}/log/%{appname}/%{appname}.log",@g' -i config/%{appname}.json
 
 %build
 %py3_build
@@ -59,7 +59,7 @@ mkdir -p %{buildroot}%{_unitdir}
 install -p -m 0644 config/%{appname}.service %{buildroot}%{_unitdir}
 
 mkdir -p %{buildroot}%{_localstatedir}/log
-install -d -m 0755 %{buildroot}%{_localstatedir}/log/%{name}
+install -d -m 0755 %{buildroot}%{_localstatedir}/log/%{appname}
 
 %check
 %{__python3} setup.py test
@@ -88,8 +88,8 @@ exit 0
 %attr(-,%{appname},%{appname}) %config(noreplace) %{_sysconfdir}/%{appname}/*.json
 %config(noreplace) %{_sysconfdir}/%{appname}/*.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{appname}
-%attr(-,%{appname},%{appname}) %dir %{_localstatedir}/log/%{name}
-%ghost %{_localstatedir}/log/%{name}/*.log
+%attr(-,%{appname},%{appname}) %dir %{_localstatedir}/log/%{appname}
+%ghost %{_localstatedir}/log/%{appname}/*.log
 %{_unitdir}/%{appname}.service
 
 %changelog

@@ -74,7 +74,7 @@ exit 0
 
 %files
 %license LICENSE
-%doc README.md
+%doc README.md docs/*.md
 %{_bindir}/%{name}
 %{python3_sitelib}/%{name}
 %{python3_sitelib}/%{name}-*.egg-info

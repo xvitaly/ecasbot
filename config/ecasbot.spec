@@ -78,6 +78,7 @@ exit 0
 %{_bindir}/%{name}
 %{python3_sitelib}/%{name}
 %{python3_sitelib}/%{name}-*.egg-info
+%dir %{_sysconfdir}/%{name}
 %attr(-,%{name},root) %config(noreplace) %{_sysconfdir}/%{name}/*.json
 %config(noreplace) %{_sysconfdir}/%{name}/*.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}

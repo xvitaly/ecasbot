@@ -1,13 +1,11 @@
-%global appname ecasbot
-
-Name: python-%{appname}
+Name: ecasbot
 Version: 0
 Release: 1%{?dist}
 Summary: EC AntiSpam bot
 
 License: GPLv3+
-URL: https://github.com/xvitaly/%{appname}
-Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
+URL: https://github.com/xvitaly/%{name}
+Source0: %{url}/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: systemd
@@ -18,29 +16,23 @@ BuildRequires: python3dist(wheel)
 BuildRequires: python3dist(six)
 BuildRequires: python3dist(emoji)
 
-%description
-EC AntiSpam bot for Telegram messenger will block all multimedia
-messages and links from new users, block chinese bots and users
-who added them in supergroups.
-
-%package -n python3-%{appname}
-Summary: EC AntiSpam bot
 Requires: python3dist(pytelegrambotapi)
 Requires: python3dist(requests)
 Requires: python3dist(six)
 Requires: python3dist(emoji)
 Requires(pre): shadow-utils
-%{?systemd_requires}
-%{?python_provide:%python_provide python3-%{appname}}
 
-%description -n python3-%{appname}
+%{?systemd_requires}
+%{?python_provide:%python_provide python3-%{name}}
+
+%description
 EC AntiSpam bot for Telegram messenger will block all multimedia
 messages and links from new users, block chinese bots and users
 who added them in supergroups.
 
 %prep
-%autosetup -n %{appname}-%{version} -p1
-sed -e 's@"logtofile": "",@"logtofile": "%{_localstatedir}/log/%{appname}/%{appname}.log",@g' -i config/%{appname}.json
+%autosetup -n %{name}-%{version} -p1
+sed -e 's@"logtofile": "",@"logtofile": "%{_localstatedir}/log/%{name}/%{name}.log",@g' -i config/%{name}.json
 
 %build
 %py3_build
@@ -48,50 +40,50 @@ sed -e 's@"logtofile": "",@"logtofile": "%{_localstatedir}/log/%{appname}/%{appn
 %install
 %py3_install
 
-mkdir -p %{buildroot}%{_sysconfdir}/%{appname}
-install -p -m 0644 config/%{appname}.json %{buildroot}%{_sysconfdir}/%{appname}
-install -p -m 0644 config/%{appname}-env.conf %{buildroot}%{_sysconfdir}/%{appname}
+mkdir -p %{buildroot}%{_sysconfdir}/%{name}
+install -p -m 0644 config/%{name}.json %{buildroot}%{_sysconfdir}/%{name}
+install -p -m 0644 config/%{name}-env.conf %{buildroot}%{_sysconfdir}/%{name}
 
 mkdir -p %{buildroot}%{_sysconfdir}/logrotate.d
-install -p -m 0644 config/%{appname}.logrotate %{buildroot}%{_sysconfdir}/logrotate.d/%{appname}
+install -p -m 0644 config/%{name}.logrotate %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 
 mkdir -p %{buildroot}%{_unitdir}
-install -p -m 0644 config/%{appname}.service %{buildroot}%{_unitdir}
+install -p -m 0644 config/%{name}.service %{buildroot}%{_unitdir}
 
 mkdir -p %{buildroot}%{_localstatedir}/log
-install -d -m 0755 %{buildroot}%{_localstatedir}/log/%{appname}
+install -d -m 0755 %{buildroot}%{_localstatedir}/log/%{name}
 
 %check
 %{__python3} setup.py test
 
-%pre -n python3-%{appname}
-getent group %{appname} >/dev/null || groupadd -r %{appname}
-getent passwd %{appname} >/dev/null || \
-useradd -r -g %{appname} -d /dev/null -s /sbin/nologin \
-  -c "%{appname} service account" %{appname}
+%pre
+getent group %{name} >/dev/null || groupadd -r %{name}
+getent passwd %{name} >/dev/null || \
+useradd -r -g %{name} -d /dev/null -s /sbin/nologin \
+  -c "%{name} service account" %{name}
 exit 0
 
-%post -n python3-%{appname}
-%systemd_post %{appname}.service
+%post
+%systemd_post %{name}.service
 
-%preun -n python3-%{appname}
-%systemd_preun %{appname}.service
+%preun
+%systemd_preun %{name}.service
 
-%postun -n python3-%{appname}
-%systemd_postun_with_restart %{appname}.service
+%postun
+%systemd_postun_with_restart %{name}.service
 
-%files -n python3-%{appname}
+%files
 %license LICENSE
 %doc README.md
-%{_bindir}/%{appname}
-%{python3_sitelib}/%{appname}
-%{python3_sitelib}/%{appname}-*.egg-info
-%attr(-,%{appname},%{appname}) %config(noreplace) %{_sysconfdir}/%{appname}/*.json
-%config(noreplace) %{_sysconfdir}/%{appname}/*.conf
-%config(noreplace) %{_sysconfdir}/logrotate.d/%{appname}
-%attr(-,%{appname},%{appname}) %dir %{_localstatedir}/log/%{appname}
-%ghost %{_localstatedir}/log/%{appname}/*.log
-%{_unitdir}/%{appname}.service
+%{_bindir}/%{name}
+%{python3_sitelib}/%{name}
+%{python3_sitelib}/%{name}-*.egg-info
+%attr(-,%{name},%{name}) %config(noreplace) %{_sysconfdir}/%{name}/*.json
+%config(noreplace) %{_sysconfdir}/%{name}/*.conf
+%config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
+%attr(-,%{name},%{name}) %dir %{_localstatedir}/log/%{name}
+%ghost %{_localstatedir}/log/%{name}/*.log
+%{_unitdir}/%{name}.service
 
 %changelog
 * Tue Sep 11 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 0-1

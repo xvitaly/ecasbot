@@ -27,8 +27,8 @@ Requires(pre): shadow-utils
 
 %description
 EC AntiSpam bot for Telegram messenger will block all multimedia
-messages and links from new users, block chinese bots and users
-who added them in supergroups.
+messages and links from new users, block some common spam bots and
+users who added them to super-groups.
 
 %prep
 %autosetup -n %{name}-%{version} -p1

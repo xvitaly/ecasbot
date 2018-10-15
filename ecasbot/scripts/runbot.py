@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 # coding=utf-8
 
 # EC AntiSpam bot for Telegram Messenger

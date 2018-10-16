@@ -23,7 +23,7 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = ecasbot
 PROJECT_NUMBER         = 1.0.0
-PROJECT_BRIEF          = "EC AntiSpam bot for Telegram messenger will block all multimedia messages and links from new users, some common spam bots and users who added them to super-groups."
+PROJECT_BRIEF          = "EC AntiSpam bot for Telegram messenger"
 PROJECT_LOGO           =
 OUTPUT_DIRECTORY       = docs/doxyout
 CREATE_SUBDIRS         = NO

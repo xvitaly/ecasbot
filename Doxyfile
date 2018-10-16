@@ -25,7 +25,7 @@ PROJECT_NAME           = ecasbot
 PROJECT_NUMBER         = 1.0.0
 PROJECT_BRIEF          = "EC AntiSpam bot for Telegram messenger"
 PROJECT_LOGO           =
-OUTPUT_DIRECTORY       = docs/doxyout
+OUTPUT_DIRECTORY       = doxyout
 CREATE_SUBDIRS         = NO
 ALLOW_UNICODE_NAMES    = NO
 OUTPUT_LANGUAGE        = English
@@ -125,7 +125,7 @@ WARN_LOGFILE           =
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                  = ecasbot README.md
+INPUT                  = ecasbot README.md docs
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.c \
                          *.cc \

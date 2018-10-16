@@ -105,4 +105,4 @@ fabric.properties
 *.db
 
 # Doxygen output files
-/docs/doxyout/
+/doxyout/

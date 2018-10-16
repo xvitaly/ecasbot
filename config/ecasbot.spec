@@ -8,6 +8,7 @@ URL: https://github.com/xvitaly/%{name}
 Source0: %{url}/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 BuildArch: noarch
 
+BuildRequires: doxygen
 BuildRequires: systemd
 BuildRequires: python3-devel
 BuildRequires: python3dist(pytelegrambotapi)
@@ -35,6 +36,7 @@ users who added them to super-groups.
 sed -e 's@"logtofile": "",@"logtofile": "%{_localstatedir}/log/%{name}/%{name}.log",@g' -i config/%{name}.json
 
 %build
+doxygen
 %py3_build
 
 %install
@@ -74,7 +76,7 @@ exit 0
 
 %files
 %license LICENSE
-%doc README.md docs/*.md
+%doc README.md doxyout/html
 %{_bindir}/%{name}
 %{python3_sitelib}/%{name}
 %{python3_sitelib}/%{name}-*.egg-info

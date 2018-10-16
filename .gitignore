@@ -103,3 +103,4 @@ fabric.properties
 
 # Local database files
 *.db
+doxyout/

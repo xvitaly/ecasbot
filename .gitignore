@@ -103,4 +103,6 @@ fabric.properties
 
 # Local database files
 *.db
-doxyout/
+
+# Doxygen output files
+/docs/doxyout/

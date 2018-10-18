@@ -167,6 +167,10 @@ class Settings:
         """
         return any(userid in x for x in self.__data['watchlist'])
 
+    def get_watchers(self, chatid) -> list:
+        result = next((x for x in self.__data['watches'] if x[0] == chatid), None)
+        return result if result else []
+
     def add_watch(self, userid: str, chatid: str) -> None:
         """
         Add new watch for reports feature.

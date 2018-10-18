@@ -273,15 +273,14 @@ class ASBot:
                 if message.reply_to_message:
                     username = self.__get_actual_username(message)
                     userid = self.__get_actual_userid(message)
-                    for admin in self.__settings.watches:
-                        if message.chat.id in admin[1]:
-                            try:
-                                self.bot.send_message(admin[0], self.__msgs['as_repmsg'].format(username, userid,
-                                                                                                self.__get_message_link(
-                                                                                                    message)),
-                                                      parse_mode='Markdown')
-                            except:
-                                self.__logger.warning(self.__msgs['as_repns'].format(admin[0]))
+                    for admin in self.__settings.get_watchers(message.chat.id):
+                        try:
+                            self.bot.send_message(admin[0], self.__msgs['as_repmsg'].format(username, userid,
+                                                                                            self.__get_message_link(
+                                                                                                message)),
+                                                  parse_mode='Markdown')
+                        except:
+                            self.__logger.warning(self.__msgs['as_repns'].format(admin[0]))
             except:
                 self.__logger.exception(self.__msgs['as_repex'])
 

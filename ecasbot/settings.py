@@ -159,13 +159,16 @@ class Settings:
         """
         return self.__data['restlangs']
 
+    def __check_watchers(self, chatid: int):
+        return (x for x in self.__data['watches'] if x[0] == chatid)
+
     def get_watchers(self, chatid: int) -> list:
         """
         Get watchers of specified chat.
         :param chatid: Chat ID.
         :return: List of watchers.
         """
-        result = next((x for x in self.__data['watches'] if x[0] == chatid), None)
+        result = next(self.__check_watchers(chatid), None)
         return result if result else []
 
     def add_watch(self, userid: int, chatid: int) -> None:
@@ -174,7 +177,7 @@ class Settings:
         :param userid: User ID.
         :param chatid: Chat ID.
         """
-        if len(self.get_watchers(chatid)) > 0:
+        if any(self.__check_watchers(chatid)):
             for watch in self.__data['watches']:
                 if watch[0] == chatid:
                     if userid not in watch[1]:

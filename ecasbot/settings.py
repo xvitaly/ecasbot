@@ -160,6 +160,11 @@ class Settings:
         return self.__data['restlangs']
 
     def __check_watchers(self, chatid: int):
+        """
+        Check if specified chat ID listed in watch list.
+        :param chatid: Chat ID.
+        :return: Generator object.
+        """
         return (x for x in self.__data['watches'] if x[0] == chatid)
 
     def get_watchers(self, chatid: int) -> list:

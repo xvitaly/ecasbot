@@ -149,7 +149,7 @@ class Settings:
         Get watch list for reports feature.
         :return: Watch list.
         """
-        return self.__data['watchlist']
+        return self.__data['watches']
 
     @property
     def restricted_languages(self) -> list:

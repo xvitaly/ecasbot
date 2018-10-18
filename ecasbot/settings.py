@@ -167,7 +167,12 @@ class Settings:
         """
         return any(userid in x for x in self.__data['watchlist'])
 
-    def get_watchers(self, chatid) -> list:
+    def get_watchers(self, chatid: int) -> list:
+        """
+        Get watchers of specified chat.
+        :param chatid: Chat ID.
+        :return: List of watchers.
+        """
         result = next((x for x in self.__data['watches'] if x[0] == chatid), None)
         return result if result else []
 

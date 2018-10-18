@@ -174,7 +174,7 @@ class Settings:
         :return: List of watchers.
         """
         result = next(self.__check_watchers(chatid), None)
-        return result if result else []
+        return result[1] if result else []
 
     def add_watch(self, userid: int, chatid: int) -> None:
         """

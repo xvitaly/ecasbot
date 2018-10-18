@@ -159,14 +159,6 @@ class Settings:
         """
         return self.__data['restlangs']
 
-    def __check_watch_user(self, userid: str) -> bool:
-        """
-        Check if user ID exists in watch list.
-        :param userid: User ID.
-        :return: Check results.
-        """
-        return any(userid in x for x in self.__data['watchlist'])
-
     def get_watchers(self, chatid: int) -> list:
         """
         Get watchers of specified chat.
@@ -176,31 +168,30 @@ class Settings:
         result = next((x for x in self.__data['watches'] if x[0] == chatid), None)
         return result if result else []
 
-    def add_watch(self, userid: str, chatid: str) -> None:
+    def add_watch(self, userid: int, chatid: int) -> None:
         """
         Add new watch for reports feature.
         :param userid: User ID.
         :param chatid: Chat ID.
         """
-        if self.__check_watch_user(userid):
-            for watch in self.__data['watchlist']:
-                if watch[0] == userid:
-                    if chatid not in watch[1]:
-                        watch[1].append(chatid)
+        if len(self.get_watchers(chatid)) > 0:
+            for watch in self.__data['watches']:
+                if watch[0] == chatid:
+                    if userid not in watch[1]:
+                        watch[1].append(userid)
         else:
-            self.__data['watchlist'].append([userid, [chatid]])
+            self.__data['watches'].append([chatid, [userid]])
 
-    def remove_watch(self, userid: str, chatid: str) -> None:
+    def remove_watch(self, userid: int, chatid: int) -> None:
         """
         Add watch for reports feature.
         :param userid: User ID.
         :param chatid: Chat ID.
         """
-        if self.__check_watch_user(userid):
-            for watch in self.__data['watchlist']:
-                if watch[0] == userid:
-                    if chatid in watch[1]:
-                        watch[1].remove(chatid)
+        for watch in self.__data['watches']:
+            if watch[0] == chatid:
+                if userid in watch[1]:
+                    watch[1].remove(userid)
 
     def save(self) -> None:
         """

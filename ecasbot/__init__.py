@@ -275,9 +275,9 @@ class ASBot:
                     userid = self.__get_actual_userid(message)
                     for admin in self.__settings.get_watchers(message.chat.id):
                         try:
-                            self.bot.send_message(admin[0], self.__msgs['as_repmsg'].format(username, userid,
-                                                                                            self.__get_message_link(
-                                                                                                message)),
+                            self.bot.send_message(admin, self.__msgs['as_repmsg'].format(username, userid,
+                                                                                         self.__get_message_link(
+                                                                                             message)),
                                                   parse_mode='Markdown')
                         except:
                             self.__logger.warning(self.__msgs['as_repns'].format(admin[0]))

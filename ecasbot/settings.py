@@ -234,8 +234,7 @@ class Settings:
         if cfgpath:
             if os.path.exists(cfgpath):
                 return cfgpath
-        return os.path.join('/etc', self.__appname) if os.name == 'posix' else str(
-            os.path.join(os.getenv('APPDATA'), self.__appname))
+        return os.path.join('/etc' if os.name == 'posix' else os.getenv('APPDATA'), self.__appname)
 
     @staticmethod
     def get_logging_level() -> int:

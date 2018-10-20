@@ -21,3 +21,5 @@ GNU General Public License version 3. You can find it here: [LICENSE](LICENSE). 
 # Documentation
  * [Installation in Python virtual environment](docs/virtualenv-installation.md).
  * [Controling this bot using systemd](docs/controling-with-systemd.md).
+ * [Configuration file documentation](docs/schema-documentation.md).
+ * [Configuration using environment options](docs/bot-environment-options.md).

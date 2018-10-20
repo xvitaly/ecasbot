@@ -1,5 +1,4 @@
-List of options
-==============================
+# List of options
 
 Available options of `acasbot.json` configuration file:
 
@@ -20,3 +19,8 @@ Available options of `acasbot.json` configuration file:
  * `stderrfmt` - custom formatter for stderr logs;
  * `watches` - watch list for reports feature;
  * `restlangs` - list of restricted languages. Bot will score users using them in their clients.
+
+# Schema changes
+
+## From 6 to 7
+Field `watchlist` renamed to `watches` due to major changes in API and format.

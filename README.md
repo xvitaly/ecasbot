@@ -13,8 +13,10 @@ GNU General Public License version 3. You can find it here: [LICENSE](LICENSE). 
 
 # Requirements
  * Python 3.x;
- * python-pytelegrambotapi;
- * python-requests.
+ * [python-pytelegrambotapi](https://github.com/eternnoir/pyTelegramBotAPI);
+ * [python-requests](https://github.com/requests/requests);
+ * [python-six](https://github.com/benjaminp/six);
+ * [python-emoji](https://github.com/carpedm20/emoji).
 
 # Documentation
  * [Installation in Python virtual environment](docs/virtualenv-installation.md).

@@ -174,6 +174,8 @@ class ASBot:
                     else:
                         self.bot.send_message(message.chat.id, self.__msgs['as_leavepm'])
                 else:
+                    self.__logger.warning(
+                        self.__msgs['as_leavelg'].format(message.from_user.first_name, message.from_user.id))
                     self.bot.send_message(message.chat.id, self.__msgs['as_unath'])
             except:
                 self.__logger.exception(self.__msgs['as_pmex'])
@@ -406,7 +408,8 @@ class ASBot:
             'as_leavepm': 'You must specify chat ID or username to leave from. Fix this and try again.',
             'as_leavelg': 'Admin {} ({}) asked bot to leave chat {}.',
             'as_leaverr': 'Failed to leave chat {} due to some error.',
-            'as_unath': 'You cannot access this command due to missing admin rights. This issue will be reported.'
+            'as_unath': 'You cannot access this command due to missing admin rights. This issue will be reported.',
+            'as_unathlg': 'User {} ({}) tried to access restricted bot command. Action was denied.'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

@@ -154,6 +154,11 @@ class ASBot:
 
         @self.bot.message_handler(func=self.__check_private_chat, commands=['leave'])
         def handle_leave(message) -> None:
+            """
+            Handle /leave command in private chats. Allow admins to ask bot leave
+            specified supergroup. Restricted command.
+            :param message: Message, triggered this event.
+            """
             try:
                 if message.from_user.id in self.__settings.admins:
                     rawreq = message.text.split(' ')

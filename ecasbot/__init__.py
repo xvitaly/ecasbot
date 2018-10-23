@@ -152,6 +152,27 @@ class ASBot:
             except:
                 self.__logger.exception(self.__msgs['as_pmex'])
 
+        @self.bot.message_handler(func=self.__check_private_chat, commands=['leave'])
+        def handle_leave(message) -> None:
+            try:
+                if message.from_user.id in self.__settings.admins:
+                    rawreq = message.text.split(' ')
+                    if len(rawreq) > 1:
+                        try:
+                            self.__logger.warning(
+                                self.__msgs['as_leavelg'].format(message.from_user.first_name, message.from_user.id,
+                                                                 rawreq[1]))
+                            self.bot.leave_chat(rawreq[1])
+                            self.bot.send_message(message.chat.id, self.__msgs['as_leaveok'].format(rawreq[1]))
+                        except:
+                            self.bot.send_message(message.chat.id, self.__msgs['as_leaverr'].format(rawreq[1]))
+                    else:
+                        self.bot.send_message(message.chat.id, self.__msgs['as_leavepm'])
+                else:
+                    self.bot.send_message(message.chat.id, self.__msgs['as_unath'])
+            except:
+                self.__logger.exception(self.__msgs['as_pmex'])
+
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['remove', 'rm'])
         def handle_remove(message) -> None:
             """
@@ -375,7 +396,12 @@ class ASBot:
             'as_replim': 'I cannot send you direct messages due to API restrictions. PM me first, then try again.',
             'as_repsblg': 'Admin {} ({}) subscribed to events in chat {}.',
             'as_repunsb': 'Successfully unsubscribed from reports in {} chat.',
-            'as_repusblg': 'Admin {} ({}) unsubscribed from events in chat {}.'
+            'as_repusblg': 'Admin {} ({}) unsubscribed from events in chat {}.',
+            'as_leaveok': 'Command successfully executed. Leaving chat {} now.',
+            'as_leavepm': 'You must specify chat ID or username to leave from. Fix this and try again.',
+            'as_leavelg': 'Admin {} ({}) asked bot to leave chat {}.',
+            'as_leaverr': 'Failed to leave chat {} due to some error.',
+            'as_unath': 'You cannot access this command due to missing admin rights. This issue will be reported.'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

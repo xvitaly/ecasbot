@@ -23,3 +23,4 @@ GNU General Public License version 3. You can find it here: [LICENSE](LICENSE). 
  * [Controling this bot using systemd](docs/controling-with-systemd.md).
  * [Configuration file documentation](docs/schema-documentation.md).
  * [Configuration using environment options](docs/bot-environment-options.md).
+ * [Building Fedora package](docs/building_fedora_package.md).

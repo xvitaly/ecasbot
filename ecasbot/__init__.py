@@ -299,11 +299,10 @@ class ASBot:
             """
             try:
                 if message.reply_to_message:
-                    username = self.__get_actual_username(message)
-                    userid = self.__get_actual_userid(message)
                     for admin in self.__settings.get_watchers(message.chat.id):
                         try:
-                            self.bot.send_message(admin, self.__msgs['as_repmsg'].format(username, userid,
+                            self.bot.send_message(admin, self.__msgs['as_repmsg'].format(message.from_user.first_name,
+                                                                                         message.from_user.id,
                                                                                          self.__get_message_link(
                                                                                              message)),
                                                   parse_mode='Markdown')

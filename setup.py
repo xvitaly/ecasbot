@@ -25,7 +25,7 @@ setup(
     package_dir={
         'ecasbot': 'ecasbot',
     },
-    url='https://www.easycoding.org/projects/ecasbot',
+    url='https://github.com/xvitaly/ecasbot',
     entry_points={
         'console_scripts': [
             'ecasbot = ecasbot.scripts.runbot:main',

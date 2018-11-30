@@ -316,7 +316,8 @@ class ASBot:
             try:
                 # Pin selected message...
                 if message.reply_to_message:
-                    self.bot.pin_chat_message(message.chat.id, message.reply_to_message.message_id, disable_notification=False)
+                    self.bot.pin_chat_message(message.chat.id, message.reply_to_message.message_id,
+                                              disable_notification=False)
                     self.__logger.warning(
                         self.__msgs['as_pinmsg'].format(message.from_user.first_name, message.from_user.id,
                                                         message.reply_to_message.message_id, message.chat.id))

@@ -19,6 +19,7 @@ GNU General Public License version 3. You can find it here: [LICENSE](LICENSE). 
  * [python-emoji](https://github.com/carpedm20/emoji).
 
 # Documentation
+ * [List of available bot actions](docs/available-bot-actions.md).
  * [Installation in Python virtual environment](docs/virtualenv-installation.md).
  * [Controling this bot using systemd](docs/controling-with-systemd.md).
  * [Configuration file documentation](docs/schema-documentation.md).

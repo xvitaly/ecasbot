@@ -313,6 +313,11 @@ class ASBot:
 
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['pin'])
         def handle_pin(message) -> None:
+            """
+            Handle /pin command in supergroups. Admin feature.
+            Pin specified message in supergroup.
+            :param message: Message, triggered this event.
+            """
             try:
                 # Pin selected message...
                 if message.reply_to_message:

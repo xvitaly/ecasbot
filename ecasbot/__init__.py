@@ -311,6 +311,18 @@ class ASBot:
             except:
                 self.__logger.exception(self.__msgs['as_repex'])
 
+        @self.bot.message_handler(func=self.__check_admin_feature, commands=['pin'])
+        def handle_pin(message) -> None:
+            try:
+                # Pin selected message...
+                if message.reply_to_message:
+                    self.bot.pin_chat_message(message.chat.id, message.reply_to_message.message_id, disable_notification=False)
+                    self.__logger.warning(
+                        self.__msgs['as_pinmsg'].format(message.from_user.first_name, message.from_user.id,
+                                                        message.reply_to_message.message_id, message.chat.id))
+            except:
+                self.__logger.exception(self.__msgs['as_admerr'])
+
         @self.bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
         def handle_join(message) -> None:
             """
@@ -408,7 +420,8 @@ class ASBot:
             'as_leavelg': 'Admin {} ({}) asked bot to leave chat {}.',
             'as_leaverr': 'Failed to leave chat {} due to some error.',
             'as_unath': 'You cannot access this command due to missing admin rights. This issue will be reported.',
-            'as_unathlg': 'User {} ({}) tried to access restricted bot command. Action was denied.'
+            'as_unathlg': 'User {} ({}) tried to access restricted bot command. Action was denied.',
+            'as_pinmsg': 'Admin {} ({}) pinned message {} in chat {}.'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

@@ -27,11 +27,11 @@ This actions can be executed only by bot owners and admins specified in `admins`
 
 List of currently supported advanced admin actions:
 
- * `/leave CHAT_ID` (direct messages only) - force bot to leave chat specified in `CHAT_ID` parameter.
+ * `/leave CHAT_ID` (private messages only) - force bot to leave chat specified in `CHAT_ID` parameter.
 
 ## User actions
 
 List of currently supported user actions:
 
  * `/report` (replies) - report specified message to admins;
- * `/checkme` (direct messages only) - check user profile and show current score for debug purposes.
+ * `/checkme` (private messages only) - check user profile and show current score for debug purposes.

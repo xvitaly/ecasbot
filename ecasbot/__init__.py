@@ -331,6 +331,11 @@ class ASBot:
 
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['unpin'])
         def handle_unpin(message) -> None:
+            """
+            Handle /unpin command in supergroups. Admin feature.
+            Remove all pinned messages in supergroup.
+            :param message: Message, triggered this event.
+            """
             try:
                 # Remove all pinned messages...
                 self.bot.unpin_chat_message(message.chat.id)

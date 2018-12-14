@@ -18,5 +18,6 @@
 
 
 class Ranges:
-    def __init__(self):
+    def __init__(self, inpstr):
         self.__rlist = []
+        self.__inputstr = inpstr

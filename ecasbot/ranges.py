@@ -21,7 +21,12 @@ from itertools import chain
 
 class Ranges:
     @staticmethod
-    def __parserange(sourcerow):
+    def __parserange(sourcerow: str) -> range:
+        """
+        Parse source range and fill result.
+        :param sourcerow: Source row to parse.
+        :return: Range generated from source.
+        """
         splitted = sourcerow.split('-')
         first, second = int(splitted[0]), int(splitted[-1])
         if (1 > len(splitted) > 2) or (first > second):

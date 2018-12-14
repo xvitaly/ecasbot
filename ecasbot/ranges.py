@@ -16,11 +16,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from itertools import chain
+
 
 class Ranges:
-    def tosorted(self):
-        sorted(self.__rlist)
+    @staticmethod
+    def __parserange(sourcerow):
+        splitted = sourcerow.split('-')
+        first, second = int(splitted[0]), int(splitted[-1])
+        if (1 > len(splitted) > 2) or (first > second):
+            raise ValueError('Invalid range specified: {}'.format(sourcerow))
+        return range(first, second + 1)
 
-    def __init__(self, inpstr):
-        self.__rlist = []
-        self.__inputstr = inpstr
+    def tosorted(self):
+        return sorted(self.__rlist)
+
+    def __init__(self, inputstr):
+        self.__rlist = list(chain.from_iterable(map(self.__parserange, inputstr.split(','))))

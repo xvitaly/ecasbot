@@ -18,6 +18,9 @@
 
 
 class Ranges:
+    def tosorted(self):
+        sorted(self.__rlist)
+
     def __init__(self, inpstr):
         self.__rlist = []
         self.__inputstr = inpstr

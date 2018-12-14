@@ -40,7 +40,11 @@ class Ranges:
         """
         return sorted(self.__rlist)
 
-    def tolist(self):
+    def tolist(self) -> list:
+        """
+        Return unsorted list of specified range.
+        :return: Unsorted list.
+        """
         return self.__rlist
 
     def __init__(self, inputstr):

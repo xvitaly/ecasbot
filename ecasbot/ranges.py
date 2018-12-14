@@ -31,5 +31,8 @@ class Ranges:
     def tosorted(self):
         return sorted(self.__rlist)
 
+    def tolist(self):
+        return self.__rlist
+
     def __init__(self, inputstr):
         self.__rlist = list(chain.from_iterable(map(self.__parserange, inputstr.split(','))))

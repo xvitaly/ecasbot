@@ -47,5 +47,9 @@ class Ranges:
         """
         return self.__rlist
 
-    def __init__(self, inputstr):
+    def __init__(self, inputstr: str) -> None:
+        """
+        Main constructor of Ranges class.
+        :param inputstr: Source string.
+        """
         self.__rlist = list(chain.from_iterable(map(self.__parserange, inputstr.split(','))))

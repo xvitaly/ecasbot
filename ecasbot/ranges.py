@@ -33,7 +33,11 @@ class Ranges:
             raise ValueError('Invalid range specified: {}'.format(sourcerow))
         return range(first, second + 1)
 
-    def tosorted(self):
+    def tosorted(self) -> list:
+        """
+        Return sorted list of specified range.
+        :return: Sorted list.
+        """
         return sorted(self.__rlist)
 
     def tolist(self):

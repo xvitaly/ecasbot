@@ -19,6 +19,10 @@
 
 class ParamExtractor:
     @property
+    def index(self):
+        return self.__index
+
+    @property
     def param(self) -> str:
         if self.__index == -1:
             raise ValueError('Cannot find parameters to extract.')

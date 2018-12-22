@@ -23,6 +23,7 @@ import telebot
 
 from .chkmsg import CheckMessage
 from .chkusr import CheckUsername
+from .modules.helpers import ParamExtractor
 from .settings import Settings
 
 
@@ -161,16 +162,16 @@ class ASBot:
             """
             try:
                 if message.from_user.id in self.__settings.admins:
-                    rawreq = message.text.split(' ')
-                    if len(rawreq) > 1:
+                    leavereq = ParamExtractor(message.text)
+                    if leavereq.index != -1:
                         try:
                             self.__logger.warning(
                                 self.__msgs['as_leavelg'].format(message.from_user.first_name, message.from_user.id,
-                                                                 rawreq[1]))
-                            self.bot.leave_chat(rawreq[1])
-                            self.bot.send_message(message.chat.id, self.__msgs['as_leaveok'].format(rawreq[1]))
+                                                                 leavereq.param))
+                            self.bot.leave_chat(leavereq.param)
+                            self.bot.send_message(message.chat.id, self.__msgs['as_leaveok'].format(leavereq.param))
                         except:
-                            self.bot.send_message(message.chat.id, self.__msgs['as_leaverr'].format(rawreq[1]))
+                            self.bot.send_message(message.chat.id, self.__msgs['as_leaverr'].format(leavereq.param))
                     else:
                         self.bot.send_message(message.chat.id, self.__msgs['as_leavepm'])
                 else:

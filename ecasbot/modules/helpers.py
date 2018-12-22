@@ -20,6 +20,8 @@
 class ParamExtractor:
     @property
     def param(self) -> str:
+        if self.__index == -1:
+            raise ValueError('Cannot find parameters to extract.')
         return self.__query[self.__index + 1:]
 
     def __init__(self, query: str):

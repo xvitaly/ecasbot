@@ -41,6 +41,6 @@ class ParamExtractor:
         Main constructor of ParamExtractor class.
         :param query: Source string.
         """
-        self.__query = query
+        self.__query = query.strip()
         self.__delimeter = ' '
-        self.__index = query.find(self.__delimeter)
+        self.__index = self.__query.find(self.__delimeter)

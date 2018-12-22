@@ -17,12 +17,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class Helpers:
-    @staticmethod
-    def extractparam(query: str) -> str:
-        """
-        Extract additional parameters from bot query.
-        :param query: Bot query.
-        :return: Extracted additional parameters.
-        """
-        return query[query.index(' ') + 1:]
+class ParamExtractor:
+    @property
+    def param(self) -> str:
+        return self.__query[self.__index + 1:]
+
+    def __init__(self, query: str):
+        self.__query = query
+        self.__delimeter = ' '
+        self.__index = query.find(self.__delimeter)

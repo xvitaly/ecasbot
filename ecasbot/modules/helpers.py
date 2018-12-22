@@ -20,4 +20,4 @@
 class Helpers:
     @staticmethod
     def extractparam(query):
-        pass
+        return query[query.index(' ') + 1:]

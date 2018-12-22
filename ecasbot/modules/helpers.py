@@ -19,5 +19,10 @@
 
 class Helpers:
     @staticmethod
-    def extractparam(query):
+    def extractparam(query: str) -> str:
+        """
+        Extract additional parameters from bot query.
+        :param query: Bot query.
+        :return: Extracted additional parameters.
+        """
         return query[query.index(' ') + 1:]

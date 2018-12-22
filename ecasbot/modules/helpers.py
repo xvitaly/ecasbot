@@ -19,16 +19,28 @@
 
 class ParamExtractor:
     @property
-    def index(self):
+    def index(self) -> int:
+        """
+        Parameters first index in source string.
+        :return: First index.
+        """
         return self.__index
 
     @property
     def param(self) -> str:
+        """
+        Extracted parameters from source string.
+        :return: Extracted parameters.
+        """
         if self.__index == -1:
             raise ValueError('Cannot find parameters to extract.')
         return self.__query[self.__index + 1:]
 
-    def __init__(self, query: str):
+    def __init__(self, query: str) -> None:
+        """
+        Main constructor of ParamExtractor class.
+        :param query: Source string.
+        """
         self.__query = query
         self.__delimeter = ' '
         self.__index = query.find(self.__delimeter)

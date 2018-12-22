@@ -19,5 +19,5 @@
 
 class Helpers:
     @staticmethod
-    def parsequery():
+    def extractparam(query):
         pass

@@ -13,6 +13,7 @@ Bot will allow to use basic admin features in supergroups for:
 List of currently supported admin actions in supergroups:
 
  * `/remove` or `/rm` (replies) - remove specified message;
+ * `/wipe RANGE` (direct) - remove messages from specified range (will return and error range will be greater than 50);
  * `/ban` or `/block` (replies) - permanently block author of specified message in supergroup;
  * `/restrict` or `/mute` (replies) - permanently restrict author of specified message in supergroup;
  * `/unrestrict` or `/un` (replies) - remove all restrictions from author of specified message in supergroup;

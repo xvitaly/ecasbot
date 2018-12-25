@@ -202,6 +202,11 @@ class ASBot:
 
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['wipe'])
         def handle_wipe(message) -> None:
+            """
+            Handle /wipe command in supergroups. Admin feature.
+            Remove all messages from specified range.
+            :param message: Message, triggered this event.
+            """
             try:
                 # Remove specified range...
                 wipereq = ParamExtractor(message.text)

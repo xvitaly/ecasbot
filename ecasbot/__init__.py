@@ -208,7 +208,7 @@ class ASBot:
                 if wipereq.index != -1:
                     wipelist = Ranges(wipereq.param).tosorted()
                     wipelength = len(wipelist)
-                    if 1 < wipelength <= 50:
+                    if 1 <= wipelength <= 50:
                         self.__logger.warning(
                             self.__msgs['as_wipelg'].format(message.from_user.first_name, message.from_user.id,
                                                             wipelength, wipereq.param, message.chat.id))

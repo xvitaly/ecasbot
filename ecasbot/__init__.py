@@ -24,6 +24,7 @@ import telebot
 from .chkmsg import CheckMessage
 from .chkusr import CheckUsername
 from .modules.helpers import ParamExtractor
+from .modules.ranges import Ranges
 from .settings import Settings
 
 
@@ -196,6 +197,31 @@ class ASBot:
                         self.__msgs['as_amsgrm'].format(message.from_user.first_name, message.from_user.id,
                                                         message.reply_to_message.from_user.first_name,
                                                         message.reply_to_message.from_user.id, message.chat.id))
+            except:
+                self.__logger.exception(self.__msgs['as_admerr'])
+
+        @self.bot.message_handler(func=self.__check_admin_feature, commands=['wipe'])
+        def handle_wipe(message) -> None:
+            try:
+                # Remove specified range...
+                wipereq = ParamExtractor(message.text)
+                if wipereq.index != -1:
+                    wipelist = Ranges(wipereq.param).tosorted()
+                    wipelength = len(wipelist)
+                    if 1 < wipelength <= 50:
+                        self.__logger.warning(
+                            self.__msgs['as_wipelg'].format(message.from_user.first_name, message.from_user.id,
+                                                            wipelength, wipereq.param, message.chat.id))
+                        for wl in wipelist:
+                            try:
+                                self.bot.delete_message(message.chat.id, wl)
+                            except:
+                                pass
+                    else:
+                        self.__logger.warning(
+                            self.__msgs['as_wipehg'].format(message.from_user.first_name, message.from_user.id,
+                                                            wipelength, message.chat.id))
+
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -445,7 +471,9 @@ class ASBot:
             'as_unath': 'You cannot access this command due to missing admin rights. This issue will be reported.',
             'as_unathlg': 'User {} ({}) tried to access restricted bot command. Action was denied.',
             'as_pinmsg': 'Admin {} ({}) pinned message {} in chat {}.',
-            'as_unpinmsg': 'Admin {} ({}) removed pinned message in chat {}.'
+            'as_unpinmsg': 'Admin {} ({}) removed pinned message in chat {}.',
+            'as_wipelg': 'Admin {} ({}) removed {} messages (range {}) in chat {}.',
+            'as_wipehg': 'Admin {} ({}) tried to remove {} messages in chat {}. Action was denied.'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

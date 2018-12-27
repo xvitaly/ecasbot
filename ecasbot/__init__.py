@@ -263,13 +263,14 @@ class ASBot:
                     userid = self.__get_actual_userid(message)
                     if message.from_user.id != userid:
                         mutereq = ParamExtractor(message.text)
-                        mutetime = int(mutereq.param) * 86400 if mutereq.index != -1 else 0
-                        self.bot.restrict_chat_member(message.chat.id, userid, until_date=int(time.time()) + mutetime,
+                        mutetime = int(time.time()) + (int(mutereq.param) * 86400 if mutereq.index != -1 else 0)
+                        self.bot.restrict_chat_member(message.chat.id, userid, until_date=mutetime,
                                                       can_send_messages=False, can_send_media_messages=False,
                                                       can_send_other_messages=False, can_add_web_page_previews=False)
                         self.__logger.warning(
                             self.__msgs['as_amute'].format(message.from_user.first_name, message.from_user.id, username,
-                                                           userid, message.chat.id))
+                                                           userid, message.chat.id,
+                                                           mutetime if mutereq.index != -1 else 'forever'))
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -457,7 +458,7 @@ class ASBot:
             'as_banned': 'Permanently banned user {} ({}) (score: {}) in chat {}.',
             'as_msgrest': 'Removed message from restricted user {} ({}) in chat {}.',
             'as_amsgrm': 'Admin {} ({}) removed message from user {} ({}) in chat {}.',
-            'as_amute': 'Admin {} ({}) permanently muted user {} ({}) in chat {}.',
+            'as_amute': 'Admin {} ({}) muted user {} ({}) in chat {} until {}.',
             'as_aunres': 'Admin {} ({}) removed all restrictions from user {} ({}) in chat {}.',
             'as_aban': 'Admin {} ({}) permanently banned user {} ({}) in chat {}.',
             'as_admerr': 'Failed to handle admin command.',

@@ -16,6 +16,7 @@ List of currently supported admin actions in supergroups:
  * `/wipe RANGE` (direct) - remove messages from specified range (will return an error if the range is greater than 50);
  * `/ban` or `/block` (replies) - permanently block author of specified message in supergroup;
  * `/restrict` or `/mute` (replies) - permanently restrict author of specified message in supergroup;
+ * `/restrict DAYS` or `/mute DAYS` (replies) - restrict author of specified message in supergroup for specified number of days;
  * `/unrestrict` or `/un` (replies) - remove all restrictions from author of specified message in supergroup;
  * `/subscribe` (direct) - subscribe to all user reports issued in supergroup;
  * `/unsubscribe` (direct) - unsubscribe from all user reports issued in supergroup;

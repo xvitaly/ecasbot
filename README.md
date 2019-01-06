@@ -7,6 +7,8 @@
 
 EC AntiSpam bot for [Telegram](https://telegram.org/) messenger will block all multimedia messages and links from new users, some common spam bots and users who added them to super-groups.
 
+Warning! Do not use `master` branch in production. Use `stable` instead.
+
 # License
 GNU General Public License version 3. You can find it here: [LICENSE](LICENSE). External libraries can use another licenses, compatible with GNU GPLv3.
 

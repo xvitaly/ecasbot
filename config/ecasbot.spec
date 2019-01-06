@@ -17,10 +17,7 @@ BuildRequires: python3dist(wheel)
 BuildRequires: python3dist(six)
 BuildRequires: python3dist(emoji)
 
-Requires: python3dist(pytelegrambotapi)
-Requires: python3dist(requests)
-Requires: python3dist(six)
-Requires: python3dist(emoji)
+%{?python_enable_dependency_generator}
 Requires(pre): shadow-utils
 
 %{?systemd_requires}

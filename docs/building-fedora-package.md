@@ -5,6 +5,7 @@
 Clone this repository with SPECs and patches to any directory:
 ```bash
 git clone -b master https://github.com/xvitaly/ecasbot.git ecasbot
+git checkout stable/1.x
 ```
 
 ### Step 2

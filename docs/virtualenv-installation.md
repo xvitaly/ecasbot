@@ -3,6 +3,7 @@ You can also install bot:
  1. Clone this repository:
  ```
  git clone https://github.com/xvitaly/ecasbot.git ecasbot
+ git checkout stable/1.x
  ```
  2. Get API tokens from [@BotFather](https://t.me/BotFather);
  3. Copy configuration file `config/ecasbot.json` to `/etc/ecasbot/ecasbot.json`, open it in any text editor and set it API token;

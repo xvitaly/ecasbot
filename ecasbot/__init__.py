@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
+import logging.handlers
 import sys
 import time
 import telebot
@@ -447,6 +448,7 @@ class ASBot:
         """
         self.__schema = 7
         self.__logger = logging.getLogger(__name__)
+        self.__logger.setLevel(logging.DEBUG)
         self.__settings = Settings(self.__schema)
         self.__msgs = {
             'as_welcome': 'Add me to supergroup and give me admin rights. I will try to block spammers automatically.',
@@ -485,13 +487,13 @@ class ASBot:
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])
-        self.__logger.setLevel(self.__settings.get_logging_level())
         if self.__settings.logtofile:
-            f_handler = logging.FileHandler(self.__settings.logtofile)
+            f_handler = logging.handlers.TimedRotatingFileHandler(self.__settings.logtofile, when='D', backupCount=99)
             f_handler.setFormatter(logging.Formatter(self.__settings.fmtlog))
+            f_handler.setLevel(logging.DEBUG)
             self.__logger.addHandler(f_handler)
-        else:
-            e_handler = logging.StreamHandler(sys.stdout)
-            e_handler.setFormatter(logging.Formatter(self.__settings.fmterr))
-            self.__logger.addHandler(e_handler)
+        e_handler = logging.StreamHandler(sys.stdout)
+        e_handler.setFormatter(logging.Formatter(self.__settings.fmterr))
+        e_handler.setLevel(self.__settings.get_logging_level())
+        self.__logger.addHandler(e_handler)
         self.bot = telebot.TeleBot(self.__settings.tgkey)

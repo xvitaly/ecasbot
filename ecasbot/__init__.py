@@ -167,8 +167,8 @@ class ASBot:
                     if leavereq.index != -1:
                         try:
                             self.__logger.warning(
-                                self.__msgs['as_leavelg'].format(message.from_user.first_name, message.from_user.id,
-                                                                 leavereq.param))
+                                self.__msgs['as_leavelg'].format(message.from_user.first_name, message.from_user.id, 
+                                                                 message.from_user.title, leavereq.param))
                             self.bot.leave_chat(leavereq.param)
                             self.bot.send_message(message.chat.id, self.__msgs['as_leaveok'].format(leavereq.param))
                         except:
@@ -196,7 +196,8 @@ class ASBot:
                     self.__logger.warning(
                         self.__msgs['as_amsgrm'].format(message.from_user.first_name, message.from_user.id,
                                                         message.reply_to_message.from_user.first_name,
-                                                        message.reply_to_message.from_user.id, message.chat.id))
+                                                        message.reply_to_message.from_user.id, message.chat.id,
+                                                        message.chat.title))
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -216,7 +217,8 @@ class ASBot:
                     if 1 <= wipelength <= 50:
                         self.__logger.warning(
                             self.__msgs['as_wipelg'].format(message.from_user.first_name, message.from_user.id,
-                                                            wipelength, wipereq.param, message.chat.id))
+                                                            wipelength, wipereq.param, message.chat.id, 
+                                                            message.chat.title))
                         for wl in wipelist:
                             try:
                                 self.bot.delete_message(message.chat.id, wl)
@@ -225,7 +227,7 @@ class ASBot:
                     else:
                         self.__logger.warning(
                             self.__msgs['as_wipehg'].format(message.from_user.first_name, message.from_user.id,
-                                                            wipelength, message.chat.id))
+                                                            wipelength, message.chat.id, message.chat.title))
 
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
@@ -246,7 +248,7 @@ class ASBot:
                         self.bot.delete_message(message.chat.id, message.reply_to_message.message_id)
                         self.__logger.warning(
                             self.__msgs['as_aban'].format(message.from_user.first_name, message.from_user.id, username,
-                                                          userid, message.chat.id))
+                                                          userid, message.chat.id, message.chat.title))
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -269,7 +271,7 @@ class ASBot:
                                                       can_send_other_messages=False, can_add_web_page_previews=False)
                         self.__logger.warning(
                             self.__msgs['as_amute'].format(message.from_user.first_name, message.from_user.id, username,
-                                                           userid, message.chat.id,
+                                                           userid, message.chat.id, message.chat.title,
                                                            mutetime if mutereq.index != -1 else 'forever'))
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
@@ -289,7 +291,8 @@ class ASBot:
                     self.__logger.warning(
                         self.__msgs['as_aunres'].format(message.from_user.first_name, message.from_user.id,
                                                         message.reply_to_message.from_user.first_name,
-                                                        message.reply_to_message.from_user.id, message.chat.id))
+                                                        message.reply_to_message.from_user.id, message.chat.id,
+                                                        message.chat.title))
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -301,11 +304,11 @@ class ASBot:
             :param message: Message, triggered this event.
             """
             try:
-                self.bot.send_message(message.from_user.id, self.__msgs['as_repsub'].format(message.chat.id))
+                self.bot.send_message(message.from_user.id, self.__msgs['as_repsub'].format(message.chat.id, message.chat.title))
                 self.__settings.add_watch(message.from_user.id, message.chat.id)
                 self.__settings.save()
                 self.__logger.info(self.__msgs['as_repsblg'].format(message.from_user.first_name, message.from_user.id,
-                                                                    message.chat.id))
+                                                                    message.chat.id, message.chat.title))
             except:
                 self.bot.reply_to(message, self.__msgs['as_replim'])
 
@@ -320,8 +323,8 @@ class ASBot:
                 self.__settings.remove_watch(message.from_user.id, message.chat.id)
                 self.__settings.save()
                 self.__logger.info(self.__msgs['as_repusblg'].format(message.from_user.first_name, message.from_user.id,
-                                                                     message.chat.id))
-                self.bot.send_message(message.from_user.id, self.__msgs['as_repunsb'].format(message.chat.id))
+                                                                     message.chat.id, message.chat.title))
+                self.bot.send_message(message.from_user.id, self.__msgs['as_repunsb'].format(message.chat.id, message.chat.title))
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -360,7 +363,8 @@ class ASBot:
                                               disable_notification=False)
                     self.__logger.warning(
                         self.__msgs['as_pinmsg'].format(message.from_user.first_name, message.from_user.id,
-                                                        message.reply_to_message.message_id, message.chat.id))
+                                                        message.reply_to_message.message_id, message.chat.id, 
+                                                        message.chat.title))
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -376,7 +380,7 @@ class ASBot:
                 self.bot.unpin_chat_message(message.chat.id)
                 self.__logger.warning(
                     self.__msgs['as_unpinmsg'].format(message.from_user.first_name, message.from_user.id,
-                                                      message.chat.id))
+                                                      message.chat.id, message.chat.title))
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -392,7 +396,7 @@ class ASBot:
                 score = self.__score_user(message.new_chat_member)
                 self.__logger.info(
                     self.__msgs['as_alog'].format(message.new_chat_member.first_name, message.new_chat_member.id,
-                                                  message.chat.id, score))
+                                                  message.chat.id, message.chat.title, score))
                 try:
                     # If user get score >= 100 - ban him, else - restrict...
                     if score >= self.__settings.nickgoal:
@@ -405,7 +409,9 @@ class ASBot:
                         # Writing information to log...
                         self.__logger.warning(self.__msgs['as_banned'].format(message.new_chat_member.first_name,
                                                                               message.new_chat_member.id, score,
-                                                                              message.chat.id))
+                                                                              message.chat.id, message.chat.title))
+                        self.__logger.warning(
+                            self.__msgs['as_banned'].format(message.new_chat_member.id, score, message.chat.id))
                     else:
                         # Limit users reached half-goal permanently (in Bot API - 366 days)...
                         limtime = 31622400 if score >= self.__settings.nickgoal / 2 else self.__settings.bantime
@@ -415,7 +421,8 @@ class ASBot:
                                                       can_send_messages=True, can_send_media_messages=False,
                                                       can_send_other_messages=False, can_add_web_page_previews=False)
                 except Exception:
-                    self.__logger.exception(self.__msgs['as_restex'].format(message.from_user.id, message.chat.id))
+                    self.__logger.exception(self.__msgs['as_restex'].format(message.from_user.id, message.chat.id, 
+                                                                            message.chat.title))
             except Exception:
                 self.__logger.exception(self.__msgs['as_joinhex'])
 
@@ -434,9 +441,10 @@ class ASBot:
                     self.bot.delete_message(message.chat.id, message.message_id)
                     self.__logger.info(
                         self.__msgs['as_msgrest'].format(message.from_user.first_name, message.from_user.id,
-                                                         message.chat.id))
+                                                         message.chat.id, message.chat.title))
             except Exception:
-                self.__logger.exception(self.__msgs['as_msgex'].format(message.from_user.id, message.chat.id))
+                self.__logger.exception(self.__msgs['as_msgex'].format(message.from_user.id, message.chat.id, 
+                                                                       message.chat.title))
 
         # Run bot forever...
         self.bot.polling(none_stop=True)
@@ -450,38 +458,38 @@ class ASBot:
         self.__settings = Settings(self.__schema)
         self.__msgs = {
             'as_welcome': 'Add me to supergroup and give me admin rights. I will try to block spammers automatically.',
-            'as_alog': 'New user {} ({}) has joined group {}. Score: {}.',
-            'as_restex': 'Cannot restrict a new user with ID {} in chat {} due to missing admin rights.',
-            'as_msgex': 'Exception detected while handling spam message from {} in chat {}.',
+            'as_alog': 'New user {} ({}) has joined chat {} ({}). Score: {}.',
+            'as_restex': 'Cannot restrict a new user with ID {} in chat {} ({}) due to missing admin rights.',
+            'as_msgex': 'Exception detected while handling spam message from {} in chat {} ({}).',
             'as_notoken': 'No API token entered. Cannot proceed. Fix this issue and run this bot again!',
             'as_joinhex': 'Failed to handle join message.',
-            'as_banned': 'Permanently banned user {} ({}) (score: {}) in chat {}.',
-            'as_msgrest': 'Removed message from restricted user {} ({}) in chat {}.',
-            'as_amsgrm': 'Admin {} ({}) removed message from user {} ({}) in chat {}.',
-            'as_amute': 'Admin {} ({}) muted user {} ({}) in chat {} until {}.',
-            'as_aunres': 'Admin {} ({}) removed all restrictions from user {} ({}) in chat {}.',
-            'as_aban': 'Admin {} ({}) permanently banned user {} ({}) in chat {}.',
+            'as_banned': 'Permanently banned user {} ({}) (score: {}) in chat {} ({}).',
+            'as_msgrest': 'Removed message from restricted user {} ({}) in chat {} ({}).',
+            'as_amsgrm': 'Admin {} ({}) removed message from user {} ({}) in chat {} ({}).',
+            'as_amute': 'Admin {} ({}) muted user {} ({}) in chat ({}) until {} ({}).',
+            'as_aunres': 'Admin {} ({}) removed all restrictions from user {} ({}) in chat {} ({}).',
+            'as_aban': 'Admin {} ({}) permanently banned user {} ({}) in chat {} ({}).',
             'as_admerr': 'Failed to handle admin command.',
             'as_chkme': 'Checking of account {} successfully completed. Your score is: {}.',
             'as_pmex': 'Failed to handle command in private chat with bot.',
             'as_repmsg': 'You have a new report from user *{}* ({}).\n\nMessage link: {}.',
             'as_repns': 'Cannot send message to admin {} due to Telegram Bot API restrictions.',
             'as_repex': 'Failed to handle report command.',
-            'as_repsub': 'Successfully subscribed to reports in {} chat.',
+            'as_repsub': 'Successfully subscribed to reports in chat {} ({}) .',
             'as_replim': 'I cannot send you direct messages due to API restrictions. PM me first, then try again.',
             'as_repsblg': 'Admin {} ({}) subscribed to events in chat {}.',
-            'as_repunsb': 'Successfully unsubscribed from reports in {} chat.',
-            'as_repusblg': 'Admin {} ({}) unsubscribed from events in chat {}.',
-            'as_leaveok': 'Command successfully executed. Leaving chat {} now.',
+            'as_repunsb': 'Successfully unsubscribed from reports in chat {} ({}).',
+            'as_repusblg': 'Admin {} ({}) unsubscribed from events in chat {} ({}).',
+            'as_leaveok': 'Command successfully executed. Leaving chat {} ({}) now.',
             'as_leavepm': 'You must specify chat ID or username to leave from. Fix this and try again.',
-            'as_leavelg': 'Admin {} ({}) asked bot to leave chat {}.',
-            'as_leaverr': 'Failed to leave chat {} due to some error.',
+            'as_leavelg': 'Admin {} ({}) asked bot to leave chat {} ({}).',
+            'as_leaverr': 'Failed to leave chat {} ({}) due to some error.',
             'as_unath': 'You cannot access this command due to missing admin rights. This issue will be reported.',
             'as_unathlg': 'User {} ({}) tried to access restricted bot command. Action was denied.',
-            'as_pinmsg': 'Admin {} ({}) pinned message {} in chat {}.',
-            'as_unpinmsg': 'Admin {} ({}) removed pinned message in chat {}.',
-            'as_wipelg': 'Admin {} ({}) removed {} messages (range {}) in chat {}.',
-            'as_wipehg': 'Admin {} ({}) tried to remove {} messages in chat {}. Action was denied.'
+            'as_pinmsg': 'Admin {} ({}) pinned message {} in chat {} ({}).',
+            'as_unpinmsg': 'Admin {} ({}) removed pinned message in chat {} ({}).',
+            'as_wipelg': 'Admin {} ({}) removed {} messages (range {}) in chat {} ({}).',
+            'as_wipehg': 'Admin {} ({}) tried to remove {} messages in chat {} ({}). Action was denied.'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

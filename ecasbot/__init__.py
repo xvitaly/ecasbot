@@ -501,7 +501,9 @@ class ASBot:
             'as_pinmsg': 'Admin {} ({}) pinned message {} in chat {} ({}).',
             'as_unpinmsg': 'Admin {} ({}) removed pinned message in chat {} ({}).',
             'as_wipelg': 'Admin {} ({}) removed {} messages (range {}) in chat {} ({}).',
-            'as_wipehg': 'Admin {} ({}) tried to remove {} messages in chat {} ({}). Action was denied.'
+            'as_wipehg': 'Admin {} ({}) tried to remove {} messages in chat {} ({}). Action was denied.',
+            'as_spamdbg': 'Message from user {} ({}) was deleted in chat {} ({}). Message checks status: entitles: {},'
+                          'spam: {}, forward: {}.\nContents: {}.'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

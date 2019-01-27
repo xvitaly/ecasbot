@@ -440,12 +440,14 @@ class ASBot:
                 forward = self.__check_message_forward(message)
                 spam = self.__check_message_spam(message)
 
+                # Writing to log some debug information when needed...
+                self.__logger.debug(
+                    self.__msgs['as_spamdbg'].format(message.from_user.first_name, message.from_user.id,
+                                                     message.chat.id, message.chat.title, entities, spam, forward,
+                                                     message.text))
+
                 # Removing messages from restricted members...
                 if entities or forward or spam:
-                    self.__logger.info(
-                        self.__msgs['as_spamdbg'].format(message.from_user.first_name, message.from_user.id,
-                                                         message.chat.id, message.chat.title, entities, spam, forward,
-                                                         message.text))
                     self.bot.delete_message(message.chat.id, message.message_id)
                     self.__logger.info(
                         self.__msgs['as_msgrest'].format(message.from_user.first_name, message.from_user.id,
@@ -498,7 +500,7 @@ class ASBot:
             'as_unpinmsg': 'Admin {} ({}) removed pinned message in chat {} ({}).',
             'as_wipelg': 'Admin {} ({}) removed {} messages (range {}) in chat {} ({}).',
             'as_wipehg': 'Admin {} ({}) tried to remove {} messages in chat {} ({}). Action was denied.',
-            'as_spamdbg': 'Possible spam message from user {} ({}) detected in chat {} ({}). Message check results: '
+            'as_spamdbg': 'Received message from restricted user {} ({}) in chat {} ({}). Check results: '
                           'entitles: {}, spam: {}, forward: {}.\nContents: {}.'
         }
         if not self.__settings.tgkey:

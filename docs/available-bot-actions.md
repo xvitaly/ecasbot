@@ -18,6 +18,7 @@ List of currently supported admin actions in supergroups:
  * `/restrict` or `/mute` (replies) - permanently restrict author of specified message in supergroup;
  * `/restrict DAYS` or `/mute DAYS` (replies) - restrict author of specified message in supergroup for specified number of days;
  * `/unrestrict` or `/un` (replies) - remove all restrictions from author of specified message in supergroup;
+ * `/unban ID` (direct) - remove all restrictions from author specified Telegram user ID in supergroup;
  * `/subscribe` (direct) - subscribe to all user reports issued in supergroup;
  * `/unsubscribe` (direct) - unsubscribe from all user reports issued in supergroup;
  * `/pin` (replies) - pin specified message in supergroup;

@@ -276,7 +276,7 @@ class ASBot:
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
-        @self.bot.message_handler(func=self.__check_admin_feature, commands=['unrestrict', 'un'])
+        @self.bot.message_handler(func=self.__check_admin_feature, commands=['unrestrict', 'un', 'unban'])
         def handle_unrestrict(message) -> None:
             """
             Handle /unrestrict command in supergroups. Admin feature.
@@ -293,6 +293,18 @@ class ASBot:
                                                         message.reply_to_message.from_user.first_name,
                                                         message.reply_to_message.from_user.id, message.chat.id,
                                                         message.chat.title))
+                else:
+                    unbanreq = ParamExtractor(message.text)
+                    if unbanreq.index != -1:
+                        userreq = self.bot.get_chat_member(message.chat.id, unbanreq.param)
+                        self.bot.restrict_chat_member(message.chat.id, userreq.user.id, can_send_messages=True,
+                                                      can_send_media_messages=True, can_send_other_messages=True,
+                                                      can_add_web_page_previews=True)
+                        self.__logger.warning(
+                            self.__msgs['as_aunban'].format(message.from_user.first_name, message.from_user.id,
+                                                            userreq.user.first_name, userreq.user.id, message.chat.id,
+                                                            message.chat.title))
+
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -478,6 +490,7 @@ class ASBot:
             'as_amsgrm': 'Admin {} ({}) removed message from user {} ({}) in chat {} ({}).',
             'as_amute': 'Admin {} ({}) muted user {} ({}) in chat ({}) until {} ({}).',
             'as_aunres': 'Admin {} ({}) removed all restrictions from user {} ({}) in chat {} ({}).',
+            'as_aunban': 'Admin {} ({}) unbanned user {} ({}) in chat {} ({}).',
             'as_aban': 'Admin {} ({}) permanently banned user {} ({}) in chat {} ({}).',
             'as_admerr': 'Failed to handle admin command.',
             'as_chkme': 'Checking of account {} successfully completed. Your score is: {}.',

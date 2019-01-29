@@ -297,7 +297,7 @@ class ASBot:
                 else:
                     unbanreq = ParamExtractor(message.text)
                     if unbanreq.index != -1:
-                        userreq = self.bot.get_chat_member(message.chat.id, unbanreq.param)
+                        userreq = self.bot.get_chat_member(message.chat.id, int(unbanreq.param))
                         self.bot.restrict_chat_member(message.chat.id, userreq.user.id, can_send_messages=True,
                                                       can_send_media_messages=True, can_send_other_messages=True,
                                                       can_add_web_page_previews=True)

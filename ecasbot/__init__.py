@@ -281,10 +281,11 @@ class ASBot:
                         self.bot.restrict_chat_member(message.chat.id, userid, until_date=mutetime,
                                                       can_send_messages=False, can_send_media_messages=False,
                                                       can_send_other_messages=False, can_add_web_page_previews=False)
-                        self.__logger.warning(
-                            self.__msgs['as_amute'].format(message.from_user.first_name, message.from_user.id, username,
-                                                           userid, message.chat.id, message.chat.title,
-                                                           mutetime if mutereq.index != -1 else 'forever'))
+                        logmsg = self.__msgs['as_amute'].format(message.from_user.first_name, message.from_user.id,
+                                                                username, userid, message.chat.id, message.chat.title,
+                                                                mutetime if mutereq.index != -1 else 'forever')
+                        self.__logger.warning(logmsg)
+                        self.__notify_admin(message, logmsg)
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 

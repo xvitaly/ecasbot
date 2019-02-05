@@ -126,6 +126,10 @@ class ASBot:
         checker = CheckMessage(message, self.__settings)
         return checker.score
 
+    def __notify_admin(self, admin, chatid, message) -> None:
+        if admin in self.__settings.get_watchers(chatid):
+            self.bot.send_message(admin, message)
+
     def runbot(self) -> None:
         """
         Run bot forever.

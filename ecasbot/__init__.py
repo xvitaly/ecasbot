@@ -226,20 +226,20 @@ class ASBot:
                     wipelist = Ranges(wipereq.param).tosorted()
                     wipelength = len(wipelist)
                     if 1 <= wipelength <= 50:
-                        self.__logger.warning(
-                            self.__msgs['as_wipelg'].format(message.from_user.first_name, message.from_user.id,
-                                                            wipelength, wipereq.param, message.chat.id, 
-                                                            message.chat.title))
+                        logmsg = self.__msgs['as_wipelg'].format(message.from_user.first_name, message.from_user.id,
+                                                                 wipelength, wipereq.param, message.chat.id,
+                                                                 message.chat.title)
+                        self.__logger.warning(logmsg)
                         for wl in wipelist:
                             try:
                                 self.bot.delete_message(message.chat.id, wl)
                             except:
                                 pass
                     else:
-                        self.__logger.warning(
-                            self.__msgs['as_wipehg'].format(message.from_user.first_name, message.from_user.id,
-                                                            wipelength, message.chat.id, message.chat.title))
-
+                        logmsg = self.__msgs['as_wipehg'].format(message.from_user.first_name, message.from_user.id,
+                                                                 wipelength, message.chat.id, message.chat.title)
+                        self.__logger.warning(logmsg)
+                    self.__notify_admin(message, logmsg)
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 

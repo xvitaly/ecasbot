@@ -386,10 +386,11 @@ class ASBot:
                 if message.reply_to_message:
                     self.bot.pin_chat_message(message.chat.id, message.reply_to_message.message_id,
                                               disable_notification=False)
-                    self.__logger.warning(
-                        self.__msgs['as_pinmsg'].format(message.from_user.first_name, message.from_user.id,
-                                                        message.reply_to_message.message_id, message.chat.id, 
-                                                        message.chat.title))
+                    logmsg = self.__msgs['as_pinmsg'].format(message.from_user.first_name, message.from_user.id,
+                                                             message.reply_to_message.message_id, message.chat.id,
+                                                             message.chat.title)
+                    self.__logger.warning(logmsg)
+                    self.__notify_admin(message, logmsg)
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -403,9 +404,10 @@ class ASBot:
             try:
                 # Remove all pinned messages...
                 self.bot.unpin_chat_message(message.chat.id)
-                self.__logger.warning(
-                    self.__msgs['as_unpinmsg'].format(message.from_user.first_name, message.from_user.id,
-                                                      message.chat.id, message.chat.title))
+                logmsg = self.__msgs['as_unpinmsg'].format(message.from_user.first_name, message.from_user.id,
+                                                           message.chat.id, message.chat.title)
+                self.__logger.warning(logmsg)
+                self.__notify_admin(message, logmsg)
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 

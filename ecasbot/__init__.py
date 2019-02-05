@@ -126,15 +126,14 @@ class ASBot:
         checker = CheckMessage(message, self.__settings)
         return checker.score
 
-    def __notify_admin(self, admin: str, chatid: int, message: str) -> None:
+    def __notify_admin(self, message, logstr) -> None:
         """
         Notify admin about event if subscribed.
-        :param admin: Admin user ID.
-        :param chatid: Chat ID where event was raised.
-        :param message: Message with useful information.
+        :param admin: Original message, raised event.
+        :param logstr: Message with useful information.
         """
-        if admin in self.__settings.get_watchers(chatid):
-            self.bot.send_message(admin, message)
+        if message.from_user.id in self.__settings.get_watchers(message.chat.id):
+            self.bot.send_message(message.from_user.id, logstr)
 
     def runbot(self) -> None:
         """
@@ -203,11 +202,13 @@ class ASBot:
                 # Remove reported message...
                 if message.reply_to_message:
                     self.bot.delete_message(message.chat.id, message.reply_to_message.message_id)
-                    self.__logger.warning(
-                        self.__msgs['as_amsgrm'].format(message.from_user.first_name, message.from_user.id,
-                                                        message.reply_to_message.from_user.first_name,
-                                                        message.reply_to_message.from_user.id, message.chat.id,
-                                                        message.chat.title))
+                    logmsg = self.__msgs['as_amsgrm'].format(message.from_user.first_name, message.from_user.id,
+                                                             message.reply_to_message.from_user.first_name,
+                                                             message.reply_to_message.from_user.id, message.chat.id,
+                                                             message.chat.title)
+                    self.__logger.warning(logmsg)
+                    self.__notify_admin(message, logmsg)
+
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 

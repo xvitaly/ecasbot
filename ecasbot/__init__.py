@@ -126,7 +126,13 @@ class ASBot:
         checker = CheckMessage(message, self.__settings)
         return checker.score
 
-    def __notify_admin(self, admin, chatid, message) -> None:
+    def __notify_admin(self, admin: str, chatid: int, message: str) -> None:
+        """
+        Notify admin about event if subscribed.
+        :param admin: Admin user ID.
+        :param chatid: Chat ID where event was raised.
+        :param message: Message with useful information.
+        """
         if admin in self.__settings.get_watchers(chatid):
             self.bot.send_message(admin, message)
 

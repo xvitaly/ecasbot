@@ -503,7 +503,7 @@ class ASBot:
             'as_banned': 'Permanently banned user {} ({}) (score: {}) in chat {} ({}).',
             'as_msgrest': 'Removed message from restricted user {} ({}) in chat {} ({}).',
             'as_amsgrm': 'Admin {} ({}) removed message from user {} ({}) in chat {} ({}).',
-            'as_amute': 'Admin {} ({}) muted user {} ({}) in chat ({}) until {} ({}).',
+            'as_amute': 'Admin {} ({}) muted user {} ({}) in chat {} ({}) until {}.',
             'as_aunres': 'Admin {} ({}) removed all restrictions from user {} ({}) in chat {} ({}).',
             'as_aunban': 'Admin {} ({}) unbanned user {} ({}) in chat {} ({}).',
             'as_aban': 'Admin {} ({}) permanently banned user {} ({}) in chat {} ({}).',

@@ -101,6 +101,10 @@ class Settings:
         return self.__data['stopwords']
 
     @property
+    def spwregex(self) -> str:
+        return "|".join(self.__data['stopwords'])
+
+    @property
     def maxemoji(self) -> int:
         """
         Get maximum allowed emoji count in messages of new users. Bot

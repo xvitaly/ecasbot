@@ -48,7 +48,7 @@ class CheckUsername:
         Check and score users with restricted words in username.
         :return: Score result.
         """
-        return 100 if any(w in self.__username for w in self.__settings.stopwords) else 0
+        return 100 if re.search(self.__settings.stwrgx, self.__username, re.I | re.M | re.U) else 0
 
     def check_too_long(self) -> int:
         """

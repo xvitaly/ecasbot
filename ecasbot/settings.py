@@ -101,7 +101,7 @@ class Settings:
         return self.__data['stopwords']
 
     @property
-    def spwregex(self) -> str:
+    def stwrgx(self) -> str:
         """
         Get regular expression for checking forbidden words in nicknames
         or new messages.

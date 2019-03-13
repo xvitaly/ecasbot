@@ -51,6 +51,9 @@ class CheckMessage:
         """
         return 100 if re.search(self.__settings.urlrgx, self.__message.text, re.I | re.M | re.U) else 0
 
+    def check_restricted_words(self) -> int:
+        return 100 if re.search(self.__settings.stwrgx, self.__message.text, re.I | re.M | re.U) else 0
+
     @property
     def score(self) -> int:
         """

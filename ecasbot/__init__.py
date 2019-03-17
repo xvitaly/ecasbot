@@ -437,8 +437,6 @@ class ASBot:
                         self.__logger.warning(self.__msgs['as_banned'].format(message.new_chat_member.first_name,
                                                                               message.new_chat_member.id, score,
                                                                               message.chat.id, message.chat.title))
-                        self.__logger.warning(
-                            self.__msgs['as_banned'].format(message.new_chat_member.id, score, message.chat.id))
                     else:
                         # Limit users reached half-goal permanently (in Bot API - 366 days)...
                         limtime = 31622400 if score >= self.__settings.nickgoal / 2 else self.__settings.bantime

@@ -362,10 +362,12 @@ class ASBot:
             """
             try:
                 if message.reply_to_message:
+                    repreq = ParamExtractor(message.text)
+                    reason = repreq.param if repreq.index != -1 else "no reason"
                     for admin in self.__settings.get_watchers(message.chat.id):
                         try:
                             self.bot.send_message(admin, self.__msgs['as_repmsg'].format(message.from_user.first_name,
-                                                                                         message.from_user.id,
+                                                                                         message.from_user.id, reason,
                                                                                          self.__get_message_link(
                                                                                              message)),
                                                   parse_mode='Markdown')
@@ -510,7 +512,7 @@ class ASBot:
             'as_admerr': 'Failed to handle admin command.',
             'as_chkme': 'Checking of account {} successfully completed. Your score is: {}.',
             'as_pmex': 'Failed to handle command in private chat with bot.',
-            'as_repmsg': 'You have a new report from user *{}* ({}).\n\nMessage link: {}.',
+            'as_repmsg': 'You have a new report from user *{}* ({}).\n\nReason: {}.\n\nMessage link: {}.',
             'as_repns': 'Cannot send message to admin {} due to Telegram Bot API restrictions.',
             'as_repex': 'Failed to handle report command.',
             'as_repsub': 'Successfully subscribed to reports in chat {} ({}) .',

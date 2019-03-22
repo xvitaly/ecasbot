@@ -36,5 +36,5 @@ List of currently supported advanced admin actions:
 
 List of currently supported user actions:
 
- * `/report` (replies) - report specified message to admins;
+ * `/report` or `/report REASON` (replies) - report specified message to admins (with optional reason);
  * `/checkme` (private messages only) - check user profile and show current score for debug purposes.

@@ -362,6 +362,10 @@ class ASBot:
             """
             try:
                 if message.reply_to_message:
+                    self.__msgs['as_replog'].format(message.from_user.first_name, message.from_user.id,
+                                                    message.reply_to_message.from_user.first_name,
+                                                    message.reply_to_message.from_user.id, message.chat.id,
+                                                    message.chat.title)
                     repreq = ParamExtractor(message.text)
                     reason = repreq.param if repreq.index != -1 else self.__msgs['as_repnors']
                     for admin in self.__settings.get_watchers(message.chat.id):
@@ -521,6 +525,7 @@ class ASBot:
             'as_repunsb': 'Successfully unsubscribed from reports in chat {} ({}).',
             'as_repusblg': 'Admin {} ({}) unsubscribed from events in chat {} ({}).',
             'as_repnors': 'No reason specified.',
+            'as_replog': 'User {} ({}) reported message of another user {} ({}) in chat {} ({}).',
             'as_leaveok': 'Command successfully executed. Leaving chat {} ({}) now.',
             'as_leavepm': 'You must specify chat ID or username to leave from. Fix this and try again.',
             'as_leavelg': 'Admin {} ({}) asked bot to leave chat {} ({}).',

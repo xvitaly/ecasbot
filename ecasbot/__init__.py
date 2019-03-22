@@ -362,10 +362,11 @@ class ASBot:
             """
             try:
                 if message.reply_to_message:
-                    self.__msgs['as_replog'].format(message.from_user.first_name, message.from_user.id,
-                                                    message.reply_to_message.from_user.first_name,
-                                                    message.reply_to_message.from_user.id, message.chat.id,
-                                                    message.chat.title)
+                    self.__logger.info(
+                        self.__msgs['as_replog'].format(message.from_user.first_name, message.from_user.id,
+                                                        message.reply_to_message.from_user.first_name,
+                                                        message.reply_to_message.from_user.id, message.chat.id,
+                                                        message.chat.title))
                     repreq = ParamExtractor(message.text)
                     reason = repreq.param if repreq.index != -1 else self.__msgs['as_repnors']
                     for admin in self.__settings.get_watchers(message.chat.id):

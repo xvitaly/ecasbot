@@ -208,8 +208,36 @@ class ASBot:
                                                                swreq.param))
                             self.__settings.add_stopword(swreq.param)
                             self.__settings.save()
-                        except:
                             self.bot.send_message(message.chat.id, self.__msgs['as_swuadd'].format(swreq.param))
+                        except:
+                            self.bot.send_message(message.chat.id, self.__msgs['as_swerr'])
+                    else:
+                        self.bot.send_message(message.chat.id, self.__msgs['as_swpm'])
+                else:
+                    self.bot.send_message(message.chat.id, self.__msgs['as_unath'])
+            except:
+                self.__logger.exception(self.__msgs['as_pmex'])
+
+        @self.bot.message_handler(func=self.__check_private_chat, commands=['sw_remove'])
+        def handle_swremove(message) -> None:
+            """
+            Handle /sw_remove command in private chats. Allow admins to ask remove
+            stopword from the list of restricted words for new users. Restricted command.
+            :param message: Message, triggered this event.
+            """
+            try:
+                if message.from_user.id in self.__settings.admins:
+                    swreq = ParamExtractor(message.text)
+                    if swreq.index != -1:
+                        try:
+                            self.__logger.warning(
+                                self.__msgs['as_swrem'].format(message.from_user.first_name, message.from_user.id,
+                                                               swreq.param))
+                            self.__settings.remove_stopword(swreq.param)
+                            self.__settings.save()
+                            self.bot.send_message(message.chat.id, self.__msgs['as_swurem'].format(swreq.param))
+                        except:
+                            self.bot.send_message(message.chat.id, self.__msgs['as_swerr'])
                     else:
                         self.bot.send_message(message.chat.id, self.__msgs['as_swpm'])
                 else:
@@ -558,6 +586,7 @@ class ASBot:
             'as_swrem': 'Admin {} ({}) removed stopword {} from list.',
             'as_swuadd': 'New stopword {} added to list.',
             'as_swurem': 'Stopword {} removed from list.',
+            'as_swerr': 'Failed to add/remove stopword. Try again later.',
             'as_swlist': 'Admin {} ({}) fetched list of stopwords.',
             'as_swpm': 'You must specify a stopword to add/remove. Fix this and try again.',
             'as_leaverr': 'Failed to leave chat {} ({}) due to some error.',

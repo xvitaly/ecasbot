@@ -30,7 +30,10 @@ This actions can be executed only by bot owners and admins specified in `admins`
 
 List of currently supported advanced admin actions:
 
- * `/leave CHAT_ID` (private messages only) - force bot to leave chat specified in `CHAT_ID` parameter.
+ * `/leave CHAT_ID` (private messages only) - force bot to leave chat specified in `CHAT_ID` parameter;
+ * `/sw_add WORD` (private messages only) - add a new stopword `WORD` to the list of restricted words for new users;
+ * `/sw_remove WORD` (private messages only) - remove stopword `WORD` from the list of restricted words for new users;
+ * `/sw_list` (private messages only) - show all restricted words for new users.
 
 ## User actions
 

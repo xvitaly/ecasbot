@@ -210,6 +210,14 @@ class Settings:
                 if userid in watch[1]:
                     watch[1].remove(userid)
 
+    def add_stopword(self, stopword: str) -> None:
+        """
+        Add a new stopword to the list of restricted words.
+        :param stopword: Restricted word to add.
+        """
+        if stopword not in self.__data['stopwords']:
+            self.__data['stopwords'].append(stopword)
+
     def save(self) -> None:
         """
         Save current settings to JSON file.

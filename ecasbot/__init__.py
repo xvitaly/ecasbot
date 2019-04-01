@@ -48,6 +48,14 @@ class ASBot:
         return message.chat.type == 'supergroup' and (
                     message.from_user.id in self.__settings.admins or usr.status in ['creator', 'administrator'])
 
+    def __check_owner_feature(self, message) -> bool:
+        """
+        Check if message was sent by bot admin in private chat.
+        :param message: Message to check.
+        :return: Check results.
+        """
+        return message.chat.type == 'supergroup' and message.from_user.id in self.__settings.admins
+
     def __check_private_chat(self, message) -> bool:
         """
         Check if message was sent in private chat.

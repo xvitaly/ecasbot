@@ -107,7 +107,7 @@ class Settings:
         or new messages.
         :return: Regex with forbidden words.
         """
-        return "|".join(self.__data['stopwords'])
+        return '|'.join(self.__data['stopwords'])
 
     @property
     def maxemoji(self) -> int:

@@ -54,7 +54,7 @@ class ASBot:
         :param message: Message to check.
         :return: Check results.
         """
-        return message.chat.type == 'supergroup' and message.from_user.id in self.__settings.admins
+        return message.chat.type == 'private' and message.from_user.id in self.__settings.admins
 
     def __check_private_chat(self, message) -> bool:
         """
@@ -171,7 +171,7 @@ class ASBot:
             except:
                 self.__logger.exception(self.__msgs['as_pmex'])
 
-        @self.bot.message_handler(func=self.__check_private_chat, commands=['leave'])
+        @self.bot.message_handler(func=self.__check_owner_feature, commands=['leave'])
         def handle_leave(message) -> None:
             """
             Handle /leave command in private chats. Allow admins to ask bot leave
@@ -179,27 +179,22 @@ class ASBot:
             :param message: Message, triggered this event.
             """
             try:
-                if message.from_user.id in self.__settings.admins:
-                    leavereq = ParamExtractor(message.text)
-                    if leavereq.index != -1:
-                        try:
-                            self.__logger.warning(
-                                self.__msgs['as_leavelg'].format(message.from_user.first_name, message.from_user.id, 
-                                                                 message.from_user.title, leavereq.param))
-                            self.bot.leave_chat(leavereq.param)
-                            self.bot.send_message(message.chat.id, self.__msgs['as_leaveok'].format(leavereq.param))
-                        except:
-                            self.bot.send_message(message.chat.id, self.__msgs['as_leaverr'].format(leavereq.param))
-                    else:
-                        self.bot.send_message(message.chat.id, self.__msgs['as_leavepm'])
+                leavereq = ParamExtractor(message.text)
+                if leavereq.index != -1:
+                    try:
+                        self.__logger.warning(
+                            self.__msgs['as_leavelg'].format(message.from_user.first_name, message.from_user.id,
+                                                             message.from_user.title, leavereq.param))
+                        self.bot.leave_chat(leavereq.param)
+                        self.bot.send_message(message.chat.id, self.__msgs['as_leaveok'].format(leavereq.param))
+                    except:
+                        self.bot.send_message(message.chat.id, self.__msgs['as_leaverr'].format(leavereq.param))
                 else:
-                    self.__logger.warning(
-                        self.__msgs['as_leavelg'].format(message.from_user.first_name, message.from_user.id))
-                    self.bot.send_message(message.chat.id, self.__msgs['as_unath'])
+                    self.bot.send_message(message.chat.id, self.__msgs['as_leavepm'])
             except:
                 self.__logger.exception(self.__msgs['as_pmex'])
 
-        @self.bot.message_handler(func=self.__check_private_chat, commands=['sw_add'])
+        @self.bot.message_handler(func=self.__check_owner_feature, commands=['sw_add'])
         def handle_swadd(message) -> None:
             """
             Handle /sw_add command in private chats. Allow admins to ask add a new
@@ -207,26 +202,23 @@ class ASBot:
             :param message: Message, triggered this event.
             """
             try:
-                if message.from_user.id in self.__settings.admins:
-                    swreq = ParamExtractor(message.text)
-                    if swreq.index != -1:
-                        try:
-                            self.__logger.warning(
-                                self.__msgs['as_swadd'].format(message.from_user.first_name, message.from_user.id,
-                                                               swreq.param))
-                            self.__settings.add_stopword(swreq.param)
-                            self.__settings.save()
-                            self.bot.send_message(message.chat.id, self.__msgs['as_swuadd'].format(swreq.param))
-                        except:
-                            self.bot.send_message(message.chat.id, self.__msgs['as_swerr'])
-                    else:
-                        self.bot.send_message(message.chat.id, self.__msgs['as_swpm'])
+                swreq = ParamExtractor(message.text)
+                if swreq.index != -1:
+                    try:
+                        self.__logger.warning(
+                            self.__msgs['as_swadd'].format(message.from_user.first_name, message.from_user.id,
+                                                           swreq.param))
+                        self.__settings.add_stopword(swreq.param)
+                        self.__settings.save()
+                        self.bot.send_message(message.chat.id, self.__msgs['as_swuadd'].format(swreq.param))
+                    except:
+                        self.bot.send_message(message.chat.id, self.__msgs['as_swerr'])
                 else:
-                    self.bot.send_message(message.chat.id, self.__msgs['as_unath'])
+                    self.bot.send_message(message.chat.id, self.__msgs['as_swpm'])
             except:
                 self.__logger.exception(self.__msgs['as_pmex'])
 
-        @self.bot.message_handler(func=self.__check_private_chat, commands=['sw_remove'])
+        @self.bot.message_handler(func=self.__check_owner_feature, commands=['sw_remove'])
         def handle_swremove(message) -> None:
             """
             Handle /sw_remove command in private chats. Allow admins to ask remove
@@ -234,26 +226,23 @@ class ASBot:
             :param message: Message, triggered this event.
             """
             try:
-                if message.from_user.id in self.__settings.admins:
-                    swreq = ParamExtractor(message.text)
-                    if swreq.index != -1:
-                        try:
-                            self.__logger.warning(
-                                self.__msgs['as_swrem'].format(message.from_user.first_name, message.from_user.id,
-                                                               swreq.param))
-                            self.__settings.remove_stopword(swreq.param)
-                            self.__settings.save()
-                            self.bot.send_message(message.chat.id, self.__msgs['as_swurem'].format(swreq.param))
-                        except:
-                            self.bot.send_message(message.chat.id, self.__msgs['as_swerr'])
-                    else:
-                        self.bot.send_message(message.chat.id, self.__msgs['as_swpm'])
+                swreq = ParamExtractor(message.text)
+                if swreq.index != -1:
+                    try:
+                        self.__logger.warning(
+                            self.__msgs['as_swrem'].format(message.from_user.first_name, message.from_user.id,
+                                                           swreq.param))
+                        self.__settings.remove_stopword(swreq.param)
+                        self.__settings.save()
+                        self.bot.send_message(message.chat.id, self.__msgs['as_swurem'].format(swreq.param))
+                    except:
+                        self.bot.send_message(message.chat.id, self.__msgs['as_swerr'])
                 else:
-                    self.bot.send_message(message.chat.id, self.__msgs['as_unath'])
+                    self.bot.send_message(message.chat.id, self.__msgs['as_swpm'])
             except:
                 self.__logger.exception(self.__msgs['as_pmex'])
 
-        @self.bot.message_handler(func=self.__check_private_chat, commands=['sw_list'])
+        @self.bot.message_handler(func=self.__check_owner_feature, commands=['sw_list'])
         def handle_swlist(message) -> None:
             """
             Handle /sw_list command in private chats. Allow admins get full list

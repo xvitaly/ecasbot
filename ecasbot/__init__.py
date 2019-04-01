@@ -191,6 +191,32 @@ class ASBot:
             except:
                 self.__logger.exception(self.__msgs['as_pmex'])
 
+        @self.bot.message_handler(func=self.__check_private_chat, commands=['sw_add'])
+        def handle_swadd(message) -> None:
+            """
+            Handle /sw_add command in private chats. Allow admins to ask add a new
+            stopword to the list of restricted words for new users. Restricted command.
+            :param message: Message, triggered this event.
+            """
+            try:
+                if message.from_user.id in self.__settings.admins:
+                    swreq = ParamExtractor(message.text)
+                    if swreq.index != -1:
+                        logmsg = self.__msgs['as_swadd'].format(message.from_user.first_name, message.from_user.id,
+                                                                swreq.param)
+                        try:
+                            self.__logger.warning(logmsg)
+                            self.__settings.add_stopword(swreq.param)
+                            self.__settings.save()
+                        except:
+                            self.bot.send_message(message.chat.id, logmsg)
+                    else:
+                        self.bot.send_message(message.chat.id, self.__msgs['as_swpm'])
+                else:
+                    self.bot.send_message(message.chat.id, self.__msgs['as_unath'])
+            except:
+                self.__logger.exception(self.__msgs['as_pmex'])
+
         @self.bot.message_handler(func=self.__check_admin_feature, commands=['remove', 'rm'])
         def handle_remove(message) -> None:
             """
@@ -528,6 +554,10 @@ class ASBot:
             'as_leaveok': 'Command successfully executed. Leaving chat {} ({}) now.',
             'as_leavepm': 'You must specify chat ID or username to leave from. Fix this and try again.',
             'as_leavelg': 'Admin {} ({}) asked bot to leave chat {} ({}).',
+            'as_swadd': 'Admin {} ({}) added new stopword {} to list.',
+            'as_swrem': 'Admin {} ({}) removed stopword {} from list.',
+            'as_swlist': 'Admin {} ({}) fetched list of stopwords.',
+            'as_swpm': 'You must specify a stopword to add/remove. Fix this and try again.',
             'as_leaverr': 'Failed to leave chat {} ({}) due to some error.',
             'as_unath': 'You cannot access this command due to missing admin rights. This issue will be reported.',
             'as_unathlg': 'User {} ({}) tried to access restricted bot command. Action was denied.',

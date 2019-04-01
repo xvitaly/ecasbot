@@ -218,6 +218,14 @@ class Settings:
         if stopword not in self.__data['stopwords']:
             self.__data['stopwords'].append(stopword)
 
+    def remove_stopword(self, stopword: str) -> None:
+        """
+        Remove stopword from the list of restricted words.
+        :param stopword: Restricted word to remove.
+        """
+        if stopword in self.__data['stopwords']:
+            self.__data['stopwords'].remove(stopword)
+
     def save(self) -> None:
         """
         Save current settings to JSON file.

@@ -202,14 +202,14 @@ class ASBot:
                 if message.from_user.id in self.__settings.admins:
                     swreq = ParamExtractor(message.text)
                     if swreq.index != -1:
-                        logmsg = self.__msgs['as_swadd'].format(message.from_user.first_name, message.from_user.id,
-                                                                swreq.param)
                         try:
-                            self.__logger.warning(logmsg)
+                            self.__logger.warning(
+                                self.__msgs['as_swadd'].format(message.from_user.first_name, message.from_user.id,
+                                                               swreq.param))
                             self.__settings.add_stopword(swreq.param)
                             self.__settings.save()
                         except:
-                            self.bot.send_message(message.chat.id, logmsg)
+                            self.bot.send_message(message.chat.id, self.__msgs['as_swuadd'].format(swreq.param))
                     else:
                         self.bot.send_message(message.chat.id, self.__msgs['as_swpm'])
                 else:
@@ -556,6 +556,8 @@ class ASBot:
             'as_leavelg': 'Admin {} ({}) asked bot to leave chat {} ({}).',
             'as_swadd': 'Admin {} ({}) added new stopword {} to list.',
             'as_swrem': 'Admin {} ({}) removed stopword {} from list.',
+            'as_swuadd': 'New stopword {} added to list.',
+            'as_swurem': 'Stopword {} removed from list.',
             'as_swlist': 'Admin {} ({}) fetched list of stopwords.',
             'as_swpm': 'You must specify a stopword to add/remove. Fix this and try again.',
             'as_leaverr': 'Failed to leave chat {} ({}) due to some error.',

@@ -561,7 +561,12 @@ class ASBot:
                                                                        message.chat.title))
 
         # Run bot forever...
-        self.bot.polling(none_stop=True)
+        while True:
+            try:
+                self.bot.polling(none_stop=True)
+            except Exception:
+                self.__logger.exception('Crashed. Restarting in 30 seconds.')
+                time.sleep(30.0)
 
     def __init__(self) -> None:
         """

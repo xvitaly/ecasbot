@@ -565,7 +565,7 @@ class ASBot:
             try:
                 self.bot.polling(none_stop=True)
             except Exception:
-                self.__logger.exception('Crashed. Restarting in 30 seconds.')
+                self.__logger.exception(self.__msgs['as_crashed'])
                 time.sleep(30.0)
 
     def __init__(self) -> None:
@@ -621,7 +621,8 @@ class ASBot:
             'as_wipelg': 'Admin {} ({}) removed {} messages (range {}) in chat {} ({}).',
             'as_wipehg': 'Admin {} ({}) tried to remove {} messages in chat {} ({}). Action was denied.',
             'as_spamdbg': 'Received message from restricted user {} ({}) in chat {} ({}). Check results: '
-                          'entitles: {}, spam: {}, forward: {}.\nContents: {}.'
+                          'entitles: {}, spam: {}, forward: {}.\nContents: {}.',
+            'as_crashed': 'Bot crashed. Scheduling restart in 30 seconds.'
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

@@ -13,6 +13,7 @@
  User=nobody
  Group=nobody
  ExecStart=VENVPATH/bin/ecasbot
+ EnvironmentFile=/etc/ecasbot
  
  [Install]
  WantedBy=multi-user.target
@@ -20,7 +21,9 @@
 
  You must change `User` and `Group` and set `VENVPATH` to path of create Python Virtual Environment.
  
- 2. Reload system configuration:
+ 2. Copy `config/ecasbot-env.conf` as `/etc/ecasbot`, open it in any text editor and set API token in `APITOKEN` field, received from [@BotFather](https://t.me/BotFather).
+ 
+ 3. Reload system configuration:
  ```
  sudo systemctl daemon-reload
  ```

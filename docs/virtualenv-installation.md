@@ -5,8 +5,8 @@ You can also install bot:
  git clone https://github.com/xvitaly/ecasbot.git ecasbot
  git checkout stable/1.x
  ```
- 2. Get API tokens from [@BotFather](https://t.me/BotFather);
- 3. Copy configuration file `config/ecasbot.json` to `/etc/ecasbot/ecasbot.json`, open it in any text editor and set it API token;
+ 2. Get API token from [@BotFather](https://t.me/BotFather);
+ 3. Copy configuration file `config/ecasbot.json` to `/etc/ecasbot/ecasbot.json`. You can edit it in any text editor;
  4. Create a new Python Virtual Environment:
  ```
  python3 -m venv ecasbot
@@ -20,7 +20,7 @@ You can also install bot:
  cd ecasbot
  python3 setup.py install
  ```
- 7. Run installed bot:
+ 7. Run installed bot with defined API key:
  ```bash
- /bin/ecasbot
+ APIKEY=API_KEY /bin/ecasbot
  ```

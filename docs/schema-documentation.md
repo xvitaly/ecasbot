@@ -3,7 +3,6 @@
 Available options of `acasbot.json` configuration file:
 
  * `schema` - current schema version;
- * `tgkey` - Telegram Bot API key. Can be obtained from [@BotFather](https://t.me/BotFather);
  * `admins` - list of bot admins. This users can execute any bot command and even control super-groups using special bot actions;
  * `restent` - list of forbidden [entitles](https://core.telegram.org/bots/api#messageentity) for new users. Bot will remove messages from restricted users contains any of it;
  * `stopwords` - list of forbidden words in nicknames of newly joined users. Bot will score them;
@@ -21,6 +20,9 @@ Available options of `acasbot.json` configuration file:
  * `restlangs` - list of restricted languages. Bot will score users using them in their clients.
 
 # Schema changes
+
+## From 7 to 8
+Field `tgkey` removed. Environment option `APIKEY` should be used.
 
 ## From 6 to 7
 Field `watchlist` renamed to `watches` due to major changes in API and format.

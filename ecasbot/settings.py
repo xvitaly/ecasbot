@@ -37,7 +37,7 @@ class Settings:
         Get Telegram Bot API token.
         :return: Bot API token.
         """
-        return self.__data['tgkey']
+        return os.getenv('APIKey')
 
     @property
     def chkrgx(self) -> str:

@@ -572,7 +572,7 @@ class ASBot:
         """
         Main constructor of ASBot class.
         """
-        self.__schema = 7
+        self.__schema = 8
         self.__logger = logging.getLogger(__name__)
         self.__settings = Settings(self.__schema)
         self.__msgs = {

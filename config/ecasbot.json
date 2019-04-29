@@ -1,6 +1,5 @@
 {
-  "schema": 7,
-  "tgkey": "",
+  "schema": 8,
   "admins": [],
   "restent": ["url", "text_link", "mention"],
   "stopwords": ["SEO", "Deleted"],

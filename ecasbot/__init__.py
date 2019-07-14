@@ -458,6 +458,8 @@ class ASBot:
                                                                                          self.__get_message_link(
                                                                                              message)),
                                                   parse_mode='Markdown')
+                            self.__logger.debug(
+                                self.__msgs['as_repsn'].format(admin, message.chat.id, message.chat.title))
                         except:
                             try:
                                 if not self.__check_user_admin(admin, message.chat.id):
@@ -611,6 +613,7 @@ class ASBot:
             'as_repmsg': 'You have a new report from user *{}* ({}).\n\nReason: *{}*.\n\nMessage link: {}.',
             'as_repns': 'Cannot send message to admin {} due to Telegram Bot API restrictions.',
             'as_repna': 'Subscribed to events user {} has no more admin rights in chat {} ({}). Watch removed.',
+            'as_repsn': 'Sent message to admin {} due to event in chat {} ({}).',
             'as_repex': 'Failed to handle report command.',
             'as_repsub': 'Successfully subscribed to reports in chat {} ({}) .',
             'as_replim': 'I cannot send you direct messages due to API restrictions. PM me first, then try again.',

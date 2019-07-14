@@ -219,7 +219,6 @@ class ASBot:
                             self.__msgs['as_swadd'].format(message.from_user.first_name, message.from_user.id,
                                                            swreq.param))
                         self.__settings.add_stopword(swreq.param)
-                        self.__settings.save()
                         self.bot.send_message(message.chat.id, self.__msgs['as_swuadd'].format(swreq.param))
                     except:
                         self.bot.send_message(message.chat.id, self.__msgs['as_swerr'])
@@ -243,7 +242,6 @@ class ASBot:
                             self.__msgs['as_swrem'].format(message.from_user.first_name, message.from_user.id,
                                                            swreq.param))
                         self.__settings.remove_stopword(swreq.param)
-                        self.__settings.save()
                         self.bot.send_message(message.chat.id, self.__msgs['as_swurem'].format(swreq.param))
                     except:
                         self.bot.send_message(message.chat.id, self.__msgs['as_swerr'])
@@ -413,7 +411,6 @@ class ASBot:
             try:
                 self.bot.send_message(message.from_user.id, self.__msgs['as_repsub'].format(message.chat.id, message.chat.title))
                 self.__settings.add_watch(message.from_user.id, message.chat.id)
-                self.__settings.save()
                 self.__logger.info(self.__msgs['as_repsblg'].format(message.from_user.first_name, message.from_user.id,
                                                                     message.chat.id, message.chat.title))
             except:
@@ -428,7 +425,6 @@ class ASBot:
             """
             try:
                 self.__settings.remove_watch(message.from_user.id, message.chat.id)
-                self.__settings.save()
                 self.__logger.info(self.__msgs['as_repusblg'].format(message.from_user.first_name, message.from_user.id,
                                                                      message.chat.id, message.chat.title))
                 self.bot.send_message(message.from_user.id, self.__msgs['as_repunsb'].format(message.chat.id, message.chat.title))
@@ -451,7 +447,8 @@ class ASBot:
                                                         message.chat.title))
                     repreq = ParamExtractor(message.text)
                     reason = repreq.param if repreq.index != -1 else self.__msgs['as_repnors']
-                    for admin in self.__settings.get_watchers(message.chat.id):
+                    watchers = list(self.__settings.get_watchers(message.chat.id))
+                    for admin in watchers:
                         try:
                             self.bot.send_message(admin, self.__msgs['as_repmsg'].format(message.from_user.first_name,
                                                                                          message.from_user.id, reason,

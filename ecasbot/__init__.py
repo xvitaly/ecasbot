@@ -147,7 +147,7 @@ class ASBot:
     def __notify_admin(self, message, logstr) -> None:
         """
         Notify admin about event if subscribed.
-        :param admin: Original message, raised event.
+        :param message: Original message, raised event.
         :param logstr: Message with useful information.
         """
         if message.from_user.id in self.__settings.get_watchers(message.chat.id):

@@ -48,6 +48,16 @@ class ASBot:
         return message.chat.type == 'supergroup' and (
                     message.from_user.id in self.__settings.admins or usr.status in ['creator', 'administrator'])
 
+    def __check_user_admin(self, userid, chatid) -> bool:
+        """
+        Check if specified user has admin rights in specified supergroup.
+        :param userid: User ID to check.
+        :param chatid: Supergroup ID.
+        :return: Check results.
+        """
+        usr = self.bot.get_chat_member(chatid, userid)
+        return userid in self.__settings.admins or usr.status in ['creator', 'administrator']
+
     def __check_owner_feature(self, message) -> bool:
         """
         Check if message was sent by bot admin in private chat.
@@ -594,7 +604,7 @@ class ASBot:
             'as_chkme': 'Checking of account {} successfully completed. Your score is: {}.',
             'as_pmex': 'Failed to handle command in private chat with bot.',
             'as_repmsg': 'You have a new report from user *{}* ({}).\n\nReason: *{}*.\n\nMessage link: {}.',
-            'as_repns': 'Cannot send message to admin {} due to Telegram Bot API restrictions. Watch removed.',
+            'as_repns': 'Cannot send message to admin {} due to Telegram Bot API restrictions.',
             'as_repex': 'Failed to handle report command.',
             'as_repsub': 'Successfully subscribed to reports in chat {} ({}) .',
             'as_replim': 'I cannot send you direct messages due to API restrictions. PM me first, then try again.',

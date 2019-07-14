@@ -459,8 +459,13 @@ class ASBot:
                                                                                              message)),
                                                   parse_mode='Markdown')
                         except:
-                            self.__settings.remove_watch(admin, message.chat.id)
-                            self.__logger.warning(self.__msgs['as_repns'].format(admin))
+                            try:
+                                if not self.__check_user_admin(admin, message.chat.id):
+                                    self.__logger.warning(
+                                        self.__msgs['as_repna'].format(admin, message.chat.id, message.chat.title))
+                                    self.__settings.remove_watch(admin, message.chat.id)
+                            except:
+                                self.__logger.warning(self.__msgs['as_repns'].format(admin))
             except:
                 self.__logger.exception(self.__msgs['as_repex'])
 
@@ -605,6 +610,7 @@ class ASBot:
             'as_pmex': 'Failed to handle command in private chat with bot.',
             'as_repmsg': 'You have a new report from user *{}* ({}).\n\nReason: *{}*.\n\nMessage link: {}.',
             'as_repns': 'Cannot send message to admin {} due to Telegram Bot API restrictions.',
+            'as_repna': 'Subscribed to events user {} has no more admin rights in chat {} ({}). Watch removed.',
             'as_repex': 'Failed to handle report command.',
             'as_repsub': 'Successfully subscribed to reports in chat {} ({}) .',
             'as_replim': 'I cannot send you direct messages due to API restrictions. PM me first, then try again.',

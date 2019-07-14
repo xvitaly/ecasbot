@@ -198,6 +198,7 @@ class Settings:
                         watch[1].append(userid)
         else:
             self.__data['watches'].append([chatid, [userid]])
+        self.save()
 
     def remove_watch(self, userid: int, chatid: int) -> None:
         """
@@ -209,6 +210,7 @@ class Settings:
             if watch[0] == chatid:
                 if userid in watch[1]:
                     watch[1].remove(userid)
+        self.save()
 
     def add_stopword(self, stopword: str) -> None:
         """
@@ -217,6 +219,7 @@ class Settings:
         """
         if stopword not in self.__data['stopwords']:
             self.__data['stopwords'].append(stopword)
+        self.save()
 
     def remove_stopword(self, stopword: str) -> None:
         """
@@ -225,6 +228,7 @@ class Settings:
         """
         if stopword in self.__data['stopwords']:
             self.__data['stopwords'].remove(stopword)
+        self.save()
 
     def save(self) -> None:
         """

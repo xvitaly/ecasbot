@@ -448,13 +448,11 @@ class ASBot:
                     repreq = ParamExtractor(message.text)
                     reason = repreq.param if repreq.index != -1 else self.__msgs['as_repnors']
                     watchers = self.__settings.get_watchers(message.chat.id).copy()
+                    sendmsg = self.__msgs['as_repmsg'].format(message.from_user.first_name, message.from_user.id,
+                                                              reason, self.__get_message_link(message))
                     for admin in watchers:
                         try:
-                            self.bot.send_message(admin, self.__msgs['as_repmsg'].format(message.from_user.first_name,
-                                                                                         message.from_user.id, reason,
-                                                                                         self.__get_message_link(
-                                                                                             message)),
-                                                  parse_mode='Markdown')
+                            self.bot.send_message(admin, sendmsg, parse_mode='Markdown')
                             self.__logger.debug(
                                 self.__msgs['as_repsn'].format(admin, message.chat.id, message.chat.title))
                         except:
@@ -607,7 +605,7 @@ class ASBot:
             'as_admerr': 'Failed to handle admin command.',
             'as_chkme': 'Checking of account {} successfully completed. Your score is: {}.',
             'as_pmex': 'Failed to handle command in private chat with bot.',
-            'as_repmsg': 'You have a new report from user *{}* ({}).\n\nReason: *{}*.\n\nMessage link: {}.',
+            'as_repmsg': 'You have a new report from user *{}* ({}).\n\nReason: *{}*.\n\nMessage link: [click]({}).',
             'as_repns': 'Cannot send message to admin {} due to Telegram Bot API restrictions.',
             'as_repna': 'Subscribed to events user {} has no more admin rights in chat {} ({}). Watch removed.',
             'as_repsn': 'Sent message to admin {} due to event in chat {} ({}).',

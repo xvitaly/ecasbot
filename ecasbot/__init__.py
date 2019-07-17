@@ -449,7 +449,7 @@ class ASBot:
                     reason = repreq.param if repreq.index != -1 else self.__msgs['as_repnors']
                     watchers = self.__settings.get_watchers(message.chat.id).copy()
                     sendmsg = self.__msgs['as_repmsg'].format(message.from_user.first_name, message.from_user.id,
-                                                              message.chat.id, message.chat.title, reason,
+                                                              message.chat.title, message.chat.id, reason,
                                                               self.__get_message_link(message))
                     for admin in watchers:
                         try:

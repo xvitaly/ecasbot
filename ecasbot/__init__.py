@@ -74,6 +74,14 @@ class ASBot:
         """
         return message.chat.type == 'private'
 
+    def __check_restriction_allowed(self, message) -> bool:
+        """
+        Check if sender of event can be restricted.
+        :param message: Message to check.
+        :return: Check results.
+        """
+        return True
+
     def __get_actual_username(self, message) -> str:
         """
         Get a real username of current message's sender.
@@ -504,7 +512,7 @@ class ASBot:
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
-        @self.bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
+        @self.bot.message_handler(func=self.__check_restriction_allowed, content_types=['new_chat_members'])
         def handle_join(message) -> None:
             """
             Handle join messages in supergroups. Perform some actions

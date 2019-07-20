@@ -520,7 +520,7 @@ class ASBot:
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
-        @self.bot.message_handler(func=self.__check_restriction_allowed, content_types=['new_chat_members'])
+        @self.bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
         def handle_join(message) -> None:
             """
             Handle join messages in supergroups. Perform some actions

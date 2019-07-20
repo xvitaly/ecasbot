@@ -471,7 +471,8 @@ class ASBot:
                             self.bot.send_message(admin, sendmsg, parse_mode='Markdown')
                             self.__logger.debug(
                                 self.__msgs['as_repsn'].format(admin, message.chat.id, message.chat.title))
-                        except:
+                        except Exception as ex:
+                            self.__logger.debug(ex)
                             try:
                                 if not self.__check_user_admin(admin, message.chat.id):
                                     self.__logger.warning(

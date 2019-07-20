@@ -343,7 +343,7 @@ class ASBot:
                 if message.reply_to_message:
                     username = self.__get_actual_username(message)
                     userid = self.__get_actual_userid(message)
-                    if message.from_user.id != userid:
+                    if message.from_user.id != userid and self.__check_restriction_allowed(message):
                         self.bot.kick_chat_member(message.chat.id, userid)
                         self.bot.delete_message(message.chat.id, message.reply_to_message.message_id)
                         logmsg = self.__msgs['as_aban'].format(message.from_user.first_name, message.from_user.id,
@@ -364,7 +364,7 @@ class ASBot:
                 if message.reply_to_message:
                     username = self.__get_actual_username(message)
                     userid = self.__get_actual_userid(message)
-                    if message.from_user.id != userid:
+                    if message.from_user.id != userid and self.__check_restriction_allowed(message):
                         mutereq = ParamExtractor(message.text)
                         mutetime = int(time.time()) + (int(float(mutereq.param) * 86400) if mutereq.index != -1 else 0)
                         self.bot.restrict_chat_member(message.chat.id, userid, until_date=mutetime,

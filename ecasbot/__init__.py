@@ -80,7 +80,8 @@ class ASBot:
         :param message: Message to check.
         :return: Check results.
         """
-        return True
+        sender = self.__get_actual_userid(message)
+        return not (self.__check_user_admin(sender, message.chat.id) or sender == self.bot.get_me().id)
 
     def __get_actual_username(self, message) -> str:
         """

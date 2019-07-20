@@ -348,8 +348,11 @@ class ASBot:
                         self.bot.delete_message(message.chat.id, message.reply_to_message.message_id)
                         logmsg = self.__msgs['as_aban'].format(message.from_user.first_name, message.from_user.id,
                                                                username, userid, message.chat.id, message.chat.title)
-                        self.__logger.warning(logmsg)
-                        self.__notify_admin(message, logmsg)
+                    else:
+                        logmsg = self.__msgs['as_banprot'].format(message.from_user.first_name, message.from_user.id,
+                                                                  username, userid, message.chat.id, message.chat.title)
+                    self.__logger.warning(logmsg)
+                    self.__notify_admin(message, logmsg)
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -373,8 +376,11 @@ class ASBot:
                         logmsg = self.__msgs['as_amute'].format(message.from_user.first_name, message.from_user.id,
                                                                 username, userid, message.chat.id, message.chat.title,
                                                                 mutetime if mutereq.index != -1 else 'forever')
-                        self.__logger.warning(logmsg)
-                        self.__notify_admin(message, logmsg)
+                    else:
+                        logmsg = self.__msgs['as_resprot'].format(message.from_user.first_name, message.from_user.id,
+                                                                  username, userid, message.chat.id, message.chat.title)
+                    self.__logger.warning(logmsg)
+                    self.__notify_admin(message, logmsg)
             except:
                 self.__logger.exception(self.__msgs['as_admerr'])
 
@@ -648,7 +654,9 @@ class ASBot:
             'as_wipehg': 'Admin {} ({}) tried to remove {} messages in chat {} ({}). Action was denied.',
             'as_spamdbg': 'Received message from restricted user {} ({}) in chat {} ({}). Check results: '
                           'entitles: {}, spam: {}, forward: {}.\nContents: {}.',
-            'as_crashed': 'Bot crashed. Scheduling restart in 30 seconds.'
+            'as_crashed': 'Bot crashed. Scheduling restart in 30 seconds.',
+            'as_resprot': 'Admin {} ({}) tried to restrict protected user {} ({}) in chat {} ({}).',
+            'as_banprot': 'Admin {} ({}) tried to ban protected user {} ({}) in chat {} ({}).',
         }
         if not self.__settings.tgkey:
             raise Exception(self.__msgs['as_notoken'])

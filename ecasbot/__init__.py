@@ -535,7 +535,8 @@ class ASBot:
                                                   message.chat.id, message.chat.title, score))
                 try:
                     # Delete join message...
-                    self.bot.delete_message(message.chat.id, message.message_id)
+                    if self.__settings.hide_join_messages:
+                        self.bot.delete_message(message.chat.id, message.message_id)
 
                     # If user get score >= 100 - ban him, else - restrict...
                     if score >= self.__settings.nickgoal:

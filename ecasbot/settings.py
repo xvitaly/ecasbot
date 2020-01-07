@@ -168,6 +168,14 @@ class Settings:
         """
         return self.__data['restlangs']
 
+    @property
+    def hide_join_messages(self) -> bool:
+        """
+        Check if hiding of join messages is enabled or not.
+        :return: Return True if hiding is enabled.
+        """
+        return self.__data['hidejoins']
+
     def __check_watchers(self, chatid: int):
         """
         Check if specified chat ID listed in watch list.

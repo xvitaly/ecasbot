@@ -17,9 +17,13 @@ Available options of `acasbot.json` configuration file:
  * `logfilefmt` - custom formatter for file logs;
  * `stderrfmt` - custom formatter for stderr logs;
  * `watches` - watch list for reports feature;
- * `restlangs` - list of restricted languages. Bot will score users using them in their clients.
+ * `restlangs` - list of restricted languages. Bot will score users using them in their clients;
+ * `hidejoins` - enable or disable join messages removing.
 
 # Schema changes
+
+## From 7 to 8
+Field `hidejoins` added. Default value it `true`.
 
 ## From 7 to 8
 Field `tgkey` removed. Environment option `APIKEY` should be used.

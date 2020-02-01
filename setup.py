@@ -20,7 +20,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='ecasbot',
-    version='1.3.1',
+    version='1.3.2',
     packages=find_packages(),
     package_dir={
         'ecasbot': 'ecasbot',

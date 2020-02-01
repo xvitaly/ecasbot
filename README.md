@@ -13,7 +13,7 @@ Warning! Do not use `dev` branch in production due to lots of breaking changes. 
 GNU General Public License version 3. You can find it here: [LICENSE](LICENSE). External libraries can use another licenses, compatible with GNU GPLv3.
 
 # Requirements
- * Python 3.x;
+ * Python 3.6+;
  * [python-pytelegrambotapi](https://github.com/eternnoir/pyTelegramBotAPI);
  * [python-requests](https://github.com/requests/requests);
  * [python-six](https://github.com/benjaminp/six);

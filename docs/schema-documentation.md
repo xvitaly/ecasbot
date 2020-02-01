@@ -22,7 +22,7 @@ Available options of `acasbot.json` configuration file:
 
 # Schema changes
 
-## From 7 to 8
+## From 8 to 9
 Field `hidejoins` added. Default value it `true`.
 
 ## From 7 to 8

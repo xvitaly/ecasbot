@@ -137,7 +137,7 @@ class Settings:
         return self.__data['msggoal']
 
     @property
-    def fmtlog(self) -> int:
+    def fmtlog(self) -> str:
         """
         Get custom formatter for file logs.
         :return: Custom formatter for text logs.
@@ -145,7 +145,7 @@ class Settings:
         return self.__data['logfilefmt']
 
     @property
-    def fmterr(self) -> int:
+    def fmterr(self) -> str:
         """
         Get custom formatter for stderr (journald) logs.
         :return: Custom formatter for stderr logs.

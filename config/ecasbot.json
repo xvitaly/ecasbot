@@ -1,5 +1,5 @@
 {
-  "schema": 9,
+  "schema": 10,
   "admins": [],
   "restent": ["url", "text_link", "mention"],
   "stopwords": ["SEO", "Deleted"],
@@ -15,5 +15,6 @@
   "stderrfmt": "%(levelname)s:%(name)s:%(message)s",
   "watches": [],
   "restlangs": [],
-  "hidejoins": true
+  "hidejoins": true,
+  "language": "en"
 }

@@ -24,18 +24,27 @@ import telebot
 from .chkmsg import CheckMessage
 from .chkusr import CheckUsername
 from .modules.helpers import ParamExtractor
+from .modules.messages import Messages
 from .modules.ranges import Ranges
 from .settings import Settings
 
 
 class ASBot:
+    def __get_lm(self, msgid: str) -> str:
+        """
+        Get localized message string in default language.
+        :param msgid: Message ID.
+        :return: Localized message string.
+        """
+        return self.__messages.get_message(msgid, self.__settings.language)
+
     def __check_restricted_user(self, message) -> bool:
         """
         Check if message was sent by a restricted user in supergroup.
         :param message: Message to check.
         :return: Check results.
         """
-        usr = self.bot.get_chat_member(message.chat.id, message.from_user.id)
+        usr = self.__bot.get_chat_member(message.chat.id, message.from_user.id)
         return message.chat.type == 'supergroup' and usr.status == 'restricted'
 
     def __check_admin_feature(self, message) -> bool:
@@ -44,7 +53,7 @@ class ASBot:
         :param message: Message to check.
         :return: Check results.
         """
-        usr = self.bot.get_chat_member(message.chat.id, message.from_user.id)
+        usr = self.__bot.get_chat_member(message.chat.id, message.from_user.id)
         return message.chat.type == 'supergroup' and (
                     message.from_user.id in self.__settings.admins or usr.status in ['creator', 'administrator'])
 
@@ -55,7 +64,7 @@ class ASBot:
         :param chatid: Supergroup ID.
         :return: Check results.
         """
-        usr = self.bot.get_chat_member(chatid, userid)
+        usr = self.__bot.get_chat_member(chatid, userid)
         return userid in self.__settings.admins or usr.status in ['creator', 'administrator']
 
     def __check_owner_feature(self, message) -> bool:
@@ -81,7 +90,7 @@ class ASBot:
         :return: Check results.
         """
         sender = self.__get_actual_userid(message)
-        return not (self.__check_user_admin(sender, message.chat.id) or sender == self.bot.get_me().id)
+        return not (self.__check_user_admin(sender, message.chat.id) or sender == self.__bot.get_me().id)
 
     def __get_actual_username(self, message) -> str:
         """
@@ -160,25 +169,63 @@ class ASBot:
         :param logstr: Message with useful information.
         """
         if message.from_user.id in self.__settings.get_watchers(message.chat.id):
-            self.bot.send_message(message.from_user.id, logstr)
+            self.__bot.send_message(message.from_user.id, logstr)
+
+    def __load_messages(self) -> None:
+        """
+        Create an instance of Messages class.
+        """
+        self.__messages = Messages()
+
+    def __read_settings(self) -> None:
+        """
+        Read settings from JSON configuration file.
+        """
+        self.__schema = 10
+        self.__settings = Settings(self.__schema)
+        if not self.__settings.tgkey:
+            raise Exception(self.__messages.get_message('fb_notoken', self.__settings.language))
+
+    def __set_logger(self) -> None:
+        """
+        Set logger engine.
+        """
+        self.__logger = logging.getLogger(__name__)
+        self.__logger.setLevel(self.__settings.get_logging_level())
+        if self.__settings.logtofile:
+            f_handler = logging.FileHandler(self.__settings.logtofile)
+            f_handler.setFormatter(logging.Formatter(self.__settings.fmtlog))
+            self.__logger.addHandler(f_handler)
+        else:
+            e_handler = logging.StreamHandler(sys.stdout)
+            e_handler.setFormatter(logging.Formatter(self.__settings.fmterr))
+            self.__logger.addHandler(e_handler)
+
+    def __init_bot(self) -> None:
+        """
+        Initialize internal bot engine by creating an instance
+        of TeleBot class.
+        """
+        self.__bot = telebot.TeleBot(self.__settings.tgkey)
 
     def runbot(self) -> None:
         """
         Run bot forever.
         """
+
         # Initialize command handlers...
-        @self.bot.message_handler(func=self.__check_private_chat, commands=['start'])
+        @self.__bot.message_handler(func=self.__check_private_chat, commands=['start'])
         def handle_start(message) -> None:
             """
             Handle /start command in private chats.
             :param message: Message, triggered this event.
             """
             try:
-                self.bot.send_message(message.chat.id, self.__msgs['as_welcome'])
+                self.__bot.send_message(message.chat.id, self.__get_lm('as_welcome'))
             except:
-                self.__logger.exception(self.__msgs['as_pmex'])
+                self.__logger.exception(self.__get_lm('as_pmex'))
 
-        @self.bot.message_handler(func=self.__check_private_chat, commands=['checkme'])
+        @self.__bot.message_handler(func=self.__check_private_chat, commands=['checkme'])
         def handle_checkme(message) -> None:
             """
             Handle /checkme command in private chats. Check username of sender.
@@ -186,11 +233,11 @@ class ASBot:
             """
             try:
                 score = self.__score_user(message.from_user)
-                self.bot.send_message(message.chat.id, self.__msgs['as_chkme'].format(message.from_user.id, score))
+                self.__bot.send_message(message.chat.id, self.__get_lm('as_chkme').format(message.from_user.id, score))
             except:
-                self.__logger.exception(self.__msgs['as_pmex'])
+                self.__logger.exception(self.__get_lm('as_pmex'))
 
-        @self.bot.message_handler(func=self.__check_owner_feature, commands=['leave'])
+        @self.__bot.message_handler(func=self.__check_owner_feature, commands=['leave'])
         def handle_leave(message) -> None:
             """
             Handle /leave command in private chats. Allow admins to ask bot leave
@@ -202,18 +249,18 @@ class ASBot:
                 if leavereq.index != -1:
                     try:
                         self.__logger.warning(
-                            self.__msgs['as_leavelg'].format(message.from_user.first_name, message.from_user.id,
-                                                             message.from_user.title, leavereq.param))
-                        self.bot.leave_chat(leavereq.param)
-                        self.bot.send_message(message.chat.id, self.__msgs['as_leaveok'].format(leavereq.param))
+                            self.__get_lm('as_leavelg').format(message.from_user.first_name, message.from_user.id,
+                                                               message.from_user.title, leavereq.param))
+                        self.__bot.leave_chat(leavereq.param)
+                        self.__bot.send_message(message.chat.id, self.__get_lm('as_leaveok').format(leavereq.param))
                     except:
-                        self.bot.send_message(message.chat.id, self.__msgs['as_leaverr'].format(leavereq.param))
+                        self.__bot.send_message(message.chat.id, self.__get_lm('as_leaverr').format(leavereq.param))
                 else:
-                    self.bot.send_message(message.chat.id, self.__msgs['as_leavepm'])
+                    self.__bot.send_message(message.chat.id, self.__get_lm('as_leavepm'))
             except:
-                self.__logger.exception(self.__msgs['as_pmex'])
+                self.__logger.exception(self.__get_lm('as_pmex'))
 
-        @self.bot.message_handler(func=self.__check_owner_feature, commands=['sw_add'])
+        @self.__bot.message_handler(func=self.__check_owner_feature, commands=['sw_add'])
         def handle_swadd(message) -> None:
             """
             Handle /sw_add command in private chats. Allow admins to ask add a new
@@ -225,18 +272,18 @@ class ASBot:
                 if swreq.index != -1:
                     try:
                         self.__logger.warning(
-                            self.__msgs['as_swadd'].format(message.from_user.first_name, message.from_user.id,
-                                                           swreq.param))
+                            self.__get_lm('as_swadd').format(message.from_user.first_name, message.from_user.id,
+                                                             swreq.param))
                         self.__settings.add_stopword(swreq.param)
-                        self.bot.send_message(message.chat.id, self.__msgs['as_swuadd'].format(swreq.param))
+                        self.__bot.send_message(message.chat.id, self.__get_lm('as_swuadd').format(swreq.param))
                     except:
-                        self.bot.send_message(message.chat.id, self.__msgs['as_swerr'])
+                        self.__bot.send_message(message.chat.id, self.__get_lm('as_swerr'))
                 else:
-                    self.bot.send_message(message.chat.id, self.__msgs['as_swpm'])
+                    self.__bot.send_message(message.chat.id, self.__get_lm('as_swpm'))
             except:
-                self.__logger.exception(self.__msgs['as_pmex'])
+                self.__logger.exception(self.__get_lm('as_pmex'))
 
-        @self.bot.message_handler(func=self.__check_owner_feature, commands=['sw_remove'])
+        @self.__bot.message_handler(func=self.__check_owner_feature, commands=['sw_remove'])
         def handle_swremove(message) -> None:
             """
             Handle /sw_remove command in private chats. Allow admins to ask remove
@@ -248,18 +295,18 @@ class ASBot:
                 if swreq.index != -1:
                     try:
                         self.__logger.warning(
-                            self.__msgs['as_swrem'].format(message.from_user.first_name, message.from_user.id,
-                                                           swreq.param))
+                            self.__get_lm('as_swrem').format(message.from_user.first_name, message.from_user.id,
+                                                             swreq.param))
                         self.__settings.remove_stopword(swreq.param)
-                        self.bot.send_message(message.chat.id, self.__msgs['as_swurem'].format(swreq.param))
+                        self.__bot.send_message(message.chat.id, self.__get_lm('as_swurem').format(swreq.param))
                     except:
-                        self.bot.send_message(message.chat.id, self.__msgs['as_swerr'])
+                        self.__bot.send_message(message.chat.id, self.__get_lm('as_swerr'))
                 else:
-                    self.bot.send_message(message.chat.id, self.__msgs['as_swpm'])
+                    self.__bot.send_message(message.chat.id, self.__get_lm('as_swpm'))
             except:
-                self.__logger.exception(self.__msgs['as_pmex'])
+                self.__logger.exception(self.__get_lm('as_pmex'))
 
-        @self.bot.message_handler(func=self.__check_owner_feature, commands=['sw_list'])
+        @self.__bot.message_handler(func=self.__check_owner_feature, commands=['sw_list'])
         def handle_swlist(message) -> None:
             """
             Handle /sw_list command in private chats. Allow admins get full list
@@ -270,17 +317,18 @@ class ASBot:
                 if message.from_user.id in self.__settings.admins:
                     try:
                         self.__logger.warning(
-                            self.__msgs['as_swlist'].format(message.from_user.first_name, message.from_user.id))
-                        self.bot.send_message(message.chat.id,
-                                              self.__msgs['as_swulist'].format(', '.join(self.__settings.stopwords)))
+                            self.__get_lm('as_swlist').format(message.from_user.first_name, message.from_user.id))
+                        self.__bot.send_message(message.chat.id,
+                                                self.__get_lm('as_swulist').format(
+                                                    ', '.join(self.__settings.stopwords)))
                     except:
-                        self.bot.send_message(message.chat.id, self.__msgs['as_swerr'])
+                        self.__bot.send_message(message.chat.id, self.__get_lm('as_swerr'))
                 else:
-                    self.bot.send_message(message.chat.id, self.__msgs['as_unath'])
+                    self.__bot.send_message(message.chat.id, self.__get_lm('as_unath'))
             except:
-                self.__logger.exception(self.__msgs['as_pmex'])
+                self.__logger.exception(self.__get_lm('as_pmex'))
 
-        @self.bot.message_handler(func=self.__check_admin_feature, commands=['remove', 'rm'])
+        @self.__bot.message_handler(func=self.__check_admin_feature, commands=['remove', 'rm'])
         def handle_remove(message) -> None:
             """
             Handle /remove command in supergroups. Admin feature.
@@ -290,18 +338,18 @@ class ASBot:
             try:
                 # Remove reported message...
                 if message.reply_to_message:
-                    self.bot.delete_message(message.chat.id, message.reply_to_message.message_id)
-                    logmsg = self.__msgs['as_amsgrm'].format(message.from_user.first_name, message.from_user.id,
-                                                             message.reply_to_message.from_user.first_name,
-                                                             message.reply_to_message.from_user.id, message.chat.id,
-                                                             message.chat.title)
+                    self.__bot.delete_message(message.chat.id, message.reply_to_message.message_id)
+                    logmsg = self.__get_lm('as_amsgrm').format(message.from_user.first_name, message.from_user.id,
+                                                               message.reply_to_message.from_user.first_name,
+                                                               message.reply_to_message.from_user.id, message.chat.id,
+                                                               message.chat.title)
                     self.__logger.warning(logmsg)
                     self.__notify_admin(message, logmsg)
 
             except:
-                self.__logger.exception(self.__msgs['as_admerr'])
+                self.__logger.exception(self.__get_lm('as_admerr'))
 
-        @self.bot.message_handler(func=self.__check_admin_feature, commands=['wipe'])
+        @self.__bot.message_handler(func=self.__check_admin_feature, commands=['wipe'])
         def handle_wipe(message) -> None:
             """
             Handle /wipe command in supergroups. Admin feature.
@@ -315,24 +363,24 @@ class ASBot:
                     wipelist = Ranges(wipereq.param).tosorted()
                     wipelength = len(wipelist)
                     if 1 <= wipelength <= 50:
-                        logmsg = self.__msgs['as_wipelg'].format(message.from_user.first_name, message.from_user.id,
-                                                                 wipelength, wipereq.param, message.chat.id,
-                                                                 message.chat.title)
+                        logmsg = self.__get_lm('as_wipelg').format(message.from_user.first_name, message.from_user.id,
+                                                                   wipelength, wipereq.param, message.chat.id,
+                                                                   message.chat.title)
                         self.__logger.warning(logmsg)
                         for wl in wipelist:
                             try:
-                                self.bot.delete_message(message.chat.id, wl)
+                                self.__bot.delete_message(message.chat.id, wl)
                             except:
                                 pass
                     else:
-                        logmsg = self.__msgs['as_wipehg'].format(message.from_user.first_name, message.from_user.id,
-                                                                 wipelength, message.chat.id, message.chat.title)
+                        logmsg = self.__get_lm('as_wipehg').format(message.from_user.first_name, message.from_user.id,
+                                                                   wipelength, message.chat.id, message.chat.title)
                         self.__logger.warning(logmsg)
                     self.__notify_admin(message, logmsg)
             except:
-                self.__logger.exception(self.__msgs['as_admerr'])
+                self.__logger.exception(self.__get_lm('as_admerr'))
 
-        @self.bot.message_handler(func=self.__check_admin_feature, commands=['ban', 'block'])
+        @self.__bot.message_handler(func=self.__check_admin_feature, commands=['ban', 'block'])
         def handle_banuser(message) -> None:
             """
             Handle /ban command in supergroups. Admin feature.
@@ -344,19 +392,20 @@ class ASBot:
                     username = self.__get_actual_username(message)
                     userid = self.__get_actual_userid(message)
                     if message.from_user.id != userid and self.__check_restriction_allowed(message):
-                        self.bot.kick_chat_member(message.chat.id, userid)
-                        self.bot.delete_message(message.chat.id, message.reply_to_message.message_id)
-                        logmsg = self.__msgs['as_aban'].format(message.from_user.first_name, message.from_user.id,
-                                                               username, userid, message.chat.id, message.chat.title)
+                        self.__bot.kick_chat_member(message.chat.id, userid)
+                        self.__bot.delete_message(message.chat.id, message.reply_to_message.message_id)
+                        logmsg = self.__get_lm('as_aban').format(message.from_user.first_name, message.from_user.id,
+                                                                 username, userid, message.chat.id, message.chat.title)
                     else:
-                        logmsg = self.__msgs['as_banprot'].format(message.from_user.first_name, message.from_user.id,
-                                                                  username, userid, message.chat.id, message.chat.title)
+                        logmsg = self.__get_lm('as_banprot').format(message.from_user.first_name, message.from_user.id,
+                                                                    username, userid, message.chat.id,
+                                                                    message.chat.title)
                     self.__logger.warning(logmsg)
                     self.__notify_admin(message, logmsg)
             except:
-                self.__logger.exception(self.__msgs['as_admerr'])
+                self.__logger.exception(self.__get_lm('as_admerr'))
 
-        @self.bot.message_handler(func=self.__check_admin_feature, commands=['restrict', 'mute'])
+        @self.__bot.message_handler(func=self.__check_admin_feature, commands=['restrict', 'mute'])
         def handle_muteuser(message) -> None:
             """
             Handle /restrict command in supergroups. Admin feature.
@@ -370,21 +419,22 @@ class ASBot:
                     if message.from_user.id != userid and self.__check_restriction_allowed(message):
                         mutereq = ParamExtractor(message.text)
                         mutetime = int(time.time()) + (int(float(mutereq.param) * 86400) if mutereq.index != -1 else 0)
-                        self.bot.restrict_chat_member(message.chat.id, userid, until_date=mutetime,
-                                                      can_send_messages=False, can_send_media_messages=False,
-                                                      can_send_other_messages=False, can_add_web_page_previews=False)
-                        logmsg = self.__msgs['as_amute'].format(message.from_user.first_name, message.from_user.id,
-                                                                username, userid, message.chat.id, message.chat.title,
-                                                                mutetime if mutereq.index != -1 else 'forever')
+                        self.__bot.restrict_chat_member(message.chat.id, userid, until_date=mutetime,
+                                                        can_send_messages=False, can_send_media_messages=False,
+                                                        can_send_other_messages=False, can_add_web_page_previews=False)
+                        logmsg = self.__get_lm('as_amute').format(message.from_user.first_name, message.from_user.id,
+                                                                  username, userid, message.chat.id, message.chat.title,
+                                                                  mutetime if mutereq.index != -1 else 'forever')
                     else:
-                        logmsg = self.__msgs['as_resprot'].format(message.from_user.first_name, message.from_user.id,
-                                                                  username, userid, message.chat.id, message.chat.title)
+                        logmsg = self.__get_lm('as_resprot').format(message.from_user.first_name, message.from_user.id,
+                                                                    username, userid, message.chat.id,
+                                                                    message.chat.title)
                     self.__logger.warning(logmsg)
                     self.__notify_admin(message, logmsg)
             except:
-                self.__logger.exception(self.__msgs['as_admerr'])
+                self.__logger.exception(self.__get_lm('as_admerr'))
 
-        @self.bot.message_handler(func=self.__check_admin_feature, commands=['unrestrict', 'un', 'unban'])
+        @self.__bot.message_handler(func=self.__check_admin_feature, commands=['unrestrict', 'un', 'unban'])
         def handle_unrestrict(message) -> None:
             """
             Handle /unrestrict and /unban commands in supergroups. Admin feature.
@@ -394,29 +444,29 @@ class ASBot:
             """
             try:
                 if message.reply_to_message:
-                    self.bot.restrict_chat_member(message.chat.id, message.reply_to_message.from_user.id,
-                                                  can_send_messages=True, can_send_media_messages=True,
-                                                  can_send_other_messages=True, can_add_web_page_previews=True)
-                    logmsg = self.__msgs['as_aunres'].format(message.from_user.first_name, message.from_user.id,
-                                                             message.reply_to_message.from_user.first_name,
-                                                             message.reply_to_message.from_user.id, message.chat.id,
-                                                             message.chat.title)
+                    self.__bot.restrict_chat_member(message.chat.id, message.reply_to_message.from_user.id,
+                                                    can_send_messages=True, can_send_media_messages=True,
+                                                    can_send_other_messages=True, can_add_web_page_previews=True)
+                    logmsg = self.__get_lm('as_aunres').format(message.from_user.first_name, message.from_user.id,
+                                                               message.reply_to_message.from_user.first_name,
+                                                               message.reply_to_message.from_user.id, message.chat.id,
+                                                               message.chat.title)
                     self.__logger.warning(logmsg)
                     self.__notify_admin(message, logmsg)
                 else:
                     unbanreq = ParamExtractor(message.text)
                     if unbanreq.index != -1:
-                        userreq = self.bot.get_chat_member(message.chat.id, int(unbanreq.param))
-                        self.bot.unban_chat_member(message.chat.id, userreq.user.id)
-                        logmsg = self.__msgs['as_aunban'].format(message.from_user.first_name, message.from_user.id,
-                                                                 userreq.user.first_name, userreq.user.id,
-                                                                 message.chat.id, message.chat.title)
+                        userreq = self.__bot.get_chat_member(message.chat.id, int(unbanreq.param))
+                        self.__bot.unban_chat_member(message.chat.id, userreq.user.id)
+                        logmsg = self.__get_lm('as_aunban').format(message.from_user.first_name, message.from_user.id,
+                                                                   userreq.user.first_name, userreq.user.id,
+                                                                   message.chat.id, message.chat.title)
                         self.__logger.warning(logmsg)
                         self.__notify_admin(message, logmsg)
             except:
-                self.__logger.exception(self.__msgs['as_admerr'])
+                self.__logger.exception(self.__get_lm('as_admerr'))
 
-        @self.bot.message_handler(func=self.__check_admin_feature, commands=['subscribe'])
+        @self.__bot.message_handler(func=self.__check_admin_feature, commands=['subscribe'])
         def handle_subscribe(message) -> None:
             """
             Handle /subscribe command in supergroups. Admin feature.
@@ -424,14 +474,16 @@ class ASBot:
             :param message: Message, triggered this event.
             """
             try:
-                self.bot.send_message(message.from_user.id, self.__msgs['as_repsub'].format(message.chat.id, message.chat.title))
+                self.__bot.send_message(message.from_user.id,
+                                        self.__get_lm('as_repsub').format(message.chat.id, message.chat.title))
                 self.__settings.add_watch(message.from_user.id, message.chat.id)
-                self.__logger.info(self.__msgs['as_repsblg'].format(message.from_user.first_name, message.from_user.id,
-                                                                    message.chat.id, message.chat.title))
+                self.__logger.info(
+                    self.__get_lm('as_repsblg').format(message.from_user.first_name, message.from_user.id,
+                                                       message.chat.id, message.chat.title))
             except:
-                self.bot.reply_to(message, self.__msgs['as_replim'])
+                self.__bot.reply_to(message, self.__get_lm('as_replim'))
 
-        @self.bot.message_handler(func=self.__check_admin_feature, commands=['unsubscribe'])
+        @self.__bot.message_handler(func=self.__check_admin_feature, commands=['unsubscribe'])
         def handle_unsubscribe(message) -> None:
             """
             Handle /unsubscribe command in supergroups. Admin feature.
@@ -440,13 +492,15 @@ class ASBot:
             """
             try:
                 self.__settings.remove_watch(message.from_user.id, message.chat.id)
-                self.__logger.info(self.__msgs['as_repusblg'].format(message.from_user.first_name, message.from_user.id,
-                                                                     message.chat.id, message.chat.title))
-                self.bot.send_message(message.from_user.id, self.__msgs['as_repunsb'].format(message.chat.id, message.chat.title))
+                self.__logger.info(
+                    self.__get_lm('as_repusblg').format(message.from_user.first_name, message.from_user.id,
+                                                        message.chat.id, message.chat.title))
+                self.__bot.send_message(message.from_user.id,
+                                        self.__get_lm('as_repunsb').format(message.chat.id, message.chat.title))
             except:
-                self.__logger.exception(self.__msgs['as_admerr'])
+                self.__logger.exception(self.__get_lm('as_admerr'))
 
-        @self.bot.message_handler(func=lambda m: True, commands=['report'])
+        @self.__bot.message_handler(func=lambda m: True, commands=['report'])
         def handle_report(message) -> None:
             """
             Handle /report command in supergroups. Send message to admins,
@@ -456,34 +510,34 @@ class ASBot:
             try:
                 if message.reply_to_message:
                     self.__logger.info(
-                        self.__msgs['as_replog'].format(message.from_user.first_name, message.from_user.id,
-                                                        message.reply_to_message.from_user.first_name,
-                                                        message.reply_to_message.from_user.id, message.chat.id,
-                                                        message.chat.title))
+                        self.__get_lm('as_replog').format(message.from_user.first_name, message.from_user.id,
+                                                          message.reply_to_message.from_user.first_name,
+                                                          message.reply_to_message.from_user.id, message.chat.id,
+                                                          message.chat.title))
                     repreq = ParamExtractor(message.text)
-                    reason = repreq.param if repreq.index != -1 else self.__msgs['as_repnors']
+                    reason = repreq.param if repreq.index != -1 else self.__get_lm('as_repnors')
                     watchers = self.__settings.get_watchers(message.chat.id).copy()
-                    sendmsg = self.__msgs['as_repmsg'].format(message.from_user.first_name, message.from_user.id,
-                                                              message.chat.title, message.chat.id, reason,
-                                                              self.__get_message_link(message))
+                    sendmsg = self.__get_lm('as_repmsg').format(message.from_user.first_name, message.from_user.id,
+                                                                message.chat.title, message.chat.id, reason,
+                                                                self.__get_message_link(message))
                     for admin in watchers:
                         try:
-                            self.bot.send_message(admin, sendmsg, parse_mode='Markdown')
+                            self.__bot.send_message(admin, sendmsg, parse_mode='Markdown')
                             self.__logger.debug(
-                                self.__msgs['as_repsn'].format(admin, message.chat.id, message.chat.title))
+                                self.__get_lm('as_repsn').format(admin, message.chat.id, message.chat.title))
                         except Exception as ex:
                             self.__logger.debug(ex)
                             try:
                                 if not self.__check_user_admin(admin, message.chat.id):
                                     self.__logger.warning(
-                                        self.__msgs['as_repna'].format(admin, message.chat.id, message.chat.title))
+                                        self.__get_lm('as_repna').format(admin, message.chat.id, message.chat.title))
                                     self.__settings.remove_watch(admin, message.chat.id)
                             except:
-                                self.__logger.warning(self.__msgs['as_repns'].format(admin))
+                                self.__logger.warning(self.__get_lm('as_repns').format(admin))
             except:
-                self.__logger.exception(self.__msgs['as_repex'])
+                self.__logger.exception(self.__get_lm('as_repex'))
 
-        @self.bot.message_handler(func=self.__check_admin_feature, commands=['pin'])
+        @self.__bot.message_handler(func=self.__check_admin_feature, commands=['pin'])
         def handle_pin(message) -> None:
             """
             Handle /pin command in supergroups. Admin feature.
@@ -493,17 +547,17 @@ class ASBot:
             try:
                 # Pin selected message...
                 if message.reply_to_message:
-                    self.bot.pin_chat_message(message.chat.id, message.reply_to_message.message_id,
-                                              disable_notification=False)
-                    logmsg = self.__msgs['as_pinmsg'].format(message.from_user.first_name, message.from_user.id,
-                                                             message.reply_to_message.message_id, message.chat.id,
-                                                             message.chat.title)
+                    self.__bot.pin_chat_message(message.chat.id, message.reply_to_message.message_id,
+                                                disable_notification=False)
+                    logmsg = self.__get_lm('as_pinmsg').format(message.from_user.first_name, message.from_user.id,
+                                                               message.reply_to_message.message_id, message.chat.id,
+                                                               message.chat.title)
                     self.__logger.warning(logmsg)
                     self.__notify_admin(message, logmsg)
             except:
-                self.__logger.exception(self.__msgs['as_admerr'])
+                self.__logger.exception(self.__get_lm('as_admerr'))
 
-        @self.bot.message_handler(func=self.__check_admin_feature, commands=['unpin'])
+        @self.__bot.message_handler(func=self.__check_admin_feature, commands=['unpin'])
         def handle_unpin(message) -> None:
             """
             Handle /unpin command in supergroups. Admin feature.
@@ -512,15 +566,15 @@ class ASBot:
             """
             try:
                 # Remove all pinned messages...
-                self.bot.unpin_chat_message(message.chat.id)
-                logmsg = self.__msgs['as_unpinmsg'].format(message.from_user.first_name, message.from_user.id,
-                                                           message.chat.id, message.chat.title)
+                self.__bot.unpin_chat_message(message.chat.id)
+                logmsg = self.__get_lm('as_unpinmsg').format(message.from_user.first_name, message.from_user.id,
+                                                             message.chat.id, message.chat.title)
                 self.__logger.warning(logmsg)
                 self.__notify_admin(message, logmsg)
             except:
-                self.__logger.exception(self.__msgs['as_admerr'])
+                self.__logger.exception(self.__get_lm('as_admerr'))
 
-        @self.bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
+        @self.__bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
         def handle_join(message) -> None:
             """
             Handle join messages in supergroups. Perform some actions
@@ -531,40 +585,40 @@ class ASBot:
                 # Check user profile using our score system...
                 score = self.__score_user(message.new_chat_member)
                 self.__logger.info(
-                    self.__msgs['as_alog'].format(message.new_chat_member.first_name, message.new_chat_member.id,
-                                                  message.chat.id, message.chat.title, score))
+                    self.__get_lm('as_alog').format(message.new_chat_member.first_name, message.new_chat_member.id,
+                                                    message.chat.id, message.chat.title, score))
                 try:
                     # Delete join message...
                     if self.__settings.hide_join_messages:
-                        self.bot.delete_message(message.chat.id, message.message_id)
+                        self.__bot.delete_message(message.chat.id, message.message_id)
 
                     # If user get score >= 100 - ban him, else - restrict...
                     if score >= self.__settings.nickgoal:
                         # Ban user permanently...
-                        self.bot.kick_chat_member(message.chat.id, message.new_chat_member.id)
+                        self.__bot.kick_chat_member(message.chat.id, message.new_chat_member.id)
                         # Also ban user who added him...
                         if message.from_user.id != message.new_chat_member.id:
-                            self.bot.kick_chat_member(message.chat.id, message.from_user.id)
+                            self.__bot.kick_chat_member(message.chat.id, message.from_user.id)
                         # Writing information to log...
-                        self.__logger.warning(self.__msgs['as_banned'].format(message.new_chat_member.first_name,
-                                                                              message.new_chat_member.id, score,
-                                                                              message.chat.id, message.chat.title))
+                        self.__logger.warning(self.__get_lm('as_banned').format(message.new_chat_member.first_name,
+                                                                                message.new_chat_member.id, score,
+                                                                                message.chat.id, message.chat.title))
                     else:
                         # Limit users reached half-goal permanently (in Bot API - 366 days)...
                         limtime = 31622400 if score >= self.__settings.nickgoal / 2 else self.__settings.bantime
                         # Restrict all new users for specified in config time...
-                        self.bot.restrict_chat_member(message.chat.id, message.new_chat_member.id,
-                                                      until_date=int(time.time()) + limtime,
-                                                      can_send_messages=True, can_send_media_messages=False,
-                                                      can_send_other_messages=False, can_add_web_page_previews=False)
+                        self.__bot.restrict_chat_member(message.chat.id, message.new_chat_member.id,
+                                                        until_date=int(time.time()) + limtime,
+                                                        can_send_messages=True, can_send_media_messages=False,
+                                                        can_send_other_messages=False, can_add_web_page_previews=False)
                 except Exception:
-                    self.__logger.exception(self.__msgs['as_restex'].format(message.from_user.id, message.chat.id, 
-                                                                            message.chat.title))
+                    self.__logger.exception(self.__get_lm('as_restex').format(message.from_user.id, message.chat.id,
+                                                                              message.chat.title))
             except Exception:
-                self.__logger.exception(self.__msgs['as_joinhex'])
+                self.__logger.exception(self.__get_lm('as_joinhex'))
 
-        @self.bot.message_handler(func=self.__check_restricted_user)
-        @self.bot.edited_message_handler(func=self.__check_restricted_user)
+        @self.__bot.message_handler(func=self.__check_restricted_user)
+        @self.__bot.edited_message_handler(func=self.__check_restricted_user)
         def handle_msg(message) -> None:
             """
             Listen and handle all messages in supergroup (including edited events).
@@ -579,98 +633,33 @@ class ASBot:
 
                 # Writing to log some debug information when needed...
                 self.__logger.debug(
-                    self.__msgs['as_spamdbg'].format(message.from_user.first_name, message.from_user.id,
-                                                     message.chat.id, message.chat.title, entities, spam, forward,
-                                                     message.text))
+                    self.__get_lm('as_spamdbg').format(message.from_user.first_name, message.from_user.id,
+                                                       message.chat.id, message.chat.title, entities, spam, forward,
+                                                       message.text))
 
                 # Removing messages from restricted members...
                 if entities or forward or spam:
-                    self.bot.delete_message(message.chat.id, message.message_id)
+                    self.__bot.delete_message(message.chat.id, message.message_id)
                     self.__logger.info(
-                        self.__msgs['as_msgrest'].format(message.from_user.first_name, message.from_user.id,
-                                                         message.chat.id, message.chat.title))
+                        self.__get_lm('as_msgrest').format(message.from_user.first_name, message.from_user.id,
+                                                           message.chat.id, message.chat.title))
             except Exception:
-                self.__logger.exception(self.__msgs['as_msgex'].format(message.from_user.id, message.chat.id, 
-                                                                       message.chat.title))
+                self.__logger.exception(self.__get_lm('as_msgex').format(message.from_user.id, message.chat.id,
+                                                                         message.chat.title))
 
         # Run bot forever...
         while True:
             try:
-                self.bot.polling(none_stop=True)
+                self.__bot.polling(none_stop=True)
             except Exception:
-                self.__logger.exception(self.__msgs['as_crashed'])
+                self.__logger.exception(self.__get_lm('as_crashed'))
                 time.sleep(30.0)
 
     def __init__(self) -> None:
         """
         Main constructor of ASBot class.
         """
-        self.__schema = 9
-        self.__logger = logging.getLogger(__name__)
-        self.__settings = Settings(self.__schema)
-        self.__msgs = {
-            'as_welcome': 'Add me to supergroup and give me admin rights. I will try to block spammers automatically.',
-            'as_alog': 'New user {} ({}) has joined chat {} ({}). Score: {}.',
-            'as_restex': 'Cannot restrict a new user with ID {} in chat {} ({}) due to missing admin rights.',
-            'as_msgex': 'Exception detected while handling spam message from {} in chat {} ({}).',
-            'as_notoken': 'No API token found. Cannot proceed. Forward API token using ENV option and try again!',
-            'as_joinhex': 'Failed to handle join message.',
-            'as_banned': 'Permanently banned user {} ({}) (score: {}) in chat {} ({}).',
-            'as_msgrest': 'Removed message from restricted user {} ({}) in chat {} ({}).',
-            'as_amsgrm': 'Admin {} ({}) removed message from user {} ({}) in chat {} ({}).',
-            'as_amute': 'Admin {} ({}) muted user {} ({}) in chat {} ({}) until {}.',
-            'as_aunres': 'Admin {} ({}) removed all restrictions from user {} ({}) in chat {} ({}).',
-            'as_aunban': 'Admin {} ({}) unbanned user {} ({}) in chat {} ({}).',
-            'as_aban': 'Admin {} ({}) permanently banned user {} ({}) in chat {} ({}).',
-            'as_admerr': 'Failed to handle admin command.',
-            'as_chkme': 'Checking of account {} successfully completed. Your score is: {}.',
-            'as_pmex': 'Failed to handle command in private chat with bot.',
-            'as_repmsg': 'You have a new report from user *{}* ({}) in chat *{}* ({}).\n\nReason: *{}*.\n\nMessage '
-                         'link: [click here]({}).',
-            'as_repns': 'Cannot send message to admin {} due to Telegram Bot API restrictions.',
-            'as_repna': 'Subscribed to events user {} has no more admin rights in chat {} ({}). Watch removed.',
-            'as_repsn': 'Sent message to admin {} due to event in chat {} ({}).',
-            'as_repex': 'Failed to handle report command.',
-            'as_repsub': 'Successfully subscribed to reports in chat {} ({}) .',
-            'as_replim': 'I cannot send you direct messages due to API restrictions. PM me first, then try again.',
-            'as_repsblg': 'Admin {} ({}) subscribed to events in chat {}.',
-            'as_repunsb': 'Successfully unsubscribed from reports in chat {} ({}).',
-            'as_repusblg': 'Admin {} ({}) unsubscribed from events in chat {} ({}).',
-            'as_repnors': 'No reason specified.',
-            'as_replog': 'User {} ({}) reported message of another user {} ({}) in chat {} ({}).',
-            'as_leaveok': 'Command successfully executed. Leaving chat {} ({}) now.',
-            'as_leavepm': 'You must specify chat ID or username to leave from. Fix this and try again.',
-            'as_leavelg': 'Admin {} ({}) asked bot to leave chat {} ({}).',
-            'as_swadd': 'Admin {} ({}) added new stopword {} to list.',
-            'as_swrem': 'Admin {} ({}) removed stopword {} from list.',
-            'as_swuadd': 'New stopword {} added to list.',
-            'as_swurem': 'Stopword {} removed from list.',
-            'as_swulist': 'Currently restricted words: {}.',
-            'as_swerr': 'Failed to add/remove stopword. Try again later.',
-            'as_swlist': 'Admin {} ({}) fetched list of stopwords.',
-            'as_swpm': 'You must specify a stopword to add/remove. Fix this and try again.',
-            'as_leaverr': 'Failed to leave chat {} ({}) due to some error.',
-            'as_unath': 'You cannot access this command due to missing admin rights. This issue will be reported.',
-            'as_unathlg': 'User {} ({}) tried to access restricted bot command. Action was denied.',
-            'as_pinmsg': 'Admin {} ({}) pinned message {} in chat {} ({}).',
-            'as_unpinmsg': 'Admin {} ({}) removed pinned message in chat {} ({}).',
-            'as_wipelg': 'Admin {} ({}) removed {} messages (range {}) in chat {} ({}).',
-            'as_wipehg': 'Admin {} ({}) tried to remove {} messages in chat {} ({}). Action was denied.',
-            'as_spamdbg': 'Received message from restricted user {} ({}) in chat {} ({}). Check results: '
-                          'entitles: {}, spam: {}, forward: {}.\nContents: {}.',
-            'as_crashed': 'Bot crashed. Scheduling restart in 30 seconds.',
-            'as_resprot': 'Admin {} ({}) tried to restrict protected user {} ({}) in chat {} ({}).',
-            'as_banprot': 'Admin {} ({}) tried to ban protected user {} ({}) in chat {} ({}).',
-        }
-        if not self.__settings.tgkey:
-            raise Exception(self.__msgs['as_notoken'])
-        self.__logger.setLevel(self.__settings.get_logging_level())
-        if self.__settings.logtofile:
-            f_handler = logging.FileHandler(self.__settings.logtofile)
-            f_handler.setFormatter(logging.Formatter(self.__settings.fmtlog))
-            self.__logger.addHandler(f_handler)
-        else:
-            e_handler = logging.StreamHandler(sys.stdout)
-            e_handler.setFormatter(logging.Formatter(self.__settings.fmterr))
-            self.__logger.addHandler(e_handler)
-        self.bot = telebot.TeleBot(self.__settings.tgkey)
+        self.__load_messages()
+        self.__read_settings()
+        self.__set_logger()
+        self.__init_bot()

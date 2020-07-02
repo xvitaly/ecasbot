@@ -100,7 +100,9 @@ class ASBot:
         :param message: Message to check.
         :return: Real username.
         """
-        return message.reply_to_message.new_chat_member.first_name if message.reply_to_message.new_chat_member else message.reply_to_message.from_user.first_name
+        return message.reply_to_message.new_chat_member.first_name \
+            if message.reply_to_message.new_chat_member \
+            else message.reply_to_message.from_user.first_name
 
     @staticmethod
     def __get_actual_userid(message) -> str:
@@ -109,7 +111,9 @@ class ASBot:
         :param message: Message to check.
         :return: Real ID.
         """
-        return message.reply_to_message.new_chat_member.id if message.reply_to_message.new_chat_member else message.reply_to_message.from_user.id
+        return message.reply_to_message.new_chat_member.id \
+            if message.reply_to_message.new_chat_member \
+            else message.reply_to_message.from_user.id
 
     @staticmethod
     def __check_message_forward(message) -> bool:

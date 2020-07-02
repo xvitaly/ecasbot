@@ -75,7 +75,8 @@ class ASBot:
         """
         return message.chat.type == 'private' and message.from_user.id in self.__settings.admins
 
-    def __check_private_chat(self, message) -> bool:
+    @staticmethod
+    def __check_private_chat(message) -> bool:
         """
         Check if message was sent in private chat.
         :param message: Message to check.
@@ -92,7 +93,8 @@ class ASBot:
         sender = self.__get_actual_userid(message)
         return not (self.__check_user_admin(sender, message.chat.id) or sender == self.__bot.get_me().id)
 
-    def __get_actual_username(self, message) -> str:
+    @staticmethod
+    def __get_actual_username(message) -> str:
         """
         Get a real username of current message's sender.
         :param message: Message to check.
@@ -108,7 +110,8 @@ class ASBot:
         """
         return message.reply_to_message.new_chat_member.id if message.reply_to_message.new_chat_member else message.reply_to_message.from_user.id
 
-    def __check_message_forward(self, message) -> bool:
+    @staticmethod
+    def __check_message_forward(message) -> bool:
         """
         Check if current message was forwarded from another chat.
         :param message: Message to check.
@@ -116,7 +119,8 @@ class ASBot:
         """
         return message.forward_from or message.forward_from_chat
 
-    def __get_message_link(self, message) -> str:
+    @staticmethod
+    def __get_message_link(message) -> str:
         """
         Generate full URL to specified message.
         :param message: Message to process.

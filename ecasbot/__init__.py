@@ -29,6 +29,7 @@ from .modules.ranges import Ranges
 from .settings import Settings
 
 
+# noinspection PyBroadException
 class ASBot:
     def __get_lm(self, msgid: str) -> str:
         """

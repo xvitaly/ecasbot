@@ -226,7 +226,7 @@ class ASBot:
             """
             try:
                 self.__bot.send_message(message.chat.id, self.__get_lm('as_welcome'))
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_pmex'))
 
         @self.__bot.message_handler(func=self.__check_private_chat, commands=['checkme'])
@@ -238,7 +238,7 @@ class ASBot:
             try:
                 score = self.__score_user(message.from_user)
                 self.__bot.send_message(message.chat.id, self.__get_lm('as_chkme').format(message.from_user.id, score))
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_pmex'))
 
         @self.__bot.message_handler(func=self.__check_owner_feature, commands=['leave'])
@@ -257,11 +257,11 @@ class ASBot:
                                                                message.from_user.title, leavereq.param))
                         self.__bot.leave_chat(leavereq.param)
                         self.__bot.send_message(message.chat.id, self.__get_lm('as_leaveok').format(leavereq.param))
-                    except:
+                    except Exception:
                         self.__bot.send_message(message.chat.id, self.__get_lm('as_leaverr').format(leavereq.param))
                 else:
                     self.__bot.send_message(message.chat.id, self.__get_lm('as_leavepm'))
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_pmex'))
 
         @self.__bot.message_handler(func=self.__check_owner_feature, commands=['sw_add'])
@@ -280,11 +280,11 @@ class ASBot:
                                                              swreq.param))
                         self.__settings.add_stopword(swreq.param)
                         self.__bot.send_message(message.chat.id, self.__get_lm('as_swuadd').format(swreq.param))
-                    except:
+                    except Exception:
                         self.__bot.send_message(message.chat.id, self.__get_lm('as_swerr'))
                 else:
                     self.__bot.send_message(message.chat.id, self.__get_lm('as_swpm'))
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_pmex'))
 
         @self.__bot.message_handler(func=self.__check_owner_feature, commands=['sw_remove'])
@@ -303,11 +303,11 @@ class ASBot:
                                                              swreq.param))
                         self.__settings.remove_stopword(swreq.param)
                         self.__bot.send_message(message.chat.id, self.__get_lm('as_swurem').format(swreq.param))
-                    except:
+                    except Exception:
                         self.__bot.send_message(message.chat.id, self.__get_lm('as_swerr'))
                 else:
                     self.__bot.send_message(message.chat.id, self.__get_lm('as_swpm'))
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_pmex'))
 
         @self.__bot.message_handler(func=self.__check_owner_feature, commands=['sw_list'])
@@ -325,11 +325,11 @@ class ASBot:
                         self.__bot.send_message(message.chat.id,
                                                 self.__get_lm('as_swulist').format(
                                                     ', '.join(self.__settings.stopwords)))
-                    except:
+                    except Exception:
                         self.__bot.send_message(message.chat.id, self.__get_lm('as_swerr'))
                 else:
                     self.__bot.send_message(message.chat.id, self.__get_lm('as_unath'))
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_pmex'))
 
         @self.__bot.message_handler(func=self.__check_admin_feature, commands=['remove', 'rm'])
@@ -350,7 +350,7 @@ class ASBot:
                     self.__logger.warning(logmsg)
                     self.__notify_admin(message, logmsg)
 
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_admerr'))
 
         @self.__bot.message_handler(func=self.__check_admin_feature, commands=['wipe'])
@@ -374,14 +374,14 @@ class ASBot:
                         for wl in wipelist:
                             try:
                                 self.__bot.delete_message(message.chat.id, wl)
-                            except:
+                            except Exception:
                                 pass
                     else:
                         logmsg = self.__get_lm('as_wipehg').format(message.from_user.first_name, message.from_user.id,
                                                                    wipelength, message.chat.id, message.chat.title)
                         self.__logger.warning(logmsg)
                     self.__notify_admin(message, logmsg)
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_admerr'))
 
         @self.__bot.message_handler(func=self.__check_admin_feature, commands=['ban', 'block'])
@@ -406,7 +406,7 @@ class ASBot:
                                                                     message.chat.title)
                     self.__logger.warning(logmsg)
                     self.__notify_admin(message, logmsg)
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_admerr'))
 
         @self.__bot.message_handler(func=self.__check_admin_feature, commands=['restrict', 'mute'])
@@ -435,7 +435,7 @@ class ASBot:
                                                                     message.chat.title)
                     self.__logger.warning(logmsg)
                     self.__notify_admin(message, logmsg)
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_admerr'))
 
         @self.__bot.message_handler(func=self.__check_admin_feature, commands=['unrestrict', 'un', 'unban'])
@@ -467,7 +467,7 @@ class ASBot:
                                                                    message.chat.id, message.chat.title)
                         self.__logger.warning(logmsg)
                         self.__notify_admin(message, logmsg)
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_admerr'))
 
         @self.__bot.message_handler(func=self.__check_admin_feature, commands=['subscribe'])
@@ -484,7 +484,7 @@ class ASBot:
                 self.__logger.info(
                     self.__get_lm('as_repsblg').format(message.from_user.first_name, message.from_user.id,
                                                        message.chat.id, message.chat.title))
-            except:
+            except Exception:
                 self.__bot.reply_to(message, self.__get_lm('as_replim'))
 
         @self.__bot.message_handler(func=self.__check_admin_feature, commands=['unsubscribe'])
@@ -501,7 +501,7 @@ class ASBot:
                                                         message.chat.id, message.chat.title))
                 self.__bot.send_message(message.from_user.id,
                                         self.__get_lm('as_repunsb').format(message.chat.id, message.chat.title))
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_admerr'))
 
         @self.__bot.message_handler(func=lambda m: True, commands=['report'])
@@ -536,9 +536,9 @@ class ASBot:
                                     self.__logger.warning(
                                         self.__get_lm('as_repna').format(admin, message.chat.id, message.chat.title))
                                     self.__settings.remove_watch(admin, message.chat.id)
-                            except:
+                            except Exception:
                                 self.__logger.warning(self.__get_lm('as_repns').format(admin))
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_repex'))
 
         @self.__bot.message_handler(func=self.__check_admin_feature, commands=['pin'])
@@ -558,7 +558,7 @@ class ASBot:
                                                                message.chat.title)
                     self.__logger.warning(logmsg)
                     self.__notify_admin(message, logmsg)
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_admerr'))
 
         @self.__bot.message_handler(func=self.__check_admin_feature, commands=['unpin'])
@@ -575,7 +575,7 @@ class ASBot:
                                                              message.chat.id, message.chat.title)
                 self.__logger.warning(logmsg)
                 self.__notify_admin(message, logmsg)
-            except:
+            except Exception:
                 self.__logger.exception(self.__get_lm('as_admerr'))
 
         @self.__bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])

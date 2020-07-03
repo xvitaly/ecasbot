@@ -18,6 +18,9 @@
 
 from setuptools import setup, find_packages
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
     name='ecasbot',
     version='1.3.2',
@@ -35,5 +38,13 @@ setup(
     install_requires=['pytelegrambotapi', 'requests', 'six', 'emoji'],
     author='Vitaly Zaitsev',
     author_email='vitaly@easycoding.org',
-    description='AntiSpam bot for Telegram by EasyCoding Team'
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    description='AntiSpam bot for Telegram by EasyCoding Team',
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "Operating System :: OS Independent",
+    ],
+    python_requires='>=3.6'
 )

@@ -268,7 +268,7 @@ class Settings:
         """
         return self.__data['schema'] >= schid
 
-    def get_cfgpath(self) -> str:
+    def __get_cfgpath(self) -> str:
         """
         Get directory where bot's configuration are stored.
         User can override this setting by exporting CFGPATH
@@ -301,7 +301,7 @@ class Settings:
         """
         Get fully-qualified path to main configuration file.
         """
-        self.__cfgfile = str(os.path.join(self.get_cfgpath(), '{}.json'.format(self.__appname)))
+        self.__cfgfile = str(os.path.join(self.__get_cfgpath(), '{}.json'.format(self.__appname)))
 
     def __init__(self, schid) -> None:
         """

@@ -288,6 +288,7 @@ class Settings:
         LOGLEVEL environment option.
         :return:
         """
+        # noinspection PyBroadException
         try:
             loglevel = os.getenv("LOGLEVEL")
             if loglevel:

@@ -1,7 +1,7 @@
 # coding=utf-8
 
 # EC AntiSpam bot for Telegram Messenger
-# Copyright (c) 2017 - 2019 EasyCoding Team
+# Copyright (c) 2017 - 2020 EasyCoding Team
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

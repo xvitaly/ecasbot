@@ -1,11 +1,11 @@
 Name: ecasbot
 Version: 1.3.2
 Release: 1%{?dist}
-Summary: EC AntiSpam bot
 
+Summary: EC AntiSpam bot
 License: GPLv3+
 URL: https://github.com/xvitaly/%{name}
-Source0: %{url}/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: doxygen
@@ -17,7 +17,6 @@ BuildRequires: python3dist(wheel)
 BuildRequires: python3dist(six)
 BuildRequires: python3dist(emoji)
 
-%{?python_enable_dependency_generator}
 Requires(pre): shadow-utils
 
 %{?systemd_requires}
@@ -29,7 +28,7 @@ messages and links from new users, block some common spam bots and
 users who added them to super-groups.
 
 %prep
-%autosetup -n %{name}-%{version} -p1
+%autosetup -p1
 sed -e 's@"logtofile": "",@"logtofile": "%{_localstatedir}/log/%{name}/%{name}.log",@g' -i config/%{name}.json
 
 %build

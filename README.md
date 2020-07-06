@@ -4,6 +4,7 @@
 [![Build status](https://travis-ci.org/xvitaly/ecasbot.svg?branch=master)](https://travis-ci.org/xvitaly/ecasbot)
 [![LGTM grade](https://img.shields.io/lgtm/grade/python/g/xvitaly/ecasbot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/xvitaly/ecasbot/context:python)
 [![LGTM alerts](https://img.shields.io/lgtm/alerts/g/xvitaly/ecasbot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/xvitaly/ecasbot/alerts/)
+[![CodeFactor](https://www.codefactor.io/repository/github/xvitaly/ecasbot/badge/dev)](https://www.codefactor.io/repository/github/xvitaly/ecasbot/overview/dev)
 [![GitHub issues](https://img.shields.io/github/issues/xvitaly/ecasbot.svg?label=issues)](https://github.com/xvitaly/ecasbot/issues)
 ---
 

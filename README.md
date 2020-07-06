@@ -1,6 +1,7 @@
 # EC AntiSpam bot
 
 [![GitHub version](https://badge.fury.io/gh/xvitaly%2Fecasbot.svg)](https://github.com/xvitaly/ecasbot/releases)
+[![GitHub CI status](https://github.com/xvitaly/ecasbot/workflows/Python%20CI/badge.svg?branch=dev)](https://github.com/xvitaly/ecasbot/actions)
 [![Build status](https://travis-ci.org/xvitaly/ecasbot.svg?branch=master)](https://travis-ci.org/xvitaly/ecasbot)
 [![LGTM grade](https://img.shields.io/lgtm/grade/python/g/xvitaly/ecasbot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/xvitaly/ecasbot/context:python)
 [![LGTM alerts](https://img.shields.io/lgtm/alerts/g/xvitaly/ecasbot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/xvitaly/ecasbot/alerts/)

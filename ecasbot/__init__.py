@@ -101,8 +101,8 @@ class ASBot:
         :param message: Message to check.
         :return: Real username.
         """
-        return message.reply_to_message.new_chat_member.first_name \
-            if message.reply_to_message.new_chat_member \
+        return message.reply_to_message.new_chat_members[0].first_name \
+            if message.reply_to_message.new_chat_members \
             else message.reply_to_message.from_user.first_name
 
     @staticmethod
@@ -112,8 +112,8 @@ class ASBot:
         :param message: Message to check.
         :return: Real ID.
         """
-        return message.reply_to_message.new_chat_member.id \
-            if message.reply_to_message.new_chat_member \
+        return message.reply_to_message.new_chat_members[0].id \
+            if message.reply_to_message.new_chat_members \
             else message.reply_to_message.from_user.id
 
     @staticmethod

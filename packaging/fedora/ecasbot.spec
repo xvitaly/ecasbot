@@ -11,6 +11,7 @@ BuildArch: noarch
 BuildRequires: doxygen
 BuildRequires: systemd
 BuildRequires: python3-devel
+BuildRequires: python3-setuptools
 BuildRequires: python3dist(pytelegrambotapi)
 BuildRequires: python3dist(requests)
 BuildRequires: python3dist(wheel)

@@ -1,4 +1,4 @@
-FROM registry.fedoraproject.org/fedora:32
+FROM quay.io/fedora/fedora:32-x86_64
 
 RUN dnf install -y python3-pip && dnf clean all
 

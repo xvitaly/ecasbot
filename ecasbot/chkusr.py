@@ -69,7 +69,7 @@ class CheckUsername:
         Check and score newly registered users.
         :return: Score result.
         """
-        return 50 if self.__userid > 750000000 else 0
+        return 50 if self.__userid > 900000000 else 0
 
     def check_user_language(self) -> int:
         """

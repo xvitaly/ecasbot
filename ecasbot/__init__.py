@@ -592,38 +592,42 @@ class ASBot:
             :param message: Message, triggered this event.
             """
             try:
-                # Check user profile using our score system...
-                score = self.__score_user(message.new_chat_member)
-                self.__logger.info(
-                    self.__get_lm('as_alog').format(message.new_chat_member.first_name, message.new_chat_member.id,
-                                                    message.chat.id, message.chat.title, score))
-                try:
-                    # Delete join message...
-                    if self.__settings.hide_join_messages:
-                        self.__bot.delete_message(message.chat.id, message.message_id)
+                # Using loop to check all joined users...
+                for new_chat_member in message.new_chat_members:
+                    # Check user profile using our score system...
+                    score = self.__score_user(new_chat_member)
+                    self.__logger.info(
+                        self.__get_lm('as_alog').format(new_chat_member.first_name, new_chat_member.id,
+                                                        message.chat.id, message.chat.title, score))
+                    try:
+                        # Delete join message...
+                        if self.__settings.hide_join_messages:
+                            self.__bot.delete_message(message.chat.id, message.message_id)
 
-                    # If user get score >= 100 - ban him, else - restrict...
-                    if score >= self.__settings.nickgoal:
-                        # Ban user permanently...
-                        self.__bot.kick_chat_member(message.chat.id, message.new_chat_member.id)
-                        # Also ban user who added him...
-                        if message.from_user.id != message.new_chat_member.id:
-                            self.__bot.kick_chat_member(message.chat.id, message.from_user.id)
-                        # Writing information to log...
-                        self.__logger.warning(self.__get_lm('as_banned').format(message.new_chat_member.first_name,
-                                                                                message.new_chat_member.id, score,
-                                                                                message.chat.id, message.chat.title))
-                    else:
-                        # Limit users reached half-goal permanently (in Bot API - 366 days)...
-                        limtime = 31622400 if score >= self.__settings.nickgoal / 2 else self.__settings.bantime
-                        # Restrict all new users for specified in config time...
-                        self.__bot.restrict_chat_member(message.chat.id, message.new_chat_member.id,
-                                                        until_date=int(time.time()) + limtime,
-                                                        can_send_messages=True, can_send_media_messages=False,
-                                                        can_send_other_messages=False, can_add_web_page_previews=False)
-                except Exception:
-                    self.__logger.exception(self.__get_lm('as_restex').format(message.from_user.id, message.chat.id,
-                                                                              message.chat.title))
+                        # If user get score >= 100 - ban him, else - restrict...
+                        if score >= self.__settings.nickgoal:
+                            # Ban user permanently...
+                            self.__bot.kick_chat_member(message.chat.id, new_chat_member.id)
+                            # Also ban user who added him...
+                            if message.from_user.id != new_chat_member.id:
+                                self.__bot.kick_chat_member(message.chat.id, message.from_user.id)
+                            # Writing information to log...
+                            self.__logger.warning(self.__get_lm('as_banned').format(new_chat_member.first_name,
+                                                                                    new_chat_member.id, score,
+                                                                                    message.chat.id,
+                                                                                    message.chat.title))
+                        else:
+                            # Limit users reached half-goal permanently (in Bot API - 366 days)...
+                            limtime = 31622400 if score >= self.__settings.nickgoal / 2 else self.__settings.bantime
+                            # Restrict all new users for specified in config time...
+                            self.__bot.restrict_chat_member(message.chat.id, new_chat_member.id,
+                                                            until_date=int(time.time()) + limtime,
+                                                            can_send_messages=True, can_send_media_messages=False,
+                                                            can_send_other_messages=False,
+                                                            can_add_web_page_previews=False)
+                    except Exception:
+                        self.__logger.exception(self.__get_lm('as_restex').format(message.from_user.id, message.chat.id,
+                                                                                  message.chat.title))
             except Exception:
                 self.__logger.exception(self.__get_lm('as_joinhex'))
 

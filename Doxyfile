@@ -22,7 +22,7 @@
 
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = ecasbot
-PROJECT_NUMBER         = 1.4.0
+PROJECT_NUMBER         = 1.4.1
 PROJECT_BRIEF          = "EC AntiSpam bot for Telegram messenger"
 PROJECT_LOGO           =
 OUTPUT_DIRECTORY       = doxyout

@@ -23,7 +23,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='ecasbot',
-    version='1.4.0',
+    version='1.4.1',
     packages=find_packages(),
     package_dir={
         'ecasbot': 'ecasbot',

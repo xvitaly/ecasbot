@@ -72,7 +72,8 @@ class MessagesEn(CommonLocale):
         'as_wipehg': 'Admin {} ({}) tried to remove {} messages in chat {} ({}). Action was denied.',
         'as_spamdbg': 'Received message from restricted user {} ({}) in chat {} ({}). Check results: '
                       'entitles: {}, spam: {}, forward: {}.\nContents: {}.',
-        'as_crashed': 'Bot crashed. Scheduling restart in 30 seconds.',
+        'as_crashed': 'The bot has crashed. Scheduling restart in 30 seconds.',
+        'as_crashdbg': 'The inner exception was: {}.',
         'as_resprot': 'Admin {} ({}) tried to restrict protected user {} ({}) in chat {} ({}).',
         'as_banprot': 'Admin {} ({}) tried to ban protected user {} ({}) in chat {} ({}).'
     }

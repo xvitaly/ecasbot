@@ -40,6 +40,14 @@ class Settings:
         return os.getenv('APIKEY')
 
     @property
+    def rotatelogs(self) -> bool:
+        """
+        Checks if the bot will need to use an internal log rotate function.
+        :return: Return True if an internal log rotate is enabled.
+        """
+        return os.getenv('ROTATE_LOGS') == 1
+
+    @property
     def chkrgx(self) -> str:
         """
         Get regular expression for checking user names on joining supergroups.

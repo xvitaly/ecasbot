@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
+import logging.handlers
 import sys
 import time
 import telebot
@@ -203,7 +204,8 @@ class ASBot:
         self.__logger = logging.getLogger(__name__)
         self.__logger.setLevel(self.__settings.get_logging_level())
         if self.__settings.logtofile:
-            f_handler = logging.FileHandler(self.__settings.logtofile)
+            f_handler = logging.handlers.TimedRotatingFileHandler(self.__settings.logtofile, when='W0', backupCount=5) \
+                if self.__settings.rotatelogs else logging.FileHandler(self.__settings.logtofile)
             f_handler.setFormatter(logging.Formatter(self.__settings.fmtlog))
             self.__logger.addHandler(f_handler)
         else:

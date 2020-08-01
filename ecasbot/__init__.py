@@ -667,9 +667,9 @@ class ASBot:
         while True:
             try:
                 self.__bot.polling(none_stop=True)
-            except Exception as runner_ex:
+            except Exception:
                 self.__logger.error(self.__get_lm('as_crashed'))
-                self.__logger.debug(self.__get_lm('as_crashdbg').format(runner_ex))
+                self.__logger.debug(self.__get_lm('as_crashdbg'), exc_info=True)
                 time.sleep(30.0)
 
     def __init__(self) -> None:

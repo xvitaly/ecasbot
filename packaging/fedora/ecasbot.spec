@@ -1,5 +1,5 @@
 Name: ecasbot
-Version: 1.4.2
+Version: 1.5.0
 Release: 1%{?dist}
 
 Summary: EC AntiSpam bot
@@ -86,32 +86,5 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
-* Mon Jul 27 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.4.2-1
-- Updated to version 1.4.2.
-
-* Thu Jul 16 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.4.1-1
-- Updated to version 1.4.1.
-
-* Thu Jul 16 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.4.0-1
-- Updated to version 1.4.0.
-
-* Sat Feb 01 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.2-1
-- Updated to version 1.3.2.
-
-* Wed Jul 17 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.1-1
-- Updated to version 1.3.1.
-
-* Tue Jul 16 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.0-1
-- Updated to version 1.3.0.
-
-* Wed Apr 24 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.2.0-1
-- Updated to version 1.2.0.
-
-* Sun Jan 06 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.1.0-1
-- Updated to version 1.1.0.
-
-* Wed Oct 31 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.0-1
-- Updated to version 1.0.0.
-
-* Tue Sep 11 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 0-1
-- Initial SPEC release.
+* Sat Aug 08 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.5.0-1
+- Updated to version 1.5.0.

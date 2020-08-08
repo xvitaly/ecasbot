@@ -1,5 +1,5 @@
 {
-  "schema": 10,
+  "schema": 11,
   "admins": [],
   "restent": ["url", "text_link", "mention"],
   "stopwords": ["SEO", "Deleted"],
@@ -16,5 +16,6 @@
   "watches": [],
   "restlangs": [],
   "hidejoins": true,
-  "language": "en"
+  "language": "en",
+  "rotatelogs": false
 }

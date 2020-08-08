@@ -192,7 +192,7 @@ class ASBot:
         """
         Read settings from JSON configuration file.
         """
-        self.__schema = 10
+        self.__schema = 11
         self.__settings = Settings(self.__schema)
         if not self.__settings.tgkey:
             raise Exception(self.__messages.get_message('fb_notoken', self.__settings.language))

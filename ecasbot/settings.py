@@ -45,7 +45,7 @@ class Settings:
         Checks if the bot will need to use an internal log rotate function.
         :return: Return True if an internal log rotate is enabled.
         """
-        return self.__data['rotatelogs'] or (os.name != 'posix')
+        return self.__data['rotatelogs']
 
     @property
     def chkrgx(self) -> str:

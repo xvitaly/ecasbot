@@ -17,5 +17,6 @@
   "restlangs": [],
   "hidejoins": true,
   "language": "en",
-  "rotatelogs": false
+  "rotatelogs": false,
+  "duplicatelogs": false
 }

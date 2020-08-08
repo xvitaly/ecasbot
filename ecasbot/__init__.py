@@ -208,7 +208,7 @@ class ASBot:
                 if self.__settings.rotatelogs else logging.FileHandler(self.__settings.logtofile)
             f_handler.setFormatter(logging.Formatter(self.__settings.fmtlog))
             self.__logger.addHandler(f_handler)
-        else:
+        if (not self.__settings.logtofile) or self.__settings.duplicate_logs:
             e_handler = logging.StreamHandler(sys.stdout)
             e_handler.setFormatter(logging.Formatter(self.__settings.fmterr))
             self.__logger.addHandler(e_handler)

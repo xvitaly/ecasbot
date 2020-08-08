@@ -192,6 +192,14 @@ class Settings:
         """
         return self.__data['hidejoins']
 
+    @property
+    def duplicate_logs(self) -> bool:
+        """
+        Duplicate logs to stdout channel when logging to files is enabled.
+        :return: Return True if duplicating logs to stdout is enabled.
+        """
+        return self.__data['duplicatelogs']
+
     def __check_watchers(self, chatid: int):
         """
         Check if specified chat ID listed in watch list.

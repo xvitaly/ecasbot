@@ -20,12 +20,14 @@ Available options of the `acasbot.json` configuration file:
  * `restlangs` - the list of restricted languages. The bot will score users using them in their clients;
  * `hidejoins` - enable or disable removing of join messages;
  * `language` - the default language for the logs and the internal messages;
- * `rotatelogs` - use an internal log rotate function (useful for configurations without logrotate.d; always enabled on all non-POSIX systems).
+ * `rotatelogs` - use an internal log rotate function (useful for configurations without logrotate.d; always enabled on all non-POSIX systems);
+ * `duplicatelogs` - allow to duplicate logs to stdout channel when logging to files is enabled.
 
 # Schema changes
 
 ## From 10 to 11
 The field `rotatelogs` was added. The default value is `false`.
+The field `duplicatelogs` was added. The default value is `false`.
 
 ## From 9 to 10
 The field `language` was added. The default value is `en`.

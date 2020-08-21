@@ -1,7 +1,7 @@
 # EC AntiSpam bot
 
 [![GitHub version](https://img.shields.io/github/v/release/xvitaly/ecasbot?sort=semver&color=brightgreen&logo=git&logoColor=white)](https://github.com/xvitaly/ecasbot/releases)
-[![PyPi Version](https://img.shields.io/pypi/v/ecasbot.svg?logo=pypi&logoColor=white)](https://pypi.python.org/pypi/ecasbot)
+[![PyPi Version](https://img.shields.io/pypi/v/ecasbot.svg?logo=pypi&logoColor=white)](https://pypi.org/project/ecasbot/)
 [![GitHub CI status](https://github.com/xvitaly/ecasbot/workflows/Python%20CI/badge.svg?branch=dev)](https://github.com/xvitaly/ecasbot/actions)
 [![Build status](https://travis-ci.org/xvitaly/ecasbot.svg?branch=master)](https://travis-ci.org/xvitaly/ecasbot)
 [![LGTM grade](https://img.shields.io/lgtm/grade/python/g/xvitaly/ecasbot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/xvitaly/ecasbot/context:python)

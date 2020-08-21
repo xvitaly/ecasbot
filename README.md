@@ -9,7 +9,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/xvitaly/ecasbot.svg?label=issues)](https://github.com/xvitaly/ecasbot/issues)
 ---
 
-EC AntiSpam bot for [Telegram](https://telegram.org/) messenger will block all multimedia messages and links from new users, some common spam bots and users who added them to super-groups.
+EC AntiSpam bot for the [Telegram](https://telegram.org/) messenger will automatically detect and block multimedia messages, links from the newly joined users, some common spam bots and users who added them to super-groups.
 
 Warning! Do not use `dev` branch in production due to lots of breaking changes. Use `master` or `stable` instead.
 

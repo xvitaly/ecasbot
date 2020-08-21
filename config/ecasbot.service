@@ -1,5 +1,5 @@
 [Unit]
-Description=EC AntiSpam bot
+Description=EC AntiSpam bot for the Telegram messenger
 After=network.target
 
 [Service]

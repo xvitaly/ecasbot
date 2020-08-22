@@ -17,6 +17,8 @@ Warning! Do not use `dev` branch in production due to lots of breaking changes. 
 # License
 GNU General Public License version 3. You can find it here: [LICENSE](LICENSE). External libraries can use another licenses, compatible with GNU GPLv3.
 
+Icon for the Windows executable and installer by [Chris Banks](https://www.deviantart.com/chrisbanks2), licensed under the terms of the [CC Attribution Non-Commercial](https://creativecommons.org/licenses/by-nc/4.0/legalcode).
+
 # Requirements
  * Python 3.6+;
  * [python-pytelegrambotapi](https://github.com/eternnoir/pyTelegramBotAPI);

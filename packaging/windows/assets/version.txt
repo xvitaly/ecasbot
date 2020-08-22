@@ -1,0 +1,49 @@
+# coding=utf-8
+
+# EC AntiSpam bot for the Telegram messenger
+# Copyright (c) 2017 - 2020 EasyCoding Team
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(1, 5, 2, 0),
+    prodvers=(1, 5, 2, 0),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x4,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0)
+    ),
+  kids=[
+    VarFileInfo([VarStruct(u'Translation', [0, 1200])]), 
+    StringFileInfo(
+      [
+      StringTable(
+        u'000004b0',
+        [StringStruct(u'Comments', u'EC AntiSpam bot for the Telegram messenger'),
+        StringStruct(u'CompanyName', u'EasyCoding Team'),
+        StringStruct(u'FileDescription', u'EC AntiSpam bot for the Telegram messenger'),
+        StringStruct(u'FileVersion', u'1.5.2.0'),
+        StringStruct(u'InternalName', u'ecasbot.exe'),
+        StringStruct(u'LegalCopyright', u'(c) 2005-2020 EasyCoding Team. All rights reserved.'),
+        StringStruct(u'LegalTrademarks', u'EasyCoding, EasyCoding Software Group and EasyCoding Team are trademarks of EasyCoding Team.'),
+        StringStruct(u'OriginalFilename', u'ecabot.exe'),
+        StringStruct(u'ProductName', u'EC AntiSpam bot'),
+        StringStruct(u'ProductVersion', u'1.5.2.0'),
+        StringStruct(u'Assembly Version', u'1.5.2.0')])
+      ])
+  ]
+)

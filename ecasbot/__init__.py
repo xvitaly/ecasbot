@@ -195,7 +195,7 @@ class ASBot:
         self.__schema = 11
         self.__settings = Settings(self.__schema)
         if not self.__settings.tgkey:
-            raise Exception(self.__messages.get_message('fb_notoken', self.__settings.language))
+            raise Exception(self.__messages.get_message('as_notoken', self.__settings.language))
 
     def __set_logger(self) -> None:
         """

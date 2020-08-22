@@ -106,3 +106,6 @@ fabric.properties
 
 # Doxygen output files
 /doxyout/
+
+# PyInstaller auto-generated files
+/packaging/windows/*.spec

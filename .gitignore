@@ -109,3 +109,4 @@ fabric.properties
 
 # PyInstaller auto-generated files
 /packaging/windows/*.spec
+/packaging/windows/results/

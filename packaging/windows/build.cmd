@@ -18,6 +18,7 @@ rem along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 title Building release binaries for Windows...
 
+set RELVER=151
 set GPGKEY=A989AAAA
 set PYTHONOPTIMIZE=1
 
@@ -39,7 +40,16 @@ pyinstaller ^
     --icon=assets\ecasbot.ico ^
     ..\..\ecasbot\scripts\runbot.py
 
+echo Signing binaries...
+"%ProgramFiles(x86)%\GnuPG\bin\gpg.exe" --sign --detach-sign --default-key %GPGKEY% results\dist\ecasbot.exe
+
+echo Compiling Installer...
+"%ProgramFiles(x86)%\Inno Setup 6\ISCC.exe" inno\ecasbot.iss
+
+echo Signing built artifacts...
+"%ProgramFiles(x86)%\GnuPG\bin\gpg.exe" --sign --detach-sign --default-key %GPGKEY% results\ecasbot_%RELVER%.exe
+
 echo Removing temporary files and directories...
 del ecasbot.spec
 rd /S /Q "results\build"
-rd /S /Q "results\spec"
+rd /S /Q "results\dist"

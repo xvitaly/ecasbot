@@ -30,7 +30,7 @@ AppPublisherURL=https://www.easycoding.org/
 AppVersion={#VERSION}
 AppSupportURL=https://github.com/xvitaly/ecasbot/issues
 AppUpdatesURL=https://github.com/xvitaly/ecasbot/releases
-DefaultDirName={code:GetDefRoot}\ecasbot
+DefaultDirName={localappdata}\ecasbot
 DefaultGroupName=EC AntiSpam bot
 AllowNoIcons=yes
 LicenseFile=..\..\..\LICENSE
@@ -68,6 +68,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: "{#BASEDIR}\ecasbot.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#BASEDIR}\ecasbot.json"; DestDir: "{userappdata}\ecasbot"; Flags: ignoreversion
 
 #ifdef _RELEASE
 Source: "{#BASEDIR}\ecasbot.exe.sig"; DestDir: "{app}"; Flags: ignoreversion
@@ -80,10 +81,4 @@ Name: "{userdesktop}\EC AntiSpam bot"; Filename: "{app}\ecasbot.exe"; Tasks: des
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\EC AntiSpam bot"; Filename: "{app}\ecasbot.exe"; Tasks: quicklaunchicon
 
 [Code]
-function GetDefRoot(Param: String): String;
-begin
-  if not IsAdmin then
-    Result := ExpandConstant('{localappdata}')
-  else
-    Result := ExpandConstant('{pf}')
-end;
+

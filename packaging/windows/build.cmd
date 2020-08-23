@@ -40,6 +40,9 @@ pyinstaller ^
     --icon=assets\ecasbot.ico ^
     ..\..\ecasbot\scripts\runbot.py
 
+echo Copying assets...
+copy /Y ..\..\config\ecasbot.json results\dist\ecasbot.json
+
 echo Signing binaries...
 "%ProgramFiles(x86)%\GnuPG\bin\gpg.exe" --sign --detach-sign --default-key %GPGKEY% results\dist\ecasbot.exe
 

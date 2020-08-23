@@ -80,6 +80,9 @@ Name: "{group}\{cm:ProgramOnTheWeb,EC AntiSpam bot}"; Filename: "https://github.
 Name: "{userdesktop}\EC AntiSpam bot"; Filename: "{app}\ecasbot.exe"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\EC AntiSpam bot"; Filename: "{app}\ecasbot.exe"; Tasks: quicklaunchicon
 
+[Registry]
+Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "APIKEY"; ValueData: "{code:GetAPIKey}"; Flags: uninsdeletevalue
+
 [Code]
 var
     APIKeyPage: TInputQueryWizardPage;
@@ -95,7 +98,7 @@ begin
     AddAPIKeyPage();
 end;
 
-function GetAPIKey(): String;
+function GetAPIKey(Value: String): String;
 begin
     Result := APIKeyPage.Values[0];
 end;

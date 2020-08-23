@@ -59,8 +59,8 @@ VersionInfoCompany=EasyCoding Team
 BeveledLabel=EasyCoding Team
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"; InfoBeforeFile: "locale\en\readme.txt"
-Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"; InfoBeforeFile: "locale\ru\readme.txt"
+Name: "english"; MessagesFile: "compiler:Default.isl,locale\en\cm.isl"; InfoBeforeFile: "locale\en\readme.txt"
+Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl,locale\ru\cm.isl"; InfoBeforeFile: "locale\ru\readme.txt"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
@@ -81,4 +81,41 @@ Name: "{userdesktop}\EC AntiSpam bot"; Filename: "{app}\ecasbot.exe"; Tasks: des
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\EC AntiSpam bot"; Filename: "{app}\ecasbot.exe"; Tasks: quicklaunchicon
 
 [Code]
+var
+    APIKeyPage: TInputQueryWizardPage;
 
+procedure AddAPIKeyPage();
+begin
+    APIKeyPage := CreateInputQueryPage(wpSelectTasks, CustomMessage('APIKeyPageCaption'), CustomMessage('APIKeyPageDescription'), CustomMessage('APIKeyPageAdditionalText'));
+    APIKeyPage.Add(CustomMessage('APIKeyPageInputFieldText'), False);
+end;
+
+procedure InitializeWizard();
+begin
+    AddAPIKeyPage();
+end;
+
+function GetAPIKey(): String;
+begin
+    Result := APIKeyPage.Values[0];
+end;
+
+function NextButtonClick(CurPageID: Integer): Boolean;
+begin
+    if CurPageID = APIKeyPage.ID then
+        begin
+            if Length(APIKeyPage.Values[0]) < 10 then
+                begin
+                    MsgBox(CustomMessage('APIKeyPageErrorMessage'), mbError, MB_OK);
+                    Result := False
+                end
+            else
+                begin
+                    Result := True
+                end
+        end
+    else
+        begin
+            Result := True
+        end
+end;

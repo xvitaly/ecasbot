@@ -64,6 +64,7 @@ Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl,locale\ru\cm.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
+Name: "autorun"; Description: "{cm:TaskAutorun}"; GroupDescription: "{cm:TaskCategoryAutorun}"; Flags: unchecked
 
 [Files]
 Source: "{#BASEDIR}\ecasbot.exe"; DestDir: "{app}"; Flags: ignoreversion
@@ -78,6 +79,7 @@ Source: "{#BASEDIR}\ecasbot.exe.sig"; DestDir: "{app}"; Flags: ignoreversion
 Name: "{group}\EC AntiSpam bot"; Filename: "{app}\launcher.cmd"; IconFilename: "{app}\ecasbot.exe"
 Name: "{group}\{cm:ProgramOnTheWeb,EC AntiSpam bot}"; Filename: "https://github.com/xvitaly/ecasbot"
 Name: "{userdesktop}\EC AntiSpam bot"; Filename: "{app}\launcher.cmd"; IconFilename: "{app}\ecasbot.exe"; Tasks: desktopicon
+Name: "{userappdata}\Microsoft\Windows\Start Menu\Programs\Startup\EC AntiSpam bot"; Filename: "{app}\launcher.cmd"; IconFilename: "{app}\ecasbot.exe"; Tasks: autorun
 
 [Code]
 var
@@ -104,7 +106,7 @@ begin
     Contents[2] := 'title EC AntiSpam bot';
     Contents[3] := 'set APIKEY=' + APIKeyPage.Values[0];
     Contents[4] := '';
-    Contents[5] := 'ecasbot.exe';
+    Contents[5] := '.\ecasbot.exe';
     Result := SaveStringsToFile(FileName, Contents, False)
 end;
 

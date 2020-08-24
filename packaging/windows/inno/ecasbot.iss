@@ -64,24 +64,20 @@ Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl,locale\ru\cm.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
-Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
 Source: "{#BASEDIR}\ecasbot.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BASEDIR}\ecasbot.json"; DestDir: "{userappdata}\ecasbot"; Flags: ignoreversion
+Source: "{tmp}\launcher.cmd"; DestDir: "{app}"; Flags: external
 
 #ifdef _RELEASE
 Source: "{#BASEDIR}\ecasbot.exe.sig"; DestDir: "{app}"; Flags: ignoreversion
 #endif
 
 [Icons]
-Name: "{group}\EC AntiSpam bot"; Filename: "{app}\ecasbot.exe"
+Name: "{group}\EC AntiSpam bot"; Filename: "{app}\launcher.cmd"; IconFilename: "{app}\ecasbot.exe"
 Name: "{group}\{cm:ProgramOnTheWeb,EC AntiSpam bot}"; Filename: "https://github.com/xvitaly/ecasbot"
-Name: "{userdesktop}\EC AntiSpam bot"; Filename: "{app}\ecasbot.exe"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\EC AntiSpam bot"; Filename: "{app}\ecasbot.exe"; Tasks: quicklaunchicon
-
-[Registry]
-Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "APIKEY"; ValueData: "{code:GetAPIKey}"; Flags: uninsdeletevalue
+Name: "{userdesktop}\EC AntiSpam bot"; Filename: "{app}\launcher.cmd"; IconFilename: "{app}\ecasbot.exe"; Tasks: desktopicon
 
 [Code]
 var
@@ -90,17 +86,26 @@ var
 procedure AddAPIKeyPage();
 begin
     APIKeyPage := CreateInputQueryPage(wpSelectTasks, CustomMessage('APIKeyPageCaption'), CustomMessage('APIKeyPageDescription'), CustomMessage('APIKeyPageAdditionalText'));
-    APIKeyPage.Add(CustomMessage('APIKeyPageInputFieldText'), False);
+    APIKeyPage.Add(CustomMessage('APIKeyPageInputFieldText'), False)
 end;
 
 procedure InitializeWizard();
 begin
-    AddAPIKeyPage();
+    AddAPIKeyPage()
 end;
 
-function GetAPIKey(Value: String): String;
+function GenerateBotLauncher(FileName: String): Boolean;
+var
+    Contents: TArrayOfString;
 begin
-    Result := APIKeyPage.Values[0];
+    SetArrayLength(Contents, 6);
+    Contents[0] := '@echo off';
+    Contents[1] := '';
+    Contents[2] := 'title EC AntiSpam bot';
+    Contents[3] := 'set APIKEY=' + APIKeyPage.Values[0];
+    Contents[4] := '';
+    Contents[5] := 'ecasbot.exe';
+    Result := SaveStringsToFile(FileName, Contents, False)
 end;
 
 function NextButtonClick(CurPageID: Integer): Boolean;
@@ -114,7 +119,7 @@ begin
                 end
             else
                 begin
-                    Result := True
+                    Result := GenerateBotLauncher(ExpandConstant('{tmp}\launcher.cmd'));
                 end
         end
     else

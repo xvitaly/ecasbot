@@ -62,24 +62,40 @@ BeveledLabel=EasyCoding Team
 Name: "english"; MessagesFile: "compiler:Default.isl,locale\en\cm.isl"; InfoBeforeFile: "locale\en\readme.txt"
 Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl,locale\ru\cm.isl"; InfoBeforeFile: "locale\ru\readme.txt"
 
+[Types]
+Name: standard; Description: "{cm:TypeStandardDescription}"
+Name: system; Description: "{cm:TypeSystemDescription}"
+
+[Components]
+Name: "core"; Description: "{cm:ComponentCoreDescription}"; Types: standard system; Flags: fixed
+Name: "apikey"; Description: "{cm:ComponentAPIKeySubDescription}"; Types: standard system; Flags: exclusive
+Name: "apikey\sysenv"; Description: "{cm:ComponentAPIKeySysEnvDescription}"; Types: system; Flags: exclusive restart
+Name: "apikey\launcher"; Description: "{cm:ComponentAPIKeyLauncherDescription}"; Types: standard; Flags: exclusive
+
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
 Name: "autorun"; Description: "{cm:TaskAutorun}"; GroupDescription: "{cm:TaskCategoryAutorun}"; Flags: unchecked
 
 [Files]
-Source: "{#BASEDIR}\ecasbot.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#BASEDIR}\ecasbot.json"; DestDir: "{userappdata}\ecasbot"; Flags: ignoreversion
-Source: "{tmp}\launcher.cmd"; DestDir: "{app}"; Flags: external
+Source: "{#BASEDIR}\ecasbot.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: core
+Source: "{#BASEDIR}\ecasbot.json"; DestDir: "{userappdata}\ecasbot"; Flags: ignoreversion; Components: core
+Source: "{tmp}\launcher.cmd"; DestDir: "{app}"; Flags: external; Components: apikey\launcher
 
 #ifdef _RELEASE
-Source: "{#BASEDIR}\ecasbot.exe.sig"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#BASEDIR}\ecasbot.exe.sig"; DestDir: "{app}"; Flags: ignoreversion; Components: core
 #endif
 
 [Icons]
-Name: "{group}\EC AntiSpam bot"; Filename: "{app}\launcher.cmd"; IconFilename: "{app}\ecasbot.exe"
-Name: "{group}\{cm:ProgramOnTheWeb,EC AntiSpam bot}"; Filename: "https://github.com/xvitaly/ecasbot"
-Name: "{userdesktop}\EC AntiSpam bot"; Filename: "{app}\launcher.cmd"; IconFilename: "{app}\ecasbot.exe"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Windows\Start Menu\Programs\Startup\EC AntiSpam bot"; Filename: "{app}\launcher.cmd"; IconFilename: "{app}\ecasbot.exe"; Tasks: autorun
+Name: "{group}\EC AntiSpam bot"; Filename: "{app}\ecasbot.exe"; Components: "apikey\sysenv"
+Name: "{group}\EC AntiSpam bot"; Filename: "{app}\launcher.cmd"; IconFilename: "{app}\ecasbot.exe"; Components: "apikey\launcher"
+Name: "{group}\{cm:ProgramOnTheWeb,EC AntiSpam bot}"; Filename: "https://github.com/xvitaly/ecasbot"; Components: core
+Name: "{userdesktop}\EC AntiSpam bot"; Filename: "{app}\ecasbot.exe"; Components: "apikey\sysenv"; Tasks: desktopicon
+Name: "{userdesktop}\EC AntiSpam bot"; Filename: "{app}\launcher.cmd"; IconFilename: "{app}\ecasbot.exe"; Components: "apikey\launcher"; Tasks: desktopicon
+Name: "{userappdata}\Microsoft\Windows\Start Menu\Programs\Startup\EC AntiSpam bot"; Filename: "{app}\launcher.cmd"; IconFilename: "{app}\ecasbot.exe"; Components: "apikey\launcher"; Tasks: autorun
+
+[Registry]
+Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "APIKEY"; ValueData: "{code:GetAPIKey}"; Flags: uninsdeletevalue; Components: "apikey\sysenv"
+Root: HKCU; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "ecasbot"; ValueData: "{app}\ecasbot.exe"; Flags: uninsdeletevalue; Components: "apikey\sysenv"; Tasks: autorun
 
 [Code]
 var
@@ -99,6 +115,11 @@ end;
 function GetAPIKeyInternal(): String;
 begin
     Result := APIKeyPage.Values[0]
+end;
+
+function GetAPIKey(Value: String): String;
+begin
+    Result := GetAPIKeyInternal()
 end;
 
 function GenerateBotLauncher(FileName: String): Boolean;

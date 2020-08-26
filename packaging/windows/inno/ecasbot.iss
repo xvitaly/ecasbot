@@ -96,6 +96,11 @@ begin
     AddAPIKeyPage()
 end;
 
+function GetAPIKeyInternal(): String;
+begin
+    Result := APIKeyPage.Values[0]
+end;
+
 function GenerateBotLauncher(FileName: String): Boolean;
 var
     Contents: TArrayOfString;
@@ -104,7 +109,7 @@ begin
     Contents[0] := '@echo off';
     Contents[1] := '';
     Contents[2] := 'title EC AntiSpam bot';
-    Contents[3] := 'set APIKEY=' + APIKeyPage.Values[0];
+    Contents[3] := 'set APIKEY=' + GetAPIKeyInternal();
     Contents[4] := '';
     Contents[5] := '.\ecasbot.exe';
     Result := SaveStringsToFile(FileName, Contents, False)

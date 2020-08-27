@@ -1,0 +1,35 @@
+version: 1.{build}
+pull_requests:
+  do_not_increment_build_number: true
+max_jobs: 1
+image: Visual Studio 2019
+clone_depth: 1
+init:
+- cmd: git config --global core.autocrlf true
+install:
+- cmd: >-
+    set PATH=C:\Python38-x64;C:\Python38-x64\Scripts;%PATH%
+
+    pip3 install -r requirements.txt
+
+    pip3 install pyinstaller
+build_script:
+- cmd: >-
+    set PATH=C:\Python38-x64;C:\Python38-x64\Scripts;%PATH%
+
+    set CI_HASH=%APPVEYOR_REPO_COMMIT:~0,7%
+
+    set PYTHONOPTIMIZE=1
+
+    cd packaging\windows
+
+    pyinstaller --log-level=INFO --distpath=results\dist --workpath=results\build --clean --noconfirm --onefile --noupx --name=ecasbot --version-file=assets\version.txt --manifest=assets\ecasbot.manifest --icon=assets\ecasbot.ico ..\..\ecasbot\scripts\runbot.py
+
+    copy /Y ..\..\config\ecasbot.json results\dist\ecasbot.json
+
+    "%ProgramFiles(x86)%\Inno Setup 6\ISCC.exe" inno\ecasbot.iss
+test: off
+artifacts:
+- path: packaging\windows\results\snapshot_*.exe
+  name: innosetup
+deploy: off

@@ -2,7 +2,7 @@ Name: ecasbot
 Version: 1.5.1
 Release: 1%{?dist}
 
-Summary: EC AntiSpam bot
+Summary: EC AntiSpam bot for the Telegram messenger
 License: GPLv3+
 URL: https://github.com/xvitaly/%{name}
 Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -24,9 +24,9 @@ Requires(pre): shadow-utils
 %{?python_provide:%python_provide python3-%{name}}
 
 %description
-EC AntiSpam bot for Telegram messenger will block all multimedia
-messages and links from new users, block some common spam bots and
-users who added them to super-groups.
+EC AntiSpam bot for the Telegram messenger will automatically detect
+and block multimedia messages, links from the newly joined users,
+some common spam bots and users who added them to super-groups.
 
 %prep
 %autosetup -p1

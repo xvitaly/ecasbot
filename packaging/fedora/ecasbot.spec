@@ -1,5 +1,5 @@
 Name: ecasbot
-Version: 1.5.1
+Version: 1.5.2
 Release: 1%{?dist}
 
 Summary: EC AntiSpam bot for the Telegram messenger
@@ -86,5 +86,5 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
-* Sat Aug 08 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.5.1-1
-- Updated to version 1.5.1.
+* Fri Aug 28 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.5.2-1
+- Updated to version 1.5.2.

@@ -18,7 +18,7 @@ rem along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 title Building release binaries for Windows...
 
-set RELVER=151
+set RELVER=152
 set GPGKEY=A989AAAA
 set PYTHONOPTIMIZE=1
 

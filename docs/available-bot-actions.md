@@ -4,40 +4,40 @@
 
 Bot will allow to use basic admin features in supergroups for:
 
- * creator of supergroup;
- * admins of supergroup;
- * any users from `admins` setting of configuration file.
+  * creator of the supergroup;
+  * admins of the supergroup;
+  * any users from the `admins` setting of the [configuration file](schema-documentation.md).
 
 ## Basic admin actions
 
-List of currently supported admin actions in supergroups:
+List of currently supported admin actions for supergroups:
 
- * `/remove` or `/rm` (replies) - remove specified message;
- * `/wipe RANGE` (direct) - remove messages from specified range (will return an error if the range is greater than 50);
- * `/ban` or `/block` (replies) - permanently block author of specified message in supergroup;
- * `/restrict` or `/mute` (replies) - permanently restrict author of specified message in supergroup;
- * `/restrict DAYS` or `/mute DAYS` (replies) - restrict author of specified message in supergroup for specified number of days;
- * `/unrestrict` or `/un` (replies) - remove all restrictions from author of specified message in supergroup;
- * `/unban ID` (direct) - remove all restrictions from author specified Telegram user ID in supergroup;
- * `/subscribe` (direct) - subscribe to all user reports issued in supergroup;
- * `/unsubscribe` (direct) - unsubscribe from all user reports issued in supergroup;
- * `/pin` (replies) - pin specified message in supergroup;
- * `/unpin` (direct) - unpin all messages from supergroup.
+  * `/remove` or `/rm` (replies) - remove the specified message;
+  * `/wipe RANGE` (direct) - remove messages from the specified range (will return an error if the range is greater than 50);
+  * `/ban` or `/block` (replies) - permanently block the author of the specified message in the supergroup;
+  * `/restrict` or `/mute` (replies) - permanently restrict the author of the specified message in the supergroup;
+  * `/restrict DAYS` or `/mute DAYS` (replies) - restrict the author of the specified message in the supergroup for the specified number of days;
+  * `/unrestrict` or `/un` (replies) - remove all restrictions from the author of the specified message in the supergroup;
+  * `/unban ID` (direct) - remove all restrictions from the author of the specified Telegram user ID in the supergroup;
+  * `/subscribe` (direct) - subscribe to all user reports issued in the supergroup;
+  * `/unsubscribe` (direct) - unsubscribe from all user reports issued in the supergroup;
+  * `/pin` (replies) - pin the specified message in the supergroup;
+  * `/unpin` (direct) - unpin all messages from the supergroup.
 
 ## Advanced admin actions
 
-This actions can be executed only by bot owners and admins specified in `admins` setting of configuration file.
+This actions can be executed only by bot owners and admins specified in the `admins` setting of the configuration file.
 
 List of currently supported advanced admin actions:
 
- * `/leave CHAT_ID` (private messages only) - force bot to leave chat specified in `CHAT_ID` parameter;
- * `/sw_add WORD` (private messages only) - add a new stopword `WORD` to the list of restricted words for new users;
- * `/sw_remove WORD` (private messages only) - remove stopword `WORD` from the list of restricted words for new users;
- * `/sw_list` (private messages only) - show all restricted words for new users.
+  * `/leave CHAT_ID` (private messages only) - force the bot to leave the chat specified in the `CHAT_ID` parameter;
+  * `/sw_add WORD` (private messages only) - add a new stopword `WORD` to the list of restricted words for the new users;
+  * `/sw_remove WORD` (private messages only) - remove stopword `WORD` from the list of restricted words for the new users;
+  * `/sw_list` (private messages only) - show the list of restricted words for the new users.
 
 ## User actions
 
 List of currently supported user actions:
 
- * `/report` or `/report REASON` (replies) - report specified message to admins (with optional reason);
- * `/checkme` (private messages only) - check user profile and show current score for debug purposes.
+  * `/report` or `/report REASON` (replies) - report the specified message to admins (with optional reason);
+  * `/checkme` (private messages only) - check user profile and show current score for the debug purposes.

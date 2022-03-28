@@ -1,17 +1,26 @@
 name: Python CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - 'master'
+      - 'dev'
+  pull_request:
+    branches:
+      - 'master'
+      - 'dev'
 
 jobs:
   build:
-
+    name: Build project
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version: ['3.9', '3.10']
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Fetching sources
+      uses: actions/checkout@v3
     - name: Setting up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
@@ -28,6 +37,3 @@ jobs:
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Running tests
-      run: |
-        python3 setup.py test

@@ -46,8 +46,10 @@ body:
       label: Platform
       multiple: false
       options:
-        - Microsoft Windows
         - GNU/Linux
+        - BSD (any variant)
+        - Microsoft Windows
+        - MacOS
         - Other
     validations:
       required: true
@@ -64,6 +66,7 @@ body:
       label: Python version
       description: >
         Please specify Python interpreter version.
+      placeholder: Python 3.10.2
     validations:
       required: true
   - type: dropdown
@@ -74,6 +77,7 @@ body:
         - Docker
         - PyPI package
         - Distribution package
+        - EXE installer
         - PIP manual install
         - Other
     validations:

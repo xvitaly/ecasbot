@@ -1,6 +1,6 @@
-﻿# SPDX-FileCopyrightText: 2017-2022 EasyCoding Team
-#
-# SPDX-License-Identifier: GPL-3.0-or-later
+﻿; SPDX-FileCopyrightText: 2017-2022 EasyCoding Team
+;
+; SPDX-License-Identifier: GPL-3.0-or-later
 
 [CustomMessages]
 APIKeyPageCaption=Токен API

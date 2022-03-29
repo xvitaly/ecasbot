@@ -11,38 +11,24 @@
 [![GitHub issues](https://img.shields.io/github/issues/xvitaly/ecasbot.svg?label=issues)](https://github.com/xvitaly/ecasbot/issues)
 ---
 
+## About
+
 EC AntiSpam bot for the [Telegram](https://telegram.org/) messenger will automatically detect and block multimedia messages, links from the newly joined users, some common spam bots and users who added them to super-groups.
 
-Warning! Do not use `dev` branch in production due to lots of breaking changes. Use `master` or `stable` instead.
+Warning! Do not use `dev` branch in production due to lots of breaking changes. Use `master` or a tagged versions instead.
 
-# License
+## License
 GNU General Public License version 3. You can find it here: [LICENSE](LICENSE). External libraries can use another licenses, compatible with GNU GPLv3.
 
 Icon for the Windows executable and installer by [Chris Banks](https://www.deviantart.com/chrisbanks2), licensed under the terms of the [CC Attribution Non-Commercial](https://creativecommons.org/licenses/by-nc/4.0/legalcode).
 
-# Requirements
+## Requirements
   * Python 3.6+;
   * [python-pytelegrambotapi](https://github.com/eternnoir/pyTelegramBotAPI);
   * [python-requests](https://github.com/requests/requests);
   * [python-six](https://github.com/benjaminp/six);
   * [python-emoji](https://github.com/carpedm20/emoji).
 
-# Documentation
+## Documentation
 
-## Basic usage
-  * [List of available bot actions](docs/available-bot-actions.md).
-  * [Configuration file documentation](docs/schema-documentation.md).
-
-## Installation
-  * [Installing the bot from PyPI](docs/pypi-installation.md).
-  * [Installing the bot on Windows](docs/windows-installation.md).
-  * [Installing the bot on Fedora](docs/fedora-installation.md).
-  * [Installation in Python virtual environment](docs/virtualenv-installation.md).
-
-## Advanced configuration
-  * [Controling this bot using systemd](docs/controling-with-systemd.md).
-  * [Configuration using environment options](docs/bot-environment-options.md).
-
-## Development
-  * [Configuration file schema changes](docs/schema-changes.md).
-  * [Building Fedora package](docs/building-fedora-package.md).
+Documentation is available [here](docs/README.md).

@@ -1,4 +1,3 @@
 requests>=2.22.0
-six>=1.14.0
 pytelegrambotapi>=3.7.2
 emoji>=0.5.4

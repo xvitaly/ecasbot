@@ -1,4 +1,8 @@
-﻿[CustomMessages]
+﻿# SPDX-FileCopyrightText: 2017-2022 EasyCoding Team
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+[CustomMessages]
 APIKeyPageCaption=Токен API
 APIKeyPageDescription=Ввод токена Telegram Bot API.
 APIKeyPageAdditionalText=Пожалуйста, введите на этой странице свой токен Telegram Bot API. Если у вас его нет, получить новый можно у бота @BotFather.

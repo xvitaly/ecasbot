@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2017-2022 EasyCoding Team
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 Name: ecasbot
 Version: 1.5.2
 Release: 1%{?dist}

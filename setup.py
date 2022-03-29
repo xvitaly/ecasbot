@@ -6,8 +6,11 @@
 
 from setuptools import setup, find_packages
 
-with open("README.md", "r") as fh:
+with open('README.md', 'r') as fh:
     long_description = fh.read()
+
+with open('requirements.txt', 'r') as fr:
+    requirements = fr.read().splitlines()
 
 setup(
     name='ecasbot',
@@ -17,13 +20,13 @@ setup(
         'ecasbot': 'ecasbot',
     },
     url='https://github.com/xvitaly/ecasbot',
+    license='GPLv3',
     entry_points={
         'console_scripts': [
             'ecasbot = ecasbot.scripts.runbot:main',
         ],
     },
-    license='GPLv3',
-    install_requires=['pytelegrambotapi', 'requests', 'six', 'emoji'],
+    install_requires=requirements,
     author='Vitaly Zaitsev',
     author_email='vitaly@easycoding.org',
     long_description=long_description,

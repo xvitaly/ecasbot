@@ -1,4 +1,4 @@
-FROM fedora:latest
+FROM fedora:35
 
 RUN dnf install -y python3-pip && dnf clean all
 

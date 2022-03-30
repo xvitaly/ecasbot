@@ -49,12 +49,14 @@ Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl,locale\ru\cm.isl"
 [Types]
 Name: standard; Description: "{cm:TypeStandardDescription}"
 Name: system; Description: "{cm:TypeSystemDescription}"
+Name: nokeys; Description: "{cm:TypeNoKeysDescription}"
 
 [Components]
-Name: "core"; Description: "{cm:ComponentCoreDescription}"; Types: standard system; Flags: fixed
-Name: "apikey"; Description: "{cm:ComponentAPIKeySubDescription}"; Types: standard system; Flags: exclusive
+Name: "core"; Description: "{cm:ComponentCoreDescription}"; Types: standard system nokeys; Flags: fixed
+Name: "apikey"; Description: "{cm:ComponentAPIKeySubDescription}"; Types: standard system nokeys; Flags: exclusive
 Name: "apikey\sysenv"; Description: "{cm:ComponentAPIKeySysEnvDescription}"; Types: system; Flags: exclusive restart
 Name: "apikey\launcher"; Description: "{cm:ComponentAPIKeyLauncherDescription}"; Types: standard; Flags: exclusive
+Name: "apikey\nokeys"; Description: "{cm:ComponentAPIKeyNoKeyDescription}"; Types: nokeys; Flags: exclusive
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
@@ -106,6 +108,16 @@ begin
     Result := GetAPIKeyInternal()
 end;
 
+function VerifyAPICredentials(): Boolean;
+begin
+    Result := Length(GetAPIKeyInternal()) < 10
+end;
+
+function IsKeylessInstallation(): Boolean;
+begin
+    Result := WizardIsComponentSelected('apikey\nokeys')
+end;
+
 function GenerateBotLauncher(FileName: String): Boolean;
 var
     Contents: TArrayOfString;
@@ -116,15 +128,27 @@ begin
     Contents[2] := 'title EC AntiSpam bot';
     Contents[3] := 'set APIKEY=' + GetAPIKeyInternal();
     Contents[4] := '';
-    Contents[5] := '.\ecasbot.exe';
+    Contents[5] := '.\wloc.exe %*';
     Result := SaveStringsToFile(FileName, Contents, False)
+end;
+
+function ShouldSkipPage(CurPageID: Integer): Boolean;
+begin
+    if CurPageID = APIKeyPage.ID then
+        begin
+            Result := IsKeylessInstallation()
+        end
+    else
+        begin
+            Result := False
+        end
 end;
 
 function NextButtonClick(CurPageID: Integer): Boolean;
 begin
     if CurPageID = APIKeyPage.ID then
         begin
-            if Length(APIKeyPage.Values[0]) < 10 then
+            if (VerifyAPICredentials()) then
                 begin
                     MsgBox(CustomMessage('APIKeyPageErrorMessage'), mbError, MB_OK);
                     Result := False

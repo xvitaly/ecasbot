@@ -26,7 +26,6 @@ Icon for the Windows executable and installer by [Chris Banks](https://www.devia
   * Python 3.6+;
   * [python-pytelegrambotapi](https://github.com/eternnoir/pyTelegramBotAPI);
   * [python-requests](https://github.com/requests/requests);
-  * [python-six](https://github.com/benjaminp/six);
   * [python-emoji](https://github.com/carpedm20/emoji).
 
 ## Documentation

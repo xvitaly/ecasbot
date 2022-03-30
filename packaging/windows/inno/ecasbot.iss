@@ -2,10 +2,10 @@
 ;
 ; SPDX-License-Identifier: GPL-3.0-or-later
 
-#define VERSION GetFileVersion("..\results\dist\ecasbot.exe")
+#define VERSION GetVersionNumbersString("..\results\dist\ecasbot.exe")
 #define BASEDIR "..\results\dist"
-#define CI_COMMIT GetEnv('CI_HASH')
-#if CI_COMMIT == ''
+
+#if GetEnv('CI_HASH') == ''
 #define _RELEASE 1
 #endif
 
@@ -23,11 +23,7 @@ DefaultGroupName=EC AntiSpam bot
 AllowNoIcons=yes
 LicenseFile=..\..\..\LICENSE
 OutputDir=..\results
-#ifdef _RELEASE
-OutputBaseFilename=ecasbot_{#GetEnv('RELVER')}
-#else
-OutputBaseFilename=snapshot_{#CI_COMMIT}
-#endif
+OutputBaseFilename={#GetEnv('PREFIX')}_setup
 SetupIconFile=..\assets\ecasbot.ico
 UninstallDisplayIcon={app}\ecasbot.exe
 Compression=lzma2
@@ -37,7 +33,7 @@ PrivilegesRequiredOverridesAllowed=commandline
 ShowLanguageDialog=auto
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
-MinVersion=6.1.7601
+MinVersion=6.1sp1
 VersionInfoVersion={#VERSION}
 VersionInfoDescription=EC AntiSpam bot
 VersionInfoCopyright=(c) 2005-2020 EasyCoding Team. All rights reserved.

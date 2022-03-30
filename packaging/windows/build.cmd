@@ -52,5 +52,6 @@ if [%CI_HASH%] == [] (
 
 echo Removing temporary files and directories...
 del ecasbot.spec
+rd /S /Q "%LOCALAPPDATA%\pyinstaller"
 rd /S /Q "results\build"
 rd /S /Q "results\dist"

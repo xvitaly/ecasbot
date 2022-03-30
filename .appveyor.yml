@@ -27,17 +27,11 @@ build_script:
 
     set CI_HASH=%APPVEYOR_REPO_COMMIT:~0,7%
 
-    set PYTHONOPTIMIZE=1
-
     cd packaging\windows
 
-    pyinstaller --log-level=INFO --distpath=results\dist --workpath=results\build --clean --noconfirm --onefile --noupx --name=ecasbot --version-file=assets\version.txt --manifest=assets\ecasbot.manifest --icon=assets\ecasbot.ico ..\..\ecasbot\scripts\runbot.py
-
-    copy /Y ..\..\config\ecasbot.json results\dist\ecasbot.json
-
-    "%ProgramFiles(x86)%\Inno Setup 6\ISCC.exe" inno\ecasbot.iss
+    call build.cmd
 test: off
 artifacts:
 - path: packaging\windows\results\snapshot_*.exe
-  name: innosetup
+  name: installer
 deploy: off

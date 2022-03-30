@@ -128,7 +128,7 @@ begin
     Contents[2] := 'title EC AntiSpam bot';
     Contents[3] := 'set APIKEY=' + GetAPIKeyInternal();
     Contents[4] := '';
-    Contents[5] := '.\wloc.exe %*';
+    Contents[5] := '.\ecasbot.exe %*';
     Result := SaveStringsToFile(FileName, Contents, False)
 end;
 

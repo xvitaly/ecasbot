@@ -60,7 +60,7 @@ Name: "apikey\nokeys"; Description: "{cm:ComponentAPIKeyNoKeyDescription}"; Type
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
-Name: "autorun"; Description: "{cm:TaskAutorun}"; GroupDescription: "{cm:TaskCategoryAutorun}"; Flags: unchecked
+Name: "autorun"; Description: "{cm:TaskAutorun}"; GroupDescription: "{cm:TaskCategoryAutorun}"; Components: "apikey\sysenv or apikey\launcher"; Flags: unchecked
 
 [Files]
 Source: "{#BASEDIR}\ecasbot.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: core
@@ -75,7 +75,7 @@ Source: "{#BASEDIR}\ecasbot.exe.sig"; DestDir: "{app}"; Flags: ignoreversion; Co
 Name: "{group}\EC AntiSpam bot"; Filename: "{app}\ecasbot.exe"; Components: "apikey\sysenv"
 Name: "{group}\EC AntiSpam bot"; Filename: "{app}\launcher.cmd"; IconFilename: "{app}\ecasbot.exe"; Components: "apikey\launcher"
 Name: "{group}\{cm:ProgramOnTheWeb,EC AntiSpam bot}"; Filename: "https://github.com/xvitaly/ecasbot"; Components: core
-Name: "{userdesktop}\EC AntiSpam bot"; Filename: "{app}\ecasbot.exe"; Components: "apikey\sysenv"; Tasks: desktopicon
+Name: "{userdesktop}\EC AntiSpam bot"; Filename: "{app}\ecasbot.exe"; Components: "apikey\sysenv or apikey\nokeys"; Tasks: desktopicon
 Name: "{userdesktop}\EC AntiSpam bot"; Filename: "{app}\launcher.cmd"; IconFilename: "{app}\ecasbot.exe"; Components: "apikey\launcher"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Windows\Start Menu\Programs\Startup\EC AntiSpam bot"; Filename: "{app}\launcher.cmd"; IconFilename: "{app}\ecasbot.exe"; Components: "apikey\launcher"; Tasks: autorun
 

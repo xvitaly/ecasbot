@@ -15,7 +15,7 @@
 
 EC AntiSpam bot for the [Telegram](https://telegram.org/) messenger will automatically detect and block multimedia messages, links from the newly joined users, some common spam bots and users who added them to super-groups.
 
-Warning! Do not use `dev` branch in production due to lots of breaking changes. Use `master` or a tagged versions instead.
+Warning! Do not use `dev` branch in production due to lots of breaking changes. Use `master` or a [tagged versions](https://github.com/xvitaly/ecasbot/releases) instead.
 
 ## License
 GNU General Public License version 3. You can find it here: [LICENSE](LICENSE). External libraries can use another licenses, compatible with GNU GPLv3.

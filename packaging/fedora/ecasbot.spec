@@ -38,7 +38,7 @@ the %{name} package.
 
 %prep
 %autosetup -p1
-sed -e 's@"logtofile": "",@"logtofile": "%{_localstatedir}/log/%{pypi_name}/%{pypi_name}.log",@g' -i config/%{pypi_name}.json
+sed -e 's@"logtofile": "",@"logtofile": "%{_localstatedir}/log/%{pypi_name}/%{pypi_name}.log",@g' -i packaging/assets/%{pypi_name}.json
 
 %generate_buildrequires
 %pyproject_buildrequires -r
@@ -52,14 +52,14 @@ doxygen
 %pyproject_save_files %{pypi_name}
 
 mkdir -p %{buildroot}%{_sysconfdir}/%{pypi_name}
-install -p -m 0644 config/%{pypi_name}.json %{buildroot}%{_sysconfdir}/%{pypi_name}
-install -p -m 0644 config/%{pypi_name}-env.conf %{buildroot}%{_sysconfdir}/%{pypi_name}
+install -p -m 0644 packaging/assets/%{pypi_name}.json %{buildroot}%{_sysconfdir}/%{pypi_name}
+install -p -m 0644 packaging/assets/%{pypi_name}-env.conf %{buildroot}%{_sysconfdir}/%{pypi_name}
 
 mkdir -p %{buildroot}%{_sysconfdir}/logrotate.d
-install -p -m 0644 config/%{pypi_name}.logrotate %{buildroot}%{_sysconfdir}/logrotate.d/%{pypi_name}
+install -p -m 0644 packaging/assets/%{pypi_name}.logrotate %{buildroot}%{_sysconfdir}/logrotate.d/%{pypi_name}
 
 mkdir -p %{buildroot}%{_unitdir}
-install -p -m 0644 config/%{pypi_name}.service %{buildroot}%{_unitdir}
+install -p -m 0644 packaging/assets/%{pypi_name}.service %{buildroot}%{_unitdir}
 
 mkdir -p %{buildroot}%{_localstatedir}/log
 install -d -m 0755 %{buildroot}%{_localstatedir}/log/%{pypi_name}

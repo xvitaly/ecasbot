@@ -17,14 +17,15 @@ License: GPLv3+
 Summary: EC AntiSpam bot for the Telegram messenger
 URL: https://github.com/xvitaly/%{pypi_name}
 Source0: %{url}/archive/v%{version}/%{pypi_name}-%{version}.tar.gz
+Source1: %{pypi_name}.sysusers
 BuildArch: noarch
 
 BuildRequires: doxygen
 BuildRequires: python3-devel
 BuildRequires: systemd
+BuildRequires: systemd-rpm-macros
 
 %{?systemd_requires}
-Requires(pre): shadow-utils
 
 %description %_description
 
@@ -63,12 +64,11 @@ install -p -m 0644 config/%{pypi_name}.service %{buildroot}%{_unitdir}
 mkdir -p %{buildroot}%{_localstatedir}/log
 install -d -m 0755 %{buildroot}%{_localstatedir}/log/%{pypi_name}
 
+mkdir -p %{buildroot}%{_sysusersdir}
+install -p -m 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/%{pypi_name}.conf
+
 %pre
-getent group %{pypi_name} >/dev/null || groupadd -r %{pypi_name}
-getent passwd %{pypi_name} >/dev/null || \
-useradd -r -g %{pypi_name} -d /dev/null -s /sbin/nologin \
-  -c "%{pypi_name} service account" %{pypi_name}
-exit 0
+%sysusers_create_compat %{SOURCE1}
 
 %post
 %systemd_post %{pypi_name}.service
@@ -81,7 +81,7 @@ exit 0
 
 %files -f %{pyproject_files}
 %license LICENSE
-%doc README.md doxyout/html
+%doc README.md
 %{_bindir}/%{pypi_name}
 %dir %{_sysconfdir}/%{pypi_name}
 %attr(-,%{pypi_name},root) %config(noreplace) %{_sysconfdir}/%{pypi_name}/*.json
@@ -90,6 +90,10 @@ exit 0
 %attr(-,%{pypi_name},root) %dir %{_localstatedir}/log/%{pypi_name}
 %ghost %{_localstatedir}/log/%{pypi_name}/*.log*
 %{_unitdir}/%{pypi_name}.service
+%{_sysusersdir}/%{pypi_name}.conf
+
+%files doc
+%doc doxyout/html/*
 
 %changelog
 * Fri Aug 28 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.5.2-1

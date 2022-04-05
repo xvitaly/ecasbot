@@ -35,7 +35,7 @@ pyinstaller ^
     ..\..\ecasbot\scripts\runbot.py
 
 echo Copying assets...
-copy /Y ..\..\config\ecasbot.json results\dist\ecasbot.json
+copy /Y ..\assets\ecasbot.json results\dist\ecasbot.json
 
 echo Signing binaries...
 if [%CI_HASH%] == [] (

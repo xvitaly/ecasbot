@@ -118,7 +118,7 @@ begin
     Result := WizardIsComponentSelected('apikey\nokeys')
 end;
 
-function GenerateBotLauncher(FileName: String): Boolean;
+function GenerateLauncher(FileName: String): Boolean;
 var
     Contents: TArrayOfString;
 begin
@@ -155,7 +155,7 @@ begin
                 end
             else
                 begin
-                    Result := GenerateBotLauncher(ExpandConstant('{tmp}\launcher.cmd'));
+                    Result := GenerateLauncher(ExpandConstant('{tmp}\launcher.cmd'));
                 end
         end
     else

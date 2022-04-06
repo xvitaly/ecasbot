@@ -93,7 +93,7 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/%{pypi_name}.conf
 %{_sysusersdir}/%{pypi_name}.conf
 
 %files doc
-%doc doxyout/html/*
+%doc docs/html/*
 
 %changelog
 * Fri Aug 28 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.5.2-1

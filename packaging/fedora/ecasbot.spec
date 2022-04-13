@@ -50,22 +50,12 @@ doxygen
 %install
 %pyproject_install
 %pyproject_save_files %{pypi_name}
-
-mkdir -p %{buildroot}%{_sysconfdir}/%{pypi_name}
-install -p -m 0644 packaging/assets/%{pypi_name}.json %{buildroot}%{_sysconfdir}/%{pypi_name}
-install -p -m 0644 packaging/assets/%{pypi_name}-env.conf %{buildroot}%{_sysconfdir}/%{pypi_name}
-
-mkdir -p %{buildroot}%{_sysconfdir}/logrotate.d
-install -p -m 0644 packaging/assets/%{pypi_name}.logrotate %{buildroot}%{_sysconfdir}/logrotate.d/%{pypi_name}
-
-mkdir -p %{buildroot}%{_unitdir}
-install -p -m 0644 packaging/assets/%{pypi_name}.service %{buildroot}%{_unitdir}
-
-mkdir -p %{buildroot}%{_localstatedir}/log
-install -d -m 0755 %{buildroot}%{_localstatedir}/log/%{pypi_name}
-
-mkdir -p %{buildroot}%{_sysusersdir}
-install -p -m 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/%{pypi_name}.conf
+install -D -d -m 0755 %{buildroot}%{_localstatedir}/log/%{pypi_name}/
+install -D -p -m 0644 packaging/assets/%{pypi_name}.json %{buildroot}%{_sysconfdir}/%{pypi_name}/%{pypi_name}.json
+install -D -p -m 0644 packaging/assets/%{pypi_name}-env.conf %{buildroot}%{_sysconfdir}/%{pypi_name}/%{pypi_name}-env.conf
+install -D -p -m 0644 packaging/assets/%{pypi_name}.logrotate %{buildroot}%{_sysconfdir}/logrotate.d/%{pypi_name}
+install -D -p -m 0644 packaging/assets/%{pypi_name}.service %{buildroot}%{_unitdir}/%{pypi_name}.service
+install -D -p -m 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/%{pypi_name}.conf
 
 %pre
 %sysusers_create_compat %{SOURCE1}

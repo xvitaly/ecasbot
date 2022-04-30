@@ -4,7 +4,6 @@
 [![PyPi Version](https://img.shields.io/pypi/v/ecasbot.svg?logo=pypi&logoColor=white)](https://pypi.org/project/ecasbot/)
 [![Python CI status](https://github.com/xvitaly/ecasbot/actions/workflows/python.yaml/badge.svg)](https://github.com/xvitaly/ecasbot/actions/workflows/python.yaml)
 [![AppVeyor status](https://ci.appveyor.com/api/projects/status/tcanemsupba2q64u?svg=true)](https://ci.appveyor.com/project/xvitaly/ecasbot)
-[![COPR status](https://copr.fedorainfracloud.org/coprs/xvitaly/ecrepo/package/ecasbot/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/xvitaly/ecrepo/package/ecasbot/)
 [![LGTM grade](https://img.shields.io/lgtm/grade/python/g/xvitaly/ecasbot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/xvitaly/ecasbot/context:python)
 [![LGTM alerts](https://img.shields.io/lgtm/alerts/g/xvitaly/ecasbot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/xvitaly/ecasbot/alerts/)
 [![Codacy](https://app.codacy.com/project/badge/Grade/f05dcd013559423183f52fabfcaf1fb8)](https://www.codacy.com/gh/xvitaly/ecasbot/dashboard)

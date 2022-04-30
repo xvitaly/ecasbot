@@ -19,12 +19,14 @@ EC AntiSpam bot for the [Telegram](https://telegram.org/) messenger will automat
 Warning! Do not use `master` branch in production due to possible breaking changes. Always use [tagged versions](https://github.com/xvitaly/ecasbot/releases) instead.
 
 ## License
+
 GNU General Public License version 3. You can find it here: [LICENSE](LICENSE). External libraries can use another licenses, compatible with GNU GPLv3.
 
 Icon for the Windows executable and installer by [Chris Banks](https://www.deviantart.com/chrisbanks2), licensed under the terms of the [CC Attribution Non-Commercial](https://creativecommons.org/licenses/by-nc/4.0/legalcode).
 
 ## Requirements
-  * Python 3.6+;
+
+  * Python 3.6+ with full set of standard libraries;
   * [python-pytelegrambotapi](https://github.com/eternnoir/pyTelegramBotAPI);
   * [python-requests](https://github.com/requests/requests);
   * [python-emoji](https://github.com/carpedm20/emoji).

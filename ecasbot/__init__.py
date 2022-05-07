@@ -95,7 +95,7 @@ class ASBot:
             else message.reply_to_message.from_user.first_name
 
     @staticmethod
-    def __get_actual_userid(message) -> str:
+    def __get_actual_userid(message) -> int:
         """
         Get a real ID of current message's sender.
         :param message: Message to check.

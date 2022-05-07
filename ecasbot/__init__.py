@@ -20,6 +20,10 @@ from .settings import Settings
 
 # noinspection PyBroadException
 class ASBot:
+    """
+    Class with ASBot implementation.
+    """
+
     def __get_lm(self, msgid: str) -> str:
         """
         Get localized message string in default language.

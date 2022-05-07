@@ -388,7 +388,8 @@ class ASBot:
                         try:
                             self.__bot.delete_message(message.chat.id, wl)
                         except Exception:
-                            pass
+                            self.__logger.debug(
+                                self.__get_lm('as_wipeerr').format(wl, message.chat.id, message.chat.title))
                 else:
                     logmsg = self.__get_lm('as_wipehg').format(message.from_user.first_name, message.from_user.id,
                                                                wipelength, message.chat.id, message.chat.title)

@@ -58,6 +58,7 @@ class MessagesEn(CommonLocale):
         'as_unpinmsg': 'Admin {} ({}) removed pinned message in chat {} ({}).',
         'as_wipelg': 'Admin {} ({}) removed {} messages (range {}) in chat {} ({}).',
         'as_wipehg': 'Admin {} ({}) tried to remove {} messages in chat {} ({}). Action was denied.',
+        'as_wipeerr': 'Failed to delete message with ID {} in chat {} ({}).',
         'as_spamdbg': 'Received message from restricted user {} ({}) in chat {} ({}). Check results: '
                       'entitles: {}, spam: {}, forward: {}.\nContents: {}.',
         'as_crashed': 'The bot has crashed. Scheduling restart in 30 seconds.',

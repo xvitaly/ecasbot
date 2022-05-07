@@ -294,7 +294,7 @@ class Settings:
         """
         # noinspection PyBroadException
         try:
-            loglevel = os.getenv("LOGLEVEL")
+            loglevel = os.getenv('LOGLEVEL')
             if loglevel:
                 return getattr(logging, loglevel)
         except Exception:

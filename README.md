@@ -21,7 +21,7 @@ Warning! Do not use `master` branch in production due to possible breaking chang
 
 GNU General Public License version 3. You can find it here: [LICENSE](LICENSE). External libraries can use another licenses, compatible with GNU GPLv3.
 
-Icon for the Windows executable and installer by [Chris Banks](https://www.deviantart.com/chrisbanks2), licensed under the terms of the [CC Attribution Non-Commercial](https://creativecommons.org/licenses/by-nc/4.0/legalcode).
+Icon for the Windows executable and installer from the [Noto Emoji](https://github.com/googlefonts/noto-emoji) font, licensed under the terms of the [Apache License 2.0](licenses/noto-emoji.LICENSE.txt).
 
 ## Requirements
 

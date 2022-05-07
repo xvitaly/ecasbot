@@ -11,9 +11,8 @@
   * [Installation in Python virtual environment](virtualenv-installation.md).
 
 ## Advanced configuration
-  * [Controling this bot using systemd](controling-with-systemd.md).
+  * [Controling the bot using systemd](controling-with-systemd.md).
   * [Configuration using environment options](bot-environment-options.md).
 
 ## Development
   * [Configuration file schema changes](schema-changes.md).
-  * [Building Fedora package](building-fedora-package.md).

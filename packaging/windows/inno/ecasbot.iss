@@ -34,6 +34,7 @@ ShowLanguageDialog=auto
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
 MinVersion=6.1sp1
+ChangesEnvironment=yes
 VersionInfoVersion={#VERSION}
 VersionInfoDescription=EC AntiSpam bot
 VersionInfoCopyright=(c) 2005-2020 EasyCoding Team. All rights reserved.

@@ -48,8 +48,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl,locale\en\cm.isl"; InfoBefo
 Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl,locale\ru\cm.isl"; InfoBeforeFile: "locale\ru\readme.rtf"
 
 [Types]
-Name: standard; Description: "{cm:TypeStandardDescription}"
 Name: system; Description: "{cm:TypeSystemDescription}"
+Name: standard; Description: "{cm:TypeStandardDescription}"
 Name: nokeys; Description: "{cm:TypeNoKeysDescription}"
 
 [Components]

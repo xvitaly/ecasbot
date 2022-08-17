@@ -62,6 +62,7 @@ Name: "apikey\nokeys"; Description: "{cm:ComponentAPIKeyNoKeyDescription}"; Type
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
 Name: "autorun"; Description: "{cm:TaskAutorun}"; GroupDescription: "{cm:TaskCategoryAutorun}"; Components: "apikey\sysenv or apikey\launcher"; Flags: unchecked
+Name: "addtopath"; Description: "{cm:TaskAddToPath}"; GroupDescription: "{cm:TaskCategoryAddToPath}"; Components: core; Flags: unchecked
 
 [Files]
 Source: "{#BASEDIR}\ecasbot.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: core
@@ -83,6 +84,7 @@ Name: "{userappdata}\Microsoft\Windows\Start Menu\Programs\Startup\EC AntiSpam b
 [Registry]
 Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "APIKEY"; ValueData: "{code:GetAPIKey}"; Flags: uninsdeletevalue; Components: "apikey\sysenv"
 Root: HKCU; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "ecasbot"; ValueData: "{app}\ecasbot.exe"; Flags: uninsdeletevalue; Components: "apikey\sysenv"; Tasks: autorun
+Root: HKCU; Subkey: "Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{code:PathNewEntry|{app}}"; Tasks: addtopath; Check: PathIsClean(ExpandConstant('{app}'))
 
 [Code]
 var
@@ -131,6 +133,45 @@ begin
     Contents[4] := '';
     Contents[5] := '.\ecasbot.exe %*';
     Result := SaveStringsToFile(FileName, Contents, False)
+end;
+
+function PathIsClean(InstallPath: String): Boolean;
+var
+    CurrentPath: String;
+begin
+    if RegQueryStringValue(HKEY_CURRENT_USER, 'Environment', 'Path', CurrentPath) then
+        begin
+            Result := Pos(InstallPath, CurrentPath) = 0
+        end
+    else
+        begin
+            Result := True
+        end
+end;
+
+function PathNewEntry(InstallPath: String): String;
+var
+    CurrentPath: String;
+begin
+    if not RegQueryStringValue(HKEY_CURRENT_USER, 'Environment', 'Path', CurrentPath) then
+        begin
+            CurrentPath := ''
+        end;
+    if Length(CurrentPath) > 0 then
+        begin
+            if CompareStr(Copy(CurrentPath, Length(CurrentPath), 1), ';') = 0 then
+                begin
+                    Result := CurrentPath + InstallPath + ';'
+                end
+            else
+                begin
+                    Result := CurrentPath + ';' + InstallPath + ';'
+                end
+        end
+    else
+        begin
+            Result := InstallPath + ';'
+        end
 end;
 
 function ShouldSkipPage(CurPageID: Integer): Boolean;

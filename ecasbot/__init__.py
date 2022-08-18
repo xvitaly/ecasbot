@@ -47,9 +47,7 @@ class ASBot:
         :param message: Message to check.
         :return: Check results.
         """
-        usr = self.__bot.get_chat_member(message.chat.id, message.from_user.id)
-        return message.chat.type == 'supergroup' and (
-                message.from_user.id in self.__settings.admins or usr.status in ['creator', 'administrator'])
+        return message.chat.type == 'supergroup' and self.__check_user_admin(message.from_user.id, message.chat.id)
 
     def __check_user_admin(self, userid, chatid) -> bool:
         """

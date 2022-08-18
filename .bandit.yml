@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 skips:
+- B110
 - B404
 - B603
 - B607

@@ -1,7 +1,7 @@
 {
   "schema": 11,
   "admins": [],
-  "restent": ["url", "text_link", "mention"],
+  "restent": ["url", "text_link", "mention", "custom_emoji"],
   "stopwords": ["SEO", "Deleted"],
   "bantime": 1209600,
   "maxname": 75,

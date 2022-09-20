@@ -210,7 +210,7 @@ class ASBot:
         """
         self.__bot = telebot.TeleBot(self.__settings.tgkey)
 
-    def __init_user_handlers(self):
+    def __init_user_handlers(self) -> None:
         """
         Initialize basic user handlers.
         """
@@ -218,7 +218,7 @@ class ASBot:
         self.__bot.register_message_handler(self.__handle_checkme, func=self.__check_private_chat, commands=['checkme'])
         self.__bot.register_message_handler(self.__handle_report, func=lambda m: True, commands=['report'])
 
-    def __init_main_handlers(self):
+    def __init_main_handlers(self) -> None:
         """
         Initialize main functionality handlers.
         """
@@ -226,7 +226,7 @@ class ASBot:
         self.__bot.register_message_handler(self.__handle_msg, func=self.__check_restricted_user)
         self.__bot.register_edited_message_handler(self.__handle_msg, func=self.__check_restricted_user)
 
-    def __init_admin_handlers(self):
+    def __init_admin_handlers(self) -> None:
         """
         Initialize chat admin actions handlers.
         """
@@ -246,7 +246,7 @@ class ASBot:
         self.__bot.register_message_handler(self.__handle_pin, func=self.__check_admin_feature, commands=['pin'])
         self.__bot.register_message_handler(self.__handle_unpin, func=self.__check_admin_feature, commands=['unpin'])
 
-    def __init_restricted_handlers(self):
+    def __init_restricted_handlers(self) -> None:
         """
         Initialize bot admin actions handlers.
         """

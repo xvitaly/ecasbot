@@ -340,17 +340,14 @@ class ASBot:
         :param message: Message, triggered this event.
         """
         try:
-            if message.from_user.id in self.__settings.admins:
-                try:
-                    self.__logger.warning(
-                        self.__get_lm('as_swlist').format(message.from_user.first_name, message.from_user.id))
-                    self.__bot.send_message(message.chat.id,
-                                            self.__get_lm('as_swulist').format(
-                                                ', '.join(self.__settings.stopwords)))
-                except Exception:
-                    self.__bot.send_message(message.chat.id, self.__get_lm('as_swerr'))
-            else:
-                self.__bot.send_message(message.chat.id, self.__get_lm('as_unath'))
+            try:
+                self.__logger.warning(
+                    self.__get_lm('as_swlist').format(message.from_user.first_name, message.from_user.id))
+                self.__bot.send_message(message.chat.id,
+                                        self.__get_lm('as_swulist').format(
+                                            ', '.join(self.__settings.stopwords)))
+            except Exception:
+                self.__bot.send_message(message.chat.id, self.__get_lm('as_swerr'))
         except Exception:
             self.__logger.exception(self.__get_lm('as_pmex'))
 

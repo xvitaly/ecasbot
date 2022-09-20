@@ -371,6 +371,28 @@ class ASBot:
         except Exception:
             self.__logger.exception(self.__get_lm('as_pmex'))
 
+    def __handle_entremove(self, message) -> None:
+        """
+        Handle /ent_remove command in private chats. Allow admins to remove
+        entity from the list of restricted entities for new users. Restricted command.
+        :param message: Message, triggered this event.
+        """
+        try:
+            entreq = ParamExtractor(message.text)
+            if entreq.index != -1:
+                try:
+                    self.__logger.warning(
+                        self.__get_lm('as_entrem').format(message.from_user.first_name, message.from_user.id,
+                                                          entreq.param))
+                    self.__settings.remove_entity(entreq.param)
+                    self.__bot.send_message(message.chat.id, self.__get_lm('as_enturem').format(entreq.param))
+                except Exception:
+                    self.__bot.send_message(message.chat.id, self.__get_lm('as_enterr'))
+            else:
+                self.__bot.send_message(message.chat.id, self.__get_lm('as_entpm'))
+        except Exception:
+            self.__logger.exception(self.__get_lm('as_pmex'))
+
     def __handle_remove(self, message) -> None:
         """
         Handle /remove command in supergroups. Admin feature.

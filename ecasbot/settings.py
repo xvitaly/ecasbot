@@ -250,6 +250,15 @@ class Settings:
             self.__data['stopwords'].remove(stopword)
         self.save()
 
+    def add_entity(self, entity: str) -> None:
+        """
+        Add a new entity to the list of restricted entities.
+        :param entity: Restricted entity to add.
+        """
+        if entity not in self.__data['restent']:
+            self.__data['restent'].append(entity)
+        self.save()
+
     def save(self) -> None:
         """
         Save current settings to JSON file.

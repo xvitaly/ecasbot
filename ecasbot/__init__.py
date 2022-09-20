@@ -221,6 +221,11 @@ class ASBot:
         self.__bot.register_message_handler(self.__handle_swremove, func=self.__check_owner_feature,
                                             commands=['sw_remove'])
         self.__bot.register_message_handler(self.__handle_swlist, func=self.__check_owner_feature, commands=['sw_list'])
+        self.__bot.register_message_handler(self.__handle_entadd, func=self.__check_owner_feature, commands=['ent_add'])
+        self.__bot.register_message_handler(self.__handle_entremove, func=self.__check_owner_feature,
+                                            commands=['ent_remove'])
+        self.__bot.register_message_handler(self.__handle_entlist, func=self.__check_owner_feature,
+                                            commands=['ent_list'])
         self.__bot.register_message_handler(self.__handle_remove, func=self.__check_admin_feature,
                                             commands=['remove', 'rm'])
         self.__bot.register_message_handler(self.__handle_wipe, func=self.__check_admin_feature, commands=['wipe'])

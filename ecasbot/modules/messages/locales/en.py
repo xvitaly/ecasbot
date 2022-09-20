@@ -60,7 +60,6 @@ class MessagesEn(CommonLocale):
         'as_entlist': 'Admin {} ({}) fetched list of restricted entities.',
         'as_entpm': 'You must specify an entity to add/remove. Fix this and try again.',
         'as_leaverr': 'Failed to leave chat {} ({}) due to some error.',
-        'as_unath': 'You cannot access this command due to missing admin rights. This issue will be reported.',
         'as_unathlg': 'User {} ({}) tried to access restricted bot command. Action was denied.',
         'as_pinmsg': 'Admin {} ({}) pinned message {} in chat {} ({}).',
         'as_unpinmsg': 'Admin {} ({}) removed pinned message in chat {} ({}).',

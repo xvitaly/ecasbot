@@ -259,6 +259,15 @@ class Settings:
             self.__data['restent'].append(entity)
         self.save()
 
+    def remove_entity(self, entity: str) -> None:
+        """
+        Remove entity from the list of restricted entities.
+        :param entity: Restricted entity to remove.
+        """
+        if entity in self.__data['restent']:
+            self.__data['restent'].remove(entity)
+        self.save()
+
     def save(self) -> None:
         """
         Save current settings to JSON file.

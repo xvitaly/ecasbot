@@ -210,22 +210,26 @@ class ASBot:
         """
         self.__bot = telebot.TeleBot(self.__settings.tgkey)
 
-    def __init_handlers(self) -> None:
+    def __init_user_handlers(self):
         """
-        Initialize event handlers.
+        Initialize basic user handlers.
         """
         self.__bot.register_message_handler(self.__handle_start, commands=['start'])
         self.__bot.register_message_handler(self.__handle_checkme, func=self.__check_private_chat, commands=['checkme'])
-        self.__bot.register_message_handler(self.__handle_leave, func=self.__check_owner_feature, commands=['leave'])
-        self.__bot.register_message_handler(self.__handle_swadd, func=self.__check_owner_feature, commands=['sw_add'])
-        self.__bot.register_message_handler(self.__handle_swremove, func=self.__check_owner_feature,
-                                            commands=['sw_remove'])
-        self.__bot.register_message_handler(self.__handle_swlist, func=self.__check_owner_feature, commands=['sw_list'])
-        self.__bot.register_message_handler(self.__handle_entadd, func=self.__check_owner_feature, commands=['ent_add'])
-        self.__bot.register_message_handler(self.__handle_entremove, func=self.__check_owner_feature,
-                                            commands=['ent_remove'])
-        self.__bot.register_message_handler(self.__handle_entlist, func=self.__check_owner_feature,
-                                            commands=['ent_list'])
+        self.__bot.register_message_handler(self.__handle_report, func=lambda m: True, commands=['report'])
+
+    def __init_main_handlers(self):
+        """
+        Initialize main functionality handlers.
+        """
+        self.__bot.register_message_handler(self.__handle_join, func=lambda m: True, content_types=['new_chat_members'])
+        self.__bot.register_message_handler(self.__handle_msg, func=self.__check_restricted_user)
+        self.__bot.register_edited_message_handler(self.__handle_msg, func=self.__check_restricted_user)
+
+    def __init_admin_handlers(self):
+        """
+        Initialize chat admin actions handlers.
+        """
         self.__bot.register_message_handler(self.__handle_remove, func=self.__check_admin_feature,
                                             commands=['remove', 'rm'])
         self.__bot.register_message_handler(self.__handle_wipe, func=self.__check_admin_feature, commands=['wipe'])
@@ -239,12 +243,32 @@ class ASBot:
                                             commands=['subscribe'])
         self.__bot.register_message_handler(self.__handle_unsubscribe, func=self.__check_admin_feature,
                                             commands=['unsubscribe'])
-        self.__bot.register_message_handler(self.__handle_report, func=lambda m: True, commands=['report'])
         self.__bot.register_message_handler(self.__handle_pin, func=self.__check_admin_feature, commands=['pin'])
         self.__bot.register_message_handler(self.__handle_unpin, func=self.__check_admin_feature, commands=['unpin'])
-        self.__bot.register_message_handler(self.__handle_join, func=lambda m: True, content_types=['new_chat_members'])
-        self.__bot.register_message_handler(self.__handle_msg, func=self.__check_restricted_user)
-        self.__bot.register_edited_message_handler(self.__handle_msg, func=self.__check_restricted_user)
+
+    def __init_restricted_handlers(self):
+        """
+        Initialize bot admin actions handlers.
+        """
+        self.__bot.register_message_handler(self.__handle_leave, func=self.__check_owner_feature, commands=['leave'])
+        self.__bot.register_message_handler(self.__handle_swadd, func=self.__check_owner_feature, commands=['sw_add'])
+        self.__bot.register_message_handler(self.__handle_swremove, func=self.__check_owner_feature,
+                                            commands=['sw_remove'])
+        self.__bot.register_message_handler(self.__handle_swlist, func=self.__check_owner_feature, commands=['sw_list'])
+        self.__bot.register_message_handler(self.__handle_entadd, func=self.__check_owner_feature, commands=['ent_add'])
+        self.__bot.register_message_handler(self.__handle_entremove, func=self.__check_owner_feature,
+                                            commands=['ent_remove'])
+        self.__bot.register_message_handler(self.__handle_entlist, func=self.__check_owner_feature,
+                                            commands=['ent_list'])
+
+    def __init_handlers(self) -> None:
+        """
+        Initialize event handlers.
+        """
+        self.__init_user_handlers()
+        self.__init_main_handlers()
+        self.__init_admin_handlers()
+        self.__init_restricted_handlers()
 
     def __handle_start(self, message) -> None:
         """

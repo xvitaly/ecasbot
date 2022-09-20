@@ -393,6 +393,24 @@ class ASBot:
         except Exception:
             self.__logger.exception(self.__get_lm('as_pmex'))
 
+    def __handle_entlist(self, message) -> None:
+        """
+        Handle /ent_list command in private chats. Allow admins get full list
+        of restricted entities for new users. Restricted command.
+        :param message: Message, triggered this event.
+        """
+        try:
+            try:
+                self.__logger.warning(
+                    self.__get_lm('as_entlist').format(message.from_user.first_name, message.from_user.id))
+                self.__bot.send_message(message.chat.id,
+                                        self.__get_lm('as_entulist').format(
+                                            ', '.join(self.__settings.restent)))
+            except Exception:
+                self.__bot.send_message(message.chat.id, self.__get_lm('as_enterr'))
+        except Exception:
+            self.__logger.exception(self.__get_lm('as_pmex'))
+
     def __handle_remove(self, message) -> None:
         """
         Handle /remove command in supergroups. Admin feature.

@@ -65,7 +65,7 @@ class ASBot:
         :param message: Message to check.
         :return: Check results.
         """
-        return message.chat.type == 'private' and message.from_user.id in self.__settings.admins
+        return self.__check_private_chat(message) and message.from_user.id in self.__settings.admins
 
     @staticmethod
     def __check_private_chat(message) -> bool:

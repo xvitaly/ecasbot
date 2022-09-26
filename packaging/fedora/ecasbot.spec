@@ -21,6 +21,7 @@ Source1: %{pypi_name}.sysusers
 BuildArch: noarch
 
 BuildRequires: doxygen
+BuildRequires: pandoc
 BuildRequires: python3-devel
 BuildRequires: systemd
 BuildRequires: systemd-rpm-macros
@@ -47,6 +48,7 @@ sed -e 's@"logtofile": "",@"logtofile": "%{_localstatedir}/log/%{pypi_name}/%{py
 %build
 %pyproject_wheel
 doxygen
+pandoc packaging/assets/manpage.md -s -t man > packaging/assets/%{pypi_name}.1
 
 %install
 %pyproject_install
@@ -56,6 +58,7 @@ install -D -p -m 0644 packaging/assets/%{pypi_name}.json %{buildroot}%{_sysconfd
 install -D -p -m 0644 packaging/assets/%{pypi_name}-env.conf %{buildroot}%{_sysconfdir}/%{pypi_name}/%{pypi_name}-env.conf
 install -D -p -m 0644 packaging/assets/%{pypi_name}.logrotate %{buildroot}%{_sysconfdir}/logrotate.d/%{pypi_name}
 install -D -p -m 0644 packaging/assets/%{pypi_name}.service %{buildroot}%{_unitdir}/%{pypi_name}.service
+install -D -p -m 0644 packaging/assets/%{pypi_name}.1 %{buildroot}%{_mandir}/man1/%{pypi_name}.1
 install -D -p -m 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/%{pypi_name}.conf
 
 %pre
@@ -82,6 +85,7 @@ install -D -p -m 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/%{pypi_name}.conf
 %ghost %{_localstatedir}/log/%{pypi_name}/*.log*
 %{_unitdir}/%{pypi_name}.service
 %{_sysusersdir}/%{pypi_name}.conf
+%{_mandir}/man1/%{pypi_name}.1*
 
 %files doc
 %doc docs/html/*

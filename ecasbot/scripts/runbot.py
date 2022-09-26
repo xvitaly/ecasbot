@@ -14,7 +14,7 @@ def main():
 
     except Exception as ex:
         # Exception detected...
-        print('An error occurred while running bot! Inner message: {}'.format(ex))
+        print(f'An error occurred while running bot! Inner message: {ex}')
 
 
 if __name__ == '__main__':

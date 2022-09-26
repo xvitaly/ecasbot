@@ -39,7 +39,7 @@ class ASBot:
         :return: Check results.
         """
         usr = self.__bot.get_chat_member(message.chat.id, message.from_user.id)
-        return message.chat.type == 'supergroup' and usr.status == 'restricted'
+        return self.__check_supergroup(message) and usr.status == 'restricted'
 
     def __check_admin_feature(self, message) -> bool:
         """
@@ -47,7 +47,7 @@ class ASBot:
         :param message: Message to check.
         :return: Check results.
         """
-        return message.chat.type == 'supergroup' and self.__check_user_admin(message.from_user.id, message.chat.id)
+        return self.__check_supergroup(message) and self.__check_user_admin(message.from_user.id, message.chat.id)
 
     def __check_user_admin(self, userid, chatid) -> bool:
         """
@@ -75,6 +75,15 @@ class ASBot:
         :return: Check results.
         """
         return message.chat.type == 'private'
+
+    @staticmethod
+    def __check_supergroup(message) -> bool:
+        """
+        Check if message was sent in a supergroup.
+        :param message: Message to check.
+        :return: Check results.
+        """
+        return message.chat.type == 'supergroup'
 
     def __check_restriction_allowed(self, message) -> bool:
         """

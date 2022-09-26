@@ -33,7 +33,10 @@ List of currently supported advanced admin actions:
   * `/leave CHAT_ID` (private messages only) - force the bot to leave the chat specified in the `CHAT_ID` parameter;
   * `/sw_add WORD` (private messages only) - add a new stopword `WORD` to the list of restricted words for the new users;
   * `/sw_remove WORD` (private messages only) - remove stopword `WORD` from the list of restricted words for the new users;
-  * `/sw_list` (private messages only) - show the list of restricted words for the new users.
+  * `/sw_list` (private messages only) - show the list of restricted words for the new users;
+  * `/ent_add ENTITY` (private messages only) - add a new entity `ENTITY` to the list of restricted entities for the new users;
+  * `/ent_remove ENTITY` (private messages only) - remove entity `ENTITY` from the list of restricted entities for the new users;
+  * `/ent_list` (private messages only) - show the list of restricted entities for the new users.
 
 ## User actions
 

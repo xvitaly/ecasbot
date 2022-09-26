@@ -10,7 +10,7 @@
 
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = ecasbot
-PROJECT_NUMBER         = 1.6.0
+PROJECT_NUMBER         = 1.7.0
 PROJECT_BRIEF          = "EC AntiSpam bot for Telegram messenger"
 PROJECT_LOGO           =
 OUTPUT_DIRECTORY       = docs

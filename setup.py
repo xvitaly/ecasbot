@@ -14,7 +14,7 @@ with open('requirements.txt', 'r') as fr:
 
 setup(
     name='ecasbot',
-    version='1.6.0',
+    version='1.7.0',
     packages=find_packages(),
     package_dir={
         'ecasbot': 'ecasbot',

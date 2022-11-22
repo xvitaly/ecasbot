@@ -272,14 +272,14 @@ class Settings:
         """
         Save current settings to JSON file.
         """
-        with open(self.__cfgfile, 'w') as f:
+        with open(self.__cfgfile, mode='w', encoding='utf-8') as f:
             json.dump(self.__data, f)
 
     def load(self) -> None:
         """
         Load settings from JSON file.
         """
-        with open(self.__cfgfile, 'r') as f:
+        with open(self.__cfgfile, mode='r', encoding='utf-8') as f:
             self.__data = json.load(f)
 
     def __check_schema(self, schid) -> bool:

@@ -6,8 +6,8 @@
 
 VSVersionInfo(
   ffi=FixedFileInfo(
-    filevers=(1, 7, 0, 0),
-    prodvers=(1, 7, 0, 0),
+    filevers=(1, 7, 1, 0),
+    prodvers=(1, 7, 1, 0),
     mask=0x3f,
     flags=0x0,
     OS=0x4,
@@ -24,14 +24,14 @@ VSVersionInfo(
         [StringStruct(u'Comments', u'EC AntiSpam bot for the Telegram messenger'),
         StringStruct(u'CompanyName', u'EasyCoding Team'),
         StringStruct(u'FileDescription', u'EC AntiSpam bot for the Telegram messenger'),
-        StringStruct(u'FileVersion', u'1.7.0.0'),
+        StringStruct(u'FileVersion', u'1.7.1.0'),
         StringStruct(u'InternalName', u'ecasbot.exe'),
         StringStruct(u'LegalCopyright', u'(c) 2017-2022 EasyCoding Team. All rights reserved.'),
         StringStruct(u'LegalTrademarks', u'EasyCoding, EasyCoding Software Group and EasyCoding Team are trademarks of EasyCoding Team.'),
         StringStruct(u'OriginalFilename', u'ecabot.exe'),
         StringStruct(u'ProductName', u'EC AntiSpam bot'),
-        StringStruct(u'ProductVersion', u'1.7.0.0'),
-        StringStruct(u'Assembly Version', u'1.7.0.0')])
+        StringStruct(u'ProductVersion', u'1.7.1.0'),
+        StringStruct(u'Assembly Version', u'1.7.1.0')])
       ])
   ]
 )

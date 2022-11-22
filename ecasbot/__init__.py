@@ -203,8 +203,9 @@ class ASBot:
         self.__logger = logging.getLogger(__name__)
         self.__logger.setLevel(self.__settings.get_logging_level())
         if self.__settings.logtofile:
-            f_handler = logging.handlers.TimedRotatingFileHandler(self.__settings.logtofile, when='W0', backupCount=5) \
-                if self.__settings.rotatelogs else logging.FileHandler(self.__settings.logtofile)
+            f_handler = logging.handlers.TimedRotatingFileHandler(self.__settings.logtofile, when='W0', backupCount=5,
+                                                                  encoding='utf-8') \
+                if self.__settings.rotatelogs else logging.FileHandler(self.__settings.logtofile, encoding='utf-8')
             f_handler.setFormatter(logging.Formatter(self.__settings.fmtlog))
             self.__logger.addHandler(f_handler)
         if (not self.__settings.logtofile) or self.__settings.duplicate_logs:

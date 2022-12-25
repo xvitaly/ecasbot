@@ -9,6 +9,6 @@ RUN dnf install -y python3-pip && dnf clean all
 WORKDIR /app
 COPY . .
 
-RUN pip3 install --no-cache-dir -e .
+RUN pip3 install --no-cache-dir .
 
 CMD ["/usr/local/bin/ecasbot"]

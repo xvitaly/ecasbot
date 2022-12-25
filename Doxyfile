@@ -120,7 +120,7 @@ WARN_LOGFILE           =
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                  = ecasbot \
+INPUT                  = src/ecasbot \
                          docs
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.c \

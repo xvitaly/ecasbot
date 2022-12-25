@@ -32,7 +32,7 @@ pyinstaller ^
     --version-file=assets\version.txt ^
     --manifest=assets\ecasbot.manifest ^
     --icon=assets\ecasbot.ico ^
-    ..\..\ecasbot\scripts\runbot.py
+    ..\..\src\ecasbot\scripts\runbot.py
 
 echo Copying assets...
 copy /Y ..\assets\ecasbot.json results\dist\ecasbot.json

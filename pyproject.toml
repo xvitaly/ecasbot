@@ -1,0 +1,57 @@
+# coding=utf-8
+
+# SPDX-FileCopyrightText: 2017-2022 EasyCoding Team
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+[project]
+name = "ecasbot"
+version = "1.7.1"
+license = { text = "GPL-3.0-or-later" }
+readme = "README.md"
+dependencies = [
+    "requests>=2.22.0",
+    "pytelegrambotapi>=4.7.0",
+    "emoji>=1.6.3"
+]
+authors = [
+    { name = "Vitaly Zaitsev", email="vitaly@easycoding.org" }
+]
+description = "EC AntiSpam bot for the Telegram messenger"
+keywords = [
+    "anti-spam",
+    "bot",
+    "database-less",
+    "telegram",
+    "telegram-api",
+    "telegram-bot"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent"
+]
+requires-python = ">=3.6"
+
+[project.urls]
+homepage = "https://github.com/xvitaly/ecasbot"
+documentation = "https://github.com/xvitaly/ecasbot/blob/master/docs/README.md"
+repository = "https://github.com/xvitaly/ecasbot"
+
+[project.scripts]
+ecasbot = "ecasbot.scripts.runbot:main"
+
+[project.optional-dependencies]
+deploy = [
+    "pyinstaller>=5.7.0"
+]
+test = [
+    "tox>=3.27.0"
+]
+
+[build-system]
+requires = [
+    "setuptools>=62.0.0",
+    "wheel>=0.37.0"
+]
+build-backend = "setuptools.build_meta"

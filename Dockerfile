@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-FROM fedora:36
+FROM fedora:37
 
 RUN dnf install -y python3-pip && dnf clean all
 

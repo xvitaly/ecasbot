@@ -17,9 +17,7 @@ install:
 - cmd: >-
     set PATH=C:\Python310-x64;C:\Python310-x64\Scripts;%PATH%
 
-    pip3 install -r requirements.txt
-
-    pip3 install pyinstaller
+    pip3 install .[deploy]
 build_script:
 - cmd: >-
     set PATH=C:\Python310-x64;C:\Python310-x64\Scripts;%PATH%

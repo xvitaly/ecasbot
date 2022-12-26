@@ -11,21 +11,22 @@ Copy configuration file `config/ecasbot.json` to `/etc/ecasbot/ecasbot.json`. Yo
 
 Create a new Python Virtual Environment:
 ```
-python3 -m venv ecasbot
+cd ecasbot
+python3 -m venv env
 ```
 
 Activate Virtual Environment:
 ```
-source ecasbot/bin/activate
+source env/bin/activate
 ```
 
 Install bot using Python 3 in VENV:
 ```
-cd ecasbot
-python3 setup.py install
+
+pip3 install .
 ```
 
 Run installed bot with defined API key:
 ```bash
-APIKEY=API_KEY /bin/ecasbot
+APIKEY=API_KEY ecasbot
 ```

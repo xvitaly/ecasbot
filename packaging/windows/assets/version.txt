@@ -1,6 +1,6 @@
 # coding=utf-8
 
-# SPDX-FileCopyrightText: 2017-2022 EasyCoding Team
+# SPDX-FileCopyrightText: 2017-2023 EasyCoding Team
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -26,7 +26,7 @@ VSVersionInfo(
         StringStruct(u'FileDescription', u'EC AntiSpam bot for the Telegram messenger'),
         StringStruct(u'FileVersion', u'1.7.1.0'),
         StringStruct(u'InternalName', u'ecasbot.exe'),
-        StringStruct(u'LegalCopyright', u'(c) 2017-2022 EasyCoding Team. All rights reserved.'),
+        StringStruct(u'LegalCopyright', u'(c) 2017-2023 EasyCoding Team. All rights reserved.'),
         StringStruct(u'LegalTrademarks', u'EasyCoding, EasyCoding Software Group and EasyCoding Team are trademarks of EasyCoding Team.'),
         StringStruct(u'OriginalFilename', u'ecabot.exe'),
         StringStruct(u'ProductName', u'EC AntiSpam bot'),

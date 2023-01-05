@@ -156,4 +156,4 @@ sudo systemctl stop ecasbot.service
 
 # AUTHORS
 
-Copyright (c) 2017-2022 EasyCoding Team.
+Copyright (c) 2017-2023 EasyCoding Team.

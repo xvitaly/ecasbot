@@ -12,9 +12,9 @@ import telebot
 
 from .chkmsg import CheckMessage
 from .chkusr import CheckUsername
-from .modules.helpers import ParamExtractor
-from .modules.messages import Messages
-from .modules.ranges import Ranges
+from .extractor import ParamExtractor
+from .messages import Messages
+from .ranges import Ranges
 from .settings import Settings
 
 

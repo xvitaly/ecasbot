@@ -334,7 +334,7 @@ class Settings:
         self.__data = {}
         self.__find_cfgfile()
         if not os.path.isfile(self.__cfgfile):
-            raise Exception('Cannot find JSON config {}! Create it using sample from repo.'.format(self.__cfgfile))
+            raise Exception(f'Cannot find JSON config {self.__cfgfile}! Create it using sample from repo.')
         self.load()
         if not self.__check_schema(schid):
-            raise Exception('Schema of JSON config {} is outdated! Update config from repo.'.format(self.__cfgfile))
+            raise Exception(f'Schema of JSON config {self.__cfgfile} is outdated! Update config from repo.')

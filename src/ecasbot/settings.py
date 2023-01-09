@@ -25,7 +25,7 @@ class Settings:
         Get Telegram Bot API token.
         :return: Bot API token.
         """
-        return os.getenv('APIKEY')
+        return self.__apikey
 
     @property
     def rotatelogs(self) -> bool:
@@ -303,6 +303,13 @@ class Settings:
                 return cfgpath
         return os.path.join('/etc' if os.name == 'posix' else os.getenv('APPDATA'), self.__appname)
 
+    def __get_apikey(self) -> None:
+        """
+        Get Telegram Bot API token from the environment variables.
+        :return: Telegram Bot API token.
+        """
+        self.__apikey = os.getenv('APIKEY')
+
     @staticmethod
     def get_logging_level() -> int:
         """
@@ -333,8 +340,11 @@ class Settings:
         self.__appname = 'ecasbot'
         self.__data = {}
         self.__find_cfgfile()
+        self.__get_apikey()
         if not os.path.isfile(self.__cfgfile):
             raise Exception(f'Cannot find JSON config {self.__cfgfile}! Create it using sample from repo.')
         self.load()
         if not self.__check_schema(schid):
             raise Exception(f'Schema of JSON config {self.__cfgfile} is outdated! Update config from repo.')
+        if not self.__apikey:
+            raise Exception('No Telegram API token found. Please forward it using APIKEY environment variable!')

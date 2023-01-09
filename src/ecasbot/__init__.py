@@ -187,8 +187,6 @@ class ASBot:
         """
         self.__schema = 11
         self.__settings = Settings(self.__schema)
-        if not self.__settings.tgkey:
-            raise Exception('No Telegram API token found. Please forward it using ENV option and try again!')
 
     def __load_messages(self) -> None:
         """

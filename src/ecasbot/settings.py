@@ -326,7 +326,7 @@ class Settings:
             pass
         return logging.INFO
 
-    def __find_cfgfile(self) -> None:
+    def __get_cfgfile(self) -> None:
         """
         Get fully-qualified path to main configuration file.
         """
@@ -339,7 +339,7 @@ class Settings:
         """
         self.__appname = 'ecasbot'
         self.__data = {}
-        self.__find_cfgfile()
+        self.__get_cfgfile()
         self.__get_apikey()
         if not os.path.isfile(self.__cfgfile):
             raise Exception(f'Cannot find JSON config {self.__cfgfile}! Create it using sample from repo.')

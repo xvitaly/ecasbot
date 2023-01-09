@@ -4,37 +4,21 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from .factory import MessagesFactory
-from .locales.en import MessagesEn
-from .locales.ru import MessagesRu
+from .factory import LanguageFactory
 
 
 class Messages:
-    def __init_factory(self) -> None:
-        """
-        Create the factory instance.
-        """
-        self.__factory = MessagesFactory()
-
-    def __add_languages(self) -> None:
-        """
-        Create the language mapping for the factory.
-        """
-        self.__factory.add_language('en', MessagesEn)
-        self.__factory.add_language('ru', MessagesRu)
-
-    def get_message(self, key: str, lang: str = 'en') -> str:
+    def get_message(self, key: str) -> str:
         """
         Get message depends on the specified language.
         :param key: Message key.
-        :param lang: Required language (EN as a fallback).
         :return: Localized string.
         """
-        return self.__factory.get_language(lang).get_message(key)
+        return self.__language.get_message(key)
 
-    def __init__(self) -> None:
+    def __init__(self, lang: str = 'en') -> None:
         """
         Main constructor of the Messages class.
+        :param lang: Required language (EN as a fallback).
         """
-        self.__init_factory()
-        self.__add_languages()
+        self.__language = LanguageFactory(lang).language

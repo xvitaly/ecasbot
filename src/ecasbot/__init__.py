@@ -30,7 +30,7 @@ class ASBot:
         :param msgid: Message ID.
         :return: Localized message string.
         """
-        return self.__messages.get_message(msgid, self.__settings.language)
+        return self.__messages.get_message(msgid)
 
     def __check_restricted_user(self, message) -> bool:
         """
@@ -181,12 +181,6 @@ class ASBot:
         if message.from_user.id in self.__settings.get_watchers(message.chat.id):
             self.__bot.send_message(message.from_user.id, logstr)
 
-    def __load_messages(self) -> None:
-        """
-        Create an instance of Messages class.
-        """
-        self.__messages = Messages()
-
     def __read_settings(self) -> None:
         """
         Read settings from JSON configuration file.
@@ -194,7 +188,13 @@ class ASBot:
         self.__schema = 11
         self.__settings = Settings(self.__schema)
         if not self.__settings.tgkey:
-            raise Exception(self.__messages.get_message('as_notoken', self.__settings.language))
+            raise Exception('No Telegram API token found. Please forward it using ENV option and try again!')
+
+    def __load_messages(self) -> None:
+        """
+        Create an instance of Messages class.
+        """
+        self.__messages = Messages(self.__settings.language)
 
     def __set_logger(self) -> None:
         """
@@ -774,8 +774,8 @@ class ASBot:
         """
         Main constructor of ASBot class.
         """
-        self.__load_messages()
         self.__read_settings()
+        self.__load_messages()
         self.__set_logger()
         self.__init_bot()
         self.__init_handlers()

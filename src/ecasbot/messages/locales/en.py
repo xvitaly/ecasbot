@@ -9,13 +9,12 @@ from typing import Dict, Union
 from ..locales import CommonLocale
 
 
-class MessagesEn(CommonLocale):
+class LocaleEn(CommonLocale):
     _messages: Dict[Union[str, str], Union[str, str]] = {
         'as_welcome': 'Add me to supergroup and give me admin rights. I will try to block spammers automatically.',
         'as_alog': 'New user {} ({}) has joined chat {} ({}). Score: {}.',
         'as_restex': 'Cannot restrict a new user with ID {} in chat {} ({}) due to missing admin rights.',
         'as_msgex': 'Exception detected while handling spam message from {} in chat {} ({}).',
-        'as_notoken': 'No API token found. Cannot proceed. Forward API token using ENV option and try again!',
         'as_joinhex': 'Failed to handle join message.',
         'as_banned': 'Permanently banned user {} ({}) (score: {}) in chat {} ({}).',
         'as_msgrest': 'Removed message from restricted user {} ({}) in chat {} ({}).',

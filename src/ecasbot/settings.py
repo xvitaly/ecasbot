@@ -323,7 +323,7 @@ class Settings:
         """
         Get fully-qualified path to main configuration file.
         """
-        self.__cfgfile = str(os.path.join(self.__get_cfgpath(), '{}.json'.format(self.__appname)))
+        self.__cfgfile = str(os.path.join(self.__get_cfgpath(), f'{self.__appname}.json'))
 
     def __init__(self, schid) -> None:
         """

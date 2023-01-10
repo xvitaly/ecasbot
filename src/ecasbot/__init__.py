@@ -185,7 +185,7 @@ class ASBot:
         """
         Read settings from JSON configuration file.
         """
-        self.__schema = 11
+        self.__schema = 12
         self.__settings = Settings(self.__schema)
 
     def __load_messages(self) -> None:

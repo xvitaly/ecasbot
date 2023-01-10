@@ -21,4 +21,6 @@ Available options of the `ecasbot.json` configuration file:
   * `hidejoins` - enable or disable removing of join messages;
   * `language` - the default language for the logs and the internal messages;
   * `rotatelogs` - use an internal log rotate function (useful for configurations without logrotate.d; recommended for all non-POSIX systems);
-  * `duplicatelogs` - allow to duplicate logs to stdout channel when logging to files is enabled.
+  * `duplicatelogs` - allow to duplicate logs to stdout channel when logging to files is enabled;
+  * `autoclean` - automatically cleanup used bot commands in super-groups;
+  * `restalert` - enable or disable alerting the subscribed admins on new restriction events.

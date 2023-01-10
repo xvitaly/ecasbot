@@ -349,7 +349,7 @@ class Settings:
         """
         self.__cfgfile = str(os.path.join(self.__get_cfgpath(), f'{self.__appname}.json'))
 
-    def __migrate_schema(self):
+    def __migrate_schema(self) -> None:
         """
         Upgrade configuration file schema to the latest version.
         """

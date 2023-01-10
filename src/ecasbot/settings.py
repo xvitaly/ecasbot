@@ -340,7 +340,7 @@ class Settings:
             if loglevel:
                 return getattr(logging, loglevel)
         except Exception:
-            pass
+            return logging.INFO
         return logging.INFO
 
     def __get_cfgfile(self) -> None:

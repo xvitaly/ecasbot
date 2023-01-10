@@ -1,5 +1,5 @@
 {
-  "schema": 11,
+  "schema": 12,
   "admins": [],
   "restent": ["url", "text_link", "mention", "custom_emoji"],
   "stopwords": ["SEO", "Deleted"],
@@ -18,5 +18,7 @@
   "hidejoins": true,
   "language": "en",
   "rotatelogs": false,
-  "duplicatelogs": false
+  "duplicatelogs": false,
+  "autoclean": false,
+  "restalert": false
 }

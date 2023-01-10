@@ -349,6 +349,17 @@ class Settings:
         """
         self.__cfgfile = str(os.path.join(self.__get_cfgpath(), f'{self.__appname}.json'))
 
+    def __migrate_schema(self):
+        """
+        Upgrade configuration file schema to the latest version.
+        """
+        schema = self.__data['schema']
+        if schema < 12:
+            self.__data['schema'] = 12
+            self.__data['autoclean'] = False
+            self.__data['restalert'] = False
+        self.save()
+
     def __init__(self, schid) -> None:
         """
         Main constructor of Settings class.
@@ -362,6 +373,6 @@ class Settings:
             raise Exception(f'Cannot find JSON config {self.__cfgfile}! Create it using sample from repo.')
         self.load()
         if not self.__check_schema(schid):
-            raise Exception(f'Schema of JSON config {self.__cfgfile} is outdated! Update config from repo.')
+            self.__migrate_schema()
         if not self.__apikey:
             raise Exception('No Telegram API token found. Please forward it using APIKEY environment variable!')

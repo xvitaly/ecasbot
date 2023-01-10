@@ -1,5 +1,9 @@
 # Schema changes
 
+## From 11 to 12
+The field `autoclean` was added. The default value is `false`.
+The field `restalert` was added. The default value is `false`.
+
 ## From 10 to 11
 The field `rotatelogs` was added. The default value is `false`.
 The field `duplicatelogs` was added. The default value is `false`.

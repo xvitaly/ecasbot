@@ -188,6 +188,23 @@ class Settings:
         """
         return self.__data['duplicatelogs']
 
+    @property
+    def autoclean_bot_commands(self) -> bool:
+        """
+        Check if automatic cleanup of the bot commands is enabled or not.
+        :return: Return True if automatic cleanup is enabled.
+        """
+        return self.__data['autoclean']
+
+    @property
+    def alert_on_restriction(self) -> bool:
+        """
+        Check if alerting subscribed admins on new restriction events
+        is enabled or not.
+        :return: Return True if alerting subscribed admins is enabled.
+        """
+        return self.__data['restalert']
+
     def __check_watchers(self, chatid: int):
         """
         Check if specified chat ID listed in watch list.

@@ -66,7 +66,7 @@ Name: "addtopath"; Description: "{cm:TaskAddToPath}"; GroupDescription: "{cm:Tas
 
 [Files]
 Source: "{#BASEDIR}\ecasbot.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: core
-Source: "{#BASEDIR}\ecasbot.json"; DestDir: "{userappdata}\ecasbot"; Flags: ignoreversion; Components: core
+Source: "{#BASEDIR}\ecasbot.json"; DestDir: "{userappdata}\ecasbot"; Flags: onlyifdoesntexist; Components: core
 Source: "{tmp}\launcher.cmd"; DestDir: "{app}"; Flags: external; Components: apikey\launcher
 
 #ifdef _RELEASE

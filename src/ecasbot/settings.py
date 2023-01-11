@@ -362,7 +362,6 @@ class Settings:
         Upgrade configuration file schema to the latest version.
         Only sequential upgrades are supported.
         """
-        # From 11 to 12...
         if self.__data['schema'] == 11:
             self.__upgrade_schema_v11()
         self.save()

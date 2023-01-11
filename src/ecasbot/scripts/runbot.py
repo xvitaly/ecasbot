@@ -9,11 +9,10 @@ from ecasbot import ASBot
 
 def main():
     try:
-        # Starting bot...
         ASBot().runbot()
-
-    except Exception as ex:
-        # Exception detected...
+    except KeyboardInterrupt:
+        print('Interrupted by user.')
+    except (Exception, SystemExit) as ex:
         print(f'An error occurred while running bot! Inner message: {ex}')
 
 

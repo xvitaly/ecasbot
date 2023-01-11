@@ -349,15 +349,22 @@ class Settings:
         """
         self.__cfgfile = str(os.path.join(self.__get_cfgpath(), f'{self.__appname}.json'))
 
-    def __migrate_schema(self) -> None:
+    def __upgrade_schema_v11(self) -> None:
+        """
+        Upgrade configuration file schema from version 11 to 12.
+        """
+        self.__data['schema'] = 12
+        self.__data['autoclean'] = False
+        self.__data['restalert'] = False
+
+    def __upgrade_schema(self) -> None:
         """
         Upgrade configuration file schema to the latest version.
+        Only sequential upgrades are supported.
         """
-        schema = self.__data['schema']
-        if schema < 12:
-            self.__data['schema'] = 12
-            self.__data['autoclean'] = False
-            self.__data['restalert'] = False
+        # From 11 to 12...
+        if self.__data['schema'] == 11:
+            self.__upgrade_schema_v11()
         self.save()
 
     def __init__(self, schid) -> None:
@@ -373,6 +380,6 @@ class Settings:
             raise Exception(f'Cannot find JSON config {self.__cfgfile}! Create it using sample from repo.')
         self.load()
         if not self.__check_schema(schid):
-            self.__migrate_schema()
+            self.__upgrade_schema()
         if not self.__apikey:
             raise Exception('No Telegram API token found. Please forward it using APIKEY environment variable!')

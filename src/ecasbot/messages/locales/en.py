@@ -67,7 +67,7 @@ class LocaleEn(CommonLocale):
         'as_wipeerr': 'Failed to delete message with ID {} in chat {} ({}).',
         'as_spamdbg': 'Received message from restricted user {} ({}) in chat {} ({}). Check results: '
                       'entitles: {}, spam: {}, forward: {}.\nContents: {}.',
-        'as_crashed': 'The bot has crashed. Scheduling restart in 30 seconds.',
+        'as_crashed': 'The bot has crashed due to the following error:\n{}.\nScheduling restart in 30 seconds.',
         'as_crashdbg': 'Additional debug information, related to this crash event:',
         'as_resprot': 'Admin {} ({}) tried to restrict protected user {} ({}) in chat {} ({}).',
         'as_banprot': 'Admin {} ({}) tried to ban protected user {} ({}) in chat {} ({}).'

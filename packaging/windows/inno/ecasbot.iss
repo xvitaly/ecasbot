@@ -90,10 +90,28 @@ Root: HKCU; Subkey: "Environment"; ValueType: expandsz; ValueName: "Path"; Value
 var
     APIKeyPage: TInputQueryWizardPage;
 
+function GetEnvValue(EnvName: String): String;
+var
+    EnvValue: String;
+begin
+    if RegQueryStringValue(HKEY_CURRENT_USER, 'Environment', EnvName, EnvValue) then
+        begin
+            Result := EnvValue
+        end
+    else
+        begin
+            Result := ''
+        end
+end;
+
 procedure AddAPIKeyPage();
 begin
     APIKeyPage := CreateInputQueryPage(wpSelectTasks, CustomMessage('APIKeyPageCaption'), CustomMessage('APIKeyPageDescription'), CustomMessage('APIKeyPageAdditionalText'));
     APIKeyPage.Add(CustomMessage('APIKeyPageInputFieldText'), False)
+    if WizardIsComponentSelected('apikey\sysenv') then
+        begin
+            APIKeyPage.Values[0] := GetEnvValue('APIKEY')
+        end
 end;
 
 procedure InitializeWizard();

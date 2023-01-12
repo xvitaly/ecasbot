@@ -90,6 +90,11 @@ Root: HKCU; Subkey: "Environment"; ValueType: expandsz; ValueName: "Path"; Value
 var
     APIKeyPage: TInputQueryWizardPage;
 
+function IsUpgrade(): Boolean;
+begin
+    Result := RegKeyExists(HKA, ExpandConstant('Software\Microsoft\Windows\CurrentVersion\Uninstall\{#SetupSetting("AppId")}_is1'))
+end;
+
 function GetEnvValue(EnvName: String): String;
 var
     EnvValue: String;
@@ -108,7 +113,7 @@ procedure AddAPIKeyPage();
 begin
     APIKeyPage := CreateInputQueryPage(wpSelectTasks, CustomMessage('APIKeyPageCaption'), CustomMessage('APIKeyPageDescription'), CustomMessage('APIKeyPageAdditionalText'));
     APIKeyPage.Add(CustomMessage('APIKeyPageInputFieldText'), False)
-    if WizardIsComponentSelected('apikey\sysenv') then
+    if IsUpgrade() and WizardIsComponentSelected('apikey\sysenv') then
         begin
             APIKeyPage.Values[0] := GetEnvValue('APIKEY')
         end

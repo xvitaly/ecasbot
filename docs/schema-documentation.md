@@ -23,4 +23,5 @@ Available options of the `ecasbot.json` configuration file:
   * `rotatelogs` - use an internal log rotate function (useful for configurations without logrotate.d; recommended for all non-POSIX systems);
   * `duplicatelogs` - allow to duplicate logs to stdout channel when logging to files is enabled;
   * `autoclean` - automatically cleanup used bot commands in super-groups;
-  * `restalert` - enable or disable alerting the subscribed admins on new restriction events.
+  * `restalert` - enable or disable alerting the subscribed admins on new restriction events;
+  * `delalert` - enable or disable alerting the subscribed admins on new message deletion events.

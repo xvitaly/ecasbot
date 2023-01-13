@@ -20,5 +20,6 @@
   "rotatelogs": false,
   "duplicatelogs": false,
   "autoclean": false,
-  "restalert": false
+  "restalert": false,
+  "delalert": false
 }

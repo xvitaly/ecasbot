@@ -201,9 +201,18 @@ class Settings:
         """
         Check if alerting subscribed admins on new restriction events
         is enabled or not.
-        :return: Return True if alerting subscribed admins is enabled.
+        :return: Return True if alerting subscribed admins on restriction events is enabled.
         """
         return self.__data['restalert']
+
+    @property
+    def alert_on_deletion(self) -> bool:
+        """
+        Check if alerting subscribed admins on new message deletion events
+        is enabled or not.
+        :return: Return True if alerting subscribed admins on message deletion events is enabled.
+        """
+        return self.__data['delalert']
 
     def __check_watchers(self, chatid: int):
         """
@@ -356,6 +365,7 @@ class Settings:
         self.__data['schema'] = 12
         self.__data['autoclean'] = False
         self.__data['restalert'] = False
+        self.__data['delalert'] = False
 
     def __upgrade_schema(self) -> None:
         """

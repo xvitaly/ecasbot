@@ -92,7 +92,7 @@ var
 
 function IsUpgrade(): Boolean;
 begin
-    Result := RegKeyExists(HKA, ExpandConstant('Software\Microsoft\Windows\CurrentVersion\Uninstall\{#SetupSetting("AppId")}_is1'))
+    Result := RegKeyExists(HKEY_CURRENT_USER, ExpandConstant('Software\Microsoft\Windows\CurrentVersion\Uninstall\{#SetupSetting("AppId")}_is1'))
 end;
 
 function GetEnvValue(EnvName: String): String;

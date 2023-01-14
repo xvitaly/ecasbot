@@ -5,7 +5,7 @@ You will need to get an API token from the @BotFather in order to use this bot. 
 EC AntiSpam bot support the following methods of storing the API key:
 
   * environment options (API key will be saved in user's environment variables) - default;
-  * launcher (API key will be saved in auto-generated launcher) - legacy, deprecated.
+  * launcher (API key will be saved in auto-generated launcher) - deprecated, not recommended.
 
 Once installed, you will need to add a running bot as an administrator to any super-groups you want to protect with the Telegram client.
 

@@ -14,6 +14,7 @@ class LocaleEn(CommonLocale):
         'as_welcome': 'Add me to supergroup and give me admin rights. I will try to block spammers automatically.',
         'as_alog': 'New user {} ({}) has joined chat {} ({}). Score: {}.',
         'as_restex': 'Cannot restrict a new user with ID {} in chat {} ({}) due to missing admin rights.',
+        'as_restnn': 'User {} ({}) is already restricted in chat {} ({}) until {}. No further actions needed.',
         'as_msgex': 'Exception detected while handling spam message from {} in chat {} ({}).',
         'as_joinhex': 'Failed to handle join message.',
         'as_banned': 'Permanently banned user {} ({}) (score: {}) in chat {} ({}).',

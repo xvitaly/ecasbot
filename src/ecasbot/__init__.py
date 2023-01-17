@@ -714,14 +714,22 @@ class ASBot:
                                                                                 message.chat.id,
                                                                                 message.chat.title))
                     else:
-                        # Limit users reached half-goal permanently (in Bot API - 366 days)...
-                        limtime = 31622400 if score >= self.__settings.nickgoal / 2 else self.__settings.bantime
-                        # Restrict all new users for specified in config time...
-                        self.__bot.restrict_chat_member(message.chat.id, new_chat_member.id,
-                                                        until_date=int(time.time()) + limtime,
-                                                        can_send_messages=True, can_send_media_messages=False,
-                                                        can_send_other_messages=False,
-                                                        can_add_web_page_previews=False)
+                        state = self.__bot.get_chat_member(message.chat.id, new_chat_member.id)
+                        if state.status == 'restricted':
+                            self.__logger.warning(self.__get_lm('as_restnn').format(new_chat_member.first_name,
+                                                                                    new_chat_member.id,
+                                                                                    message.chat.id,
+                                                                                    message.chat.title,
+                                                                                    state.until_date))
+                        else:
+                            # Limit users reached half-goal permanently (in Bot API - 366 days)...
+                            limtime = 31622400 if score >= self.__settings.nickgoal / 2 else self.__settings.bantime
+                            # Restrict all new users for specified in config time...
+                            self.__bot.restrict_chat_member(message.chat.id, new_chat_member.id,
+                                                            until_date=int(time.time()) + limtime,
+                                                            can_send_messages=True, can_send_media_messages=False,
+                                                            can_send_other_messages=False,
+                                                            can_add_web_page_previews=False)
                 except Exception:
                     self.__logger.exception(self.__get_lm('as_restex').format(message.from_user.id, message.chat.id,
                                                                               message.chat.title))

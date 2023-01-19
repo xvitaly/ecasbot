@@ -535,7 +535,9 @@ class ASBot:
                     mutetime = int(time.time()) + (int(float(mutereq.param) * 86400) if mutereq.index != -1 else 0)
                     self.__bot.restrict_chat_member(message.chat.id, userid, until_date=mutetime,
                                                     can_send_messages=False, can_send_media_messages=False,
-                                                    can_send_other_messages=False, can_add_web_page_previews=False)
+                                                    can_send_other_messages=False, can_add_web_page_previews=False,
+                                                    can_change_info=False, can_invite_users=False,
+                                                    can_pin_messages=False, can_send_polls=False)
                     logmsg = self.__get_lm('as_amute').format(message.from_user.first_name, message.from_user.id,
                                                               username, userid, message.chat.id, message.chat.title,
                                                               mutetime if mutereq.index != -1 else 'forever')

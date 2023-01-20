@@ -726,8 +726,8 @@ class ASBot:
                                                                                     message.chat.title,
                                                                                     state.until_date))
                         else:
-                            # Limit users reached half-goal permanently (in Bot API - 366 days)...
-                            limtime = 31622400 if score >= self.__settings.nickgoal / 2 else self.__settings.bantime
+                            # Limit users reached half-goal permanently (366 or 367 for leap years days)...
+                            limtime = 31708800 if score >= self.__settings.nickgoal / 2 else self.__settings.bantime
                             # Restrict all new users for specified in config time...
                             self.__bot.restrict_chat_member(message.chat.id, new_chat_member.id,
                                                             until_date=int(time.time()) + limtime,

@@ -181,6 +181,28 @@ class ASBot:
         if message.from_user.id in self.__settings.get_watchers(message.chat.id):
             self.__bot.send_message(message.from_user.id, logstr)
 
+    def __notify_subscribers(self, message, logstr) -> None:
+        """
+        Notify all subscribed admins about event.
+        :param message: Original message, raised event.
+        :param logstr: Message with useful information.
+        """
+        watchers = self.__settings.get_watchers(message.chat.id).copy()
+        for admin in watchers:
+            try:
+                self.__bot.send_message(admin, logstr, parse_mode='Markdown')
+                self.__logger.debug(
+                    self.__get_lm('as_repsn').format(admin, message.chat.id, message.chat.title))
+            except Exception as ex:
+                self.__logger.debug(ex)
+                try:
+                    if not self.__check_user_admin(admin, message.chat.id):
+                        self.__logger.warning(
+                            self.__get_lm('as_repna').format(admin, message.chat.id, message.chat.title))
+                        self.__settings.remove_watch(admin, message.chat.id)
+                except Exception:
+                    self.__logger.warning(self.__get_lm('as_repns').format(admin))
+
     def __read_settings(self) -> None:
         """
         Read settings from JSON configuration file.
@@ -630,24 +652,10 @@ class ASBot:
                                                       message.chat.title))
                 repreq = ParamExtractor(message.text)
                 reason = repreq.param if repreq.index != -1 else self.__get_lm('as_repnors')
-                watchers = self.__settings.get_watchers(message.chat.id).copy()
                 sendmsg = self.__get_lm('as_repmsg').format(message.from_user.first_name, message.from_user.id,
                                                             message.chat.title, message.chat.id, reason,
                                                             self.__get_message_link(message))
-                for admin in watchers:
-                    try:
-                        self.__bot.send_message(admin, sendmsg, parse_mode='Markdown')
-                        self.__logger.debug(
-                            self.__get_lm('as_repsn').format(admin, message.chat.id, message.chat.title))
-                    except Exception as ex:
-                        self.__logger.debug(ex)
-                        try:
-                            if not self.__check_user_admin(admin, message.chat.id):
-                                self.__logger.warning(
-                                    self.__get_lm('as_repna').format(admin, message.chat.id, message.chat.title))
-                                self.__settings.remove_watch(admin, message.chat.id)
-                        except Exception:
-                            self.__logger.warning(self.__get_lm('as_repns').format(admin))
+                self.__notify_subscribers(message, sendmsg)
         except Exception:
             self.__logger.exception(self.__get_lm('as_repex'))
 

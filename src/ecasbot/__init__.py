@@ -720,19 +720,18 @@ class ASBot:
                         # Also ban user who added him...
                         if message.from_user.id != new_chat_member.id:
                             self.__bot.kick_chat_member(message.chat.id, message.from_user.id)
-                        # Writing information to log...
-                        self.__logger.warning(self.__get_lm('as_banned').format(new_chat_member.first_name,
-                                                                                new_chat_member.id, score,
-                                                                                message.chat.id,
-                                                                                message.chat.title))
+                        actmsg = self.__get_lm('as_banned').format(new_chat_member.first_name,
+                                                                   new_chat_member.id, score,
+                                                                   message.chat.id,
+                                                                   message.chat.title)
                     else:
                         state = self.__bot.get_chat_member(message.chat.id, new_chat_member.id)
                         if state.status == 'restricted':
-                            self.__logger.warning(self.__get_lm('as_restnn').format(new_chat_member.first_name,
-                                                                                    new_chat_member.id,
-                                                                                    message.chat.id,
-                                                                                    message.chat.title,
-                                                                                    state.until_date))
+                            actmsg = self.__get_lm('as_restnn').format(new_chat_member.first_name,
+                                                                       new_chat_member.id,
+                                                                       message.chat.id,
+                                                                       message.chat.title,
+                                                                       state.until_date)
                         else:
                             # Limit users reached half-goal permanently (366 or 367 for leap years days)...
                             limtime = 31708800 if score >= self.__settings.nickgoal / 2 else self.__settings.bantime
@@ -742,6 +741,15 @@ class ASBot:
                                                             can_send_messages=True, can_send_media_messages=False,
                                                             can_send_other_messages=False,
                                                             can_add_web_page_previews=False)
+                            actmsg = self.__get_lm('as_rest').format(new_chat_member.first_name,
+                                                                     new_chat_member.id, score,
+                                                                     message.chat.id,
+                                                                     message.chat.title,
+                                                                     limtime / 86400)
+                    # Writing to log and notifying subscribers if enabled...
+                    self.__logger.warning(actmsg)
+                    if self.__settings.alert_on_restriction:
+                        self.__notify_subscribers(message, actmsg)
                 except Exception:
                     self.__logger.exception(self.__get_lm('as_restex').format(message.from_user.id, message.chat.id,
                                                                               message.chat.title))

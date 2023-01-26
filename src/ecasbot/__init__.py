@@ -491,7 +491,7 @@ class ASBot:
                                                            message.chat.title)
                 self.__logger.warning(logmsg)
                 self.__notify_admin(message, logmsg)
-
+                self.__clean_command(message)
         except Exception:
             self.__logger.exception(self.__get_lm('as_admerr'))
 
@@ -523,6 +523,7 @@ class ASBot:
                                                                wipelength, message.chat.id, message.chat.title)
                     self.__logger.warning(logmsg)
                 self.__notify_admin(message, logmsg)
+                self.__clean_command(message)
         except Exception:
             self.__logger.exception(self.__get_lm('as_admerr'))
 
@@ -547,6 +548,7 @@ class ASBot:
                                                                 message.chat.title)
                 self.__logger.warning(logmsg)
                 self.__notify_admin(message, logmsg)
+                self.__clean_command(message)
         except Exception:
             self.__logger.exception(self.__get_lm('as_admerr'))
 
@@ -577,6 +579,7 @@ class ASBot:
                                                                 message.chat.title)
                 self.__logger.warning(logmsg)
                 self.__notify_admin(message, logmsg)
+                self.__clean_command(message)
         except Exception:
             self.__logger.exception(self.__get_lm('as_admerr'))
 
@@ -600,6 +603,7 @@ class ASBot:
                                                            message.chat.title)
                 self.__logger.warning(logmsg)
                 self.__notify_admin(message, logmsg)
+                self.__clean_command(message)
             else:
                 unbanreq = ParamExtractor(message.text)
                 if unbanreq.index != -1:
@@ -610,6 +614,7 @@ class ASBot:
                                                                message.chat.id, message.chat.title)
                     self.__logger.warning(logmsg)
                     self.__notify_admin(message, logmsg)
+                    self.__clean_command(message)
         except Exception:
             self.__logger.exception(self.__get_lm('as_admerr'))
 
@@ -626,6 +631,7 @@ class ASBot:
             self.__logger.info(
                 self.__get_lm('as_repsblg').format(message.from_user.first_name, message.from_user.id,
                                                    message.chat.id, message.chat.title))
+            self.__clean_command(message)
         except Exception:
             self.__bot.reply_to(message, self.__get_lm('as_replim'))
 
@@ -642,6 +648,7 @@ class ASBot:
                                                     message.chat.id, message.chat.title))
             self.__bot.send_message(message.from_user.id,
                                     self.__get_lm('as_repunsb').format(message.chat.id, message.chat.title))
+            self.__clean_command(message)
         except Exception:
             self.__logger.exception(self.__get_lm('as_admerr'))
 
@@ -664,6 +671,7 @@ class ASBot:
                                                             message.chat.title, message.chat.id, reason,
                                                             self.__get_message_link(message))
                 self.__notify_subscribers(message, sendmsg)
+                self.__clean_command(message)
         except Exception:
             self.__logger.exception(self.__get_lm('as_repex'))
 
@@ -683,6 +691,7 @@ class ASBot:
                                                            message.chat.title)
                 self.__logger.warning(logmsg)
                 self.__notify_admin(message, logmsg)
+                self.__clean_command(message)
         except Exception:
             self.__logger.exception(self.__get_lm('as_admerr'))
 
@@ -699,6 +708,7 @@ class ASBot:
                                                          message.chat.id, message.chat.title)
             self.__logger.warning(logmsg)
             self.__notify_admin(message, logmsg)
+            self.__clean_command(message)
         except Exception:
             self.__logger.exception(self.__get_lm('as_admerr'))
 

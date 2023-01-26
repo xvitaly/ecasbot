@@ -203,6 +203,14 @@ class ASBot:
                 except Exception:
                     self.__logger.warning(self.__get_lm('as_repns').format(admin))
 
+    def __clean_command(self, message) -> None:
+        """
+        Remove used bot command from super-group if enabled.
+        :param message: Message with bot command for deletion.
+        """
+        if self.__settings.autoclean_bot_commands:
+            self.__bot.delete_message(message.chat.id, message.message_id)
+
     def __read_settings(self) -> None:
         """
         Read settings from JSON configuration file.

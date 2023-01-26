@@ -771,15 +771,16 @@ class ASBot:
             # Writing to log some debug information when needed...
             self.__logger.debug(
                 self.__get_lm('as_spamdbg').format(message.from_user.first_name, message.from_user.id,
-                                                   message.chat.id, message.chat.title, entities, spam, forward,
-                                                   message.text))
-
+                                                   message.chat.id, message.chat.title, entities, spam,
+                                                   forward, message.text))
             # Removing messages from restricted members...
             if entities or forward or spam:
                 self.__bot.delete_message(message.chat.id, message.message_id)
-                self.__logger.info(
-                    self.__get_lm('as_msgrest').format(message.from_user.first_name, message.from_user.id,
-                                                       message.chat.id, message.chat.title))
+                logmsg = self.__get_lm('as_msgrest').format(message.from_user.first_name, message.from_user.id,
+                                                            message.chat.id, message.chat.title)
+                self.__logger.info(logmsg)
+                if self.__settings.alert_on_deletion:
+                    self.__notify_subscribers(message, logmsg)
         except Exception:
             self.__logger.exception(self.__get_lm('as_msgex').format(message.from_user.id, message.chat.id,
                                                                      message.chat.title))

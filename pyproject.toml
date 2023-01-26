@@ -10,9 +10,9 @@ version = "1.7.1"
 license = { text = "GPL-3.0-or-later" }
 readme = "README.md"
 dependencies = [
-    "requests>=2.22.0",
-    "pytelegrambotapi>=4.7.0",
-    "emoji>=1.6.3"
+    "requests>=2.28.0",
+    "pytelegrambotapi>=4.8.0",
+    "emoji>=2.2.0"
 ]
 authors = [
     { name = "Vitaly Zaitsev", email="vitaly@easycoding.org" }

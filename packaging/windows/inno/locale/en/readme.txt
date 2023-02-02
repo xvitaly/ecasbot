@@ -9,10 +9,12 @@ EC AntiSpam bot support the following methods of storing the API key:
 
 Once installed, you will need to add a running bot as an administrator to any super-groups you want to protect with the Telegram client.
 
+Attention! The Hide Members feature must be disabled to work properly!
+
 Please check out the list of available bot actions before using this bot:
 https://github.com/xvitaly/ecasbot/blob/master/docs/available-bot-actions.md
 
 You can also change bot's settings by editing the %APPDATA%\ecasbot\ecasbot.json file in any text editor:
 https://github.com/xvitaly/ecasbot/blob/master/docs/schema-documentation.md
 
-Don't forget to restart the bot after any changes to this file.
+Don't forget to restart the bot after doing any changes to this file.

@@ -1,0 +1,32 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: ecasbot
+Upstream-Contact: EasyCoding Team
+Source: https://github.com/xvitaly/ecasbot
+
+Files: .github/*.md
+Copyright: 2017-2023 EasyCoding Team
+License: GPL-3.0-or-later
+
+Files: *.md
+Copyright: 2017-2023 EasyCoding Team
+License: GPL-3.0-or-later
+
+Files: packaging/assets/*
+Copyright: 2017-2023 EasyCoding Team
+License: GPL-3.0-or-later
+
+Files: packaging/fedora/*
+Copyright: 2017-2023 EasyCoding Team
+License: GPL-3.0-or-later
+
+Files: packaging/windows/assets/ecasbot.ico
+Copyright: 2015 Google Inc.
+License: Apache-2.0
+
+Files: packaging/windows/assets/ecasbot.manifest
+Copyright: 2017-2023 EasyCoding Team
+License: GPL-3.0-or-later
+
+Files: packaging/windows/inno/locale/*/readme.txt
+Copyright: 2017-2023 EasyCoding Team
+License: GPL-3.0-or-later

@@ -11,7 +11,7 @@ license = { text = "GPL-3.0-or-later" }
 readme = "README.md"
 dependencies = [
     "requests>=2.28.0",
-    "pytelegrambotapi>=4.8.0",
+    "pytelegrambotapi>=4.10.0",
     "emoji>=2.2.0"
 ]
 authors = [

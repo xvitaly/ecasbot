@@ -765,11 +765,17 @@ class ASBot:
                             # Limit users reached half-goal permanently (366 or 367 for leap years days)...
                             limtime = 31708800 if score >= self.__settings.nickgoal / 2 else self.__settings.bantime
                             # Restrict all new users for specified in config time...
+                            perm = telebot.types.ChatPermissions(can_send_messages=True, can_send_media_messages=False,
+                                                                 can_send_audios=False, can_send_documents=False,
+                                                                 can_send_photos=False, can_send_videos=False,
+                                                                 can_send_video_notes=False, can_send_voice_notes=False,
+                                                                 can_send_polls=False, can_send_other_messages=False,
+                                                                 can_add_web_page_previews=False, can_change_info=False,
+                                                                 can_invite_users=False, can_pin_messages=False,
+                                                                 can_manage_topics=False)
                             self.__bot.restrict_chat_member(message.chat.id, new_chat_member.id,
                                                             until_date=int(time.time()) + limtime,
-                                                            can_send_messages=True, can_send_media_messages=False,
-                                                            can_send_other_messages=False,
-                                                            can_add_web_page_previews=False)
+                                                            permissions=perm, use_independent_chat_permissions=True)
                             actmsg = self.__get_lm('as_rest').format(new_chat_member.first_name,
                                                                      new_chat_member.id, score,
                                                                      message.chat.id,

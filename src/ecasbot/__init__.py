@@ -8,12 +8,14 @@ import logging
 import logging.handlers
 import sys
 import time
+
 import telebot
 
 from .chkmsg import CheckMessage
 from .chkusr import CheckUsername
 from .extractor import ParamExtractor
 from .messages import Messages
+from .permissions import Permissions
 from .ranges import Ranges
 from .settings import Settings
 
@@ -247,6 +249,13 @@ class ASBot:
         of TeleBot class.
         """
         self.__bot = telebot.TeleBot(self.__settings.tgkey)
+
+    def __init_permissions(self) -> None:
+        """
+        Initialize permissions by creating an instance of
+        the Permissions class.
+        """
+        self.__perm = Permissions()
 
     def __init_user_handlers(self) -> None:
         """
@@ -565,16 +574,9 @@ class ASBot:
                 if message.from_user.id != userid and self.__check_restriction_allowed(message):
                     mutereq = ParamExtractor(message.text)
                     mutetime = int(time.time()) + (int(float(mutereq.param) * 86400) if mutereq.index != -1 else 0)
-                    perm = telebot.types.ChatPermissions(can_send_messages=False, can_send_media_messages=False,
-                                                         can_send_audios=False, can_send_documents=False,
-                                                         can_send_photos=False, can_send_videos=False,
-                                                         can_send_video_notes=False, can_send_voice_notes=False,
-                                                         can_send_polls=False, can_send_other_messages=False,
-                                                         can_add_web_page_previews=False, can_change_info=False,
-                                                         can_invite_users=False, can_pin_messages=False,
-                                                         can_manage_topics=False)
                     self.__bot.restrict_chat_member(message.chat.id, userid, until_date=mutetime,
-                                                    permissions=perm, use_independent_chat_permissions=True)
+                                                    permissions=self.__perm.restrict,
+                                                    use_independent_chat_permissions=True)
                     logmsg = self.__get_lm('as_amute').format(message.from_user.first_name, message.from_user.id,
                                                               username, userid, message.chat.id, message.chat.title,
                                                               mutetime if mutereq.index != -1 else 'forever')
@@ -597,16 +599,9 @@ class ASBot:
         """
         try:
             if message.reply_to_message:
-                perm = telebot.types.ChatPermissions(can_send_messages=True, can_send_media_messages=True,
-                                                     can_send_audios=True, can_send_documents=True,
-                                                     can_send_photos=True, can_send_videos=True,
-                                                     can_send_video_notes=True, can_send_voice_notes=True,
-                                                     can_send_polls=True, can_send_other_messages=True,
-                                                     can_add_web_page_previews=True, can_change_info=True,
-                                                     can_invite_users=True, can_pin_messages=True,
-                                                     can_manage_topics=True)
                 self.__bot.restrict_chat_member(message.chat.id, message.reply_to_message.from_user.id,
-                                                permissions=perm, use_independent_chat_permissions=True)
+                                                permissions=self.__perm.unrestrict,
+                                                use_independent_chat_permissions=True)
                 logmsg = self.__get_lm('as_aunres').format(message.from_user.first_name, message.from_user.id,
                                                            message.reply_to_message.from_user.first_name,
                                                            message.reply_to_message.from_user.id, message.chat.id,
@@ -764,17 +759,10 @@ class ASBot:
                             # Limit users reached half-goal permanently (366 or 367 for leap years days)...
                             limtime = 31708800 if score >= self.__settings.nickgoal / 2 else self.__settings.bantime
                             # Restrict all new users for specified in config time...
-                            perm = telebot.types.ChatPermissions(can_send_messages=True, can_send_media_messages=False,
-                                                                 can_send_audios=False, can_send_documents=False,
-                                                                 can_send_photos=False, can_send_videos=False,
-                                                                 can_send_video_notes=False, can_send_voice_notes=False,
-                                                                 can_send_polls=False, can_send_other_messages=False,
-                                                                 can_add_web_page_previews=False, can_change_info=False,
-                                                                 can_invite_users=False, can_pin_messages=False,
-                                                                 can_manage_topics=False)
                             self.__bot.restrict_chat_member(message.chat.id, new_chat_member.id,
                                                             until_date=int(time.time()) + limtime,
-                                                            permissions=perm, use_independent_chat_permissions=True)
+                                                            permissions=self.__perm.join,
+                                                            use_independent_chat_permissions=True)
                             actmsg = self.__get_lm('as_rest').format(new_chat_member.first_name,
                                                                      new_chat_member.id, score,
                                                                      message.chat.id,
@@ -839,4 +827,5 @@ class ASBot:
         self.__load_messages()
         self.__set_logger()
         self.__init_bot()
+        self.__init_permissions()
         self.__init_handlers()

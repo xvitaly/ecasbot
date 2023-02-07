@@ -311,6 +311,7 @@ class Settings:
     def __check_config(self) -> None:
         """
         Check if JSON config file exists.
+        :exception Exception If JSON config can't be found.
         """
         if not os.path.isfile(self.__cfgfile):
             raise Exception(f'Cannot find JSON config {self.__cfgfile}! Create it using sample from repo.')
@@ -319,6 +320,7 @@ class Settings:
         """
         Check JSON config schema version.
         :param schid: New schema version.
+        :exception Exception If JSON config schema version is higher than supported.
         """
         schema = self.__data['schema']
         if schema < schid:
@@ -329,6 +331,7 @@ class Settings:
     def __check_apikey(self) -> None:
         """
         Check if Telegram Bot API token is present.
+        :exception Exception If Telegram API token not found.
         """
         if not self.__apikey:
             raise Exception('No Telegram API token found. Please forward it using APIKEY environment variable!')

@@ -316,7 +316,7 @@ class Settings:
         if not os.path.isfile(self.__cfgfile):
             raise Exception(f'Cannot find JSON config {self.__cfgfile}! Create it using sample from repo.')
 
-    def __check_schema(self, schid) -> None:
+    def __check_schema(self, schid: int) -> None:
         """
         Check JSON config schema version.
         :param schid: New schema version.
@@ -396,7 +396,7 @@ class Settings:
             self.__upgrade_schema_v11()
         self.__write_config()
 
-    def __init__(self, schid) -> None:
+    def __init__(self, schid: int) -> None:
         """
         Main constructor of Settings class.
         :param schid: Required schema version.

@@ -326,6 +326,13 @@ class Settings:
         elif schema > schid:
             raise Exception(f'JSON config schema version ({schema}) is higher than supported ({schid})!')
 
+    def __check_apikey(self) -> None:
+        """
+        Check if Telegram Bot API token is present.
+        """
+        if not self.__apikey:
+            raise Exception('No Telegram API token found. Please forward it using APIKEY environment variable!')
+
     def __get_cfgpath(self) -> str:
         """
         Get directory where bot's configuration are stored.
@@ -398,5 +405,4 @@ class Settings:
         self.__check_config()
         self.load()
         self.__check_schema(schid)
-        if not self.__apikey:
-            raise Exception('No Telegram API token found. Please forward it using APIKEY environment variable!')
+        self.__check_apikey()

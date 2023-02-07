@@ -4,21 +4,21 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from itertools import chain
+import itertools
 
 
 class Ranges:
     @staticmethod
-    def __parserange(sourcerow: str) -> range:
+    def __parse(row: str) -> range:
         """
         Parse source range and fill result.
-        :param sourcerow: Source row to parse.
+        :param row: Source row to parse.
         :return: Range generated from source.
         """
-        splitted = sourcerow.split('-')
+        splitted = row.split('-')
         first, second = int(splitted[0]), int(splitted[-1])
         if (1 > len(splitted) > 2) or (first > second):
-            raise ValueError(f'Invalid range specified: {sourcerow}')
+            raise ValueError(f'Invalid range specified: {row}')
         return range(first, second + 1)
 
     def tosorted(self) -> list:
@@ -35,9 +35,9 @@ class Ranges:
         """
         return self.__rlist
 
-    def __init__(self, inputstr: str) -> None:
+    def __init__(self, source: str) -> None:
         """
         Main constructor of Ranges class.
-        :param inputstr: Source string.
+        :param source: Source string.
         """
-        self.__rlist = list(chain.from_iterable(map(self.__parserange, inputstr.split(','))))
+        self.__rlist = list(itertools.chain.from_iterable(map(self.__parse, source.split(','))))

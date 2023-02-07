@@ -301,7 +301,7 @@ class Settings:
         with open(self.__cfgfile, mode='w', encoding='utf-8') as f:
             json.dump(self.__data, f)
 
-    def load(self) -> None:
+    def __read_config(self) -> None:
         """
         Load settings from JSON file.
         """
@@ -406,6 +406,6 @@ class Settings:
         self.__get_cfgfile()
         self.__get_apikey()
         self.__check_config()
-        self.load()
+        self.__read_config()
         self.__check_schema(schid)
         self.__check_apikey()

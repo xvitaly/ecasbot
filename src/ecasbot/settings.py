@@ -244,7 +244,7 @@ class Settings:
                         watch[1].append(userid)
         else:
             self.__data['watches'].append([chatid, [userid]])
-        self.save()
+        self.__write_config()
 
     def remove_watch(self, userid: int, chatid: int) -> None:
         """
@@ -256,7 +256,7 @@ class Settings:
             if watch[0] == chatid:
                 if userid in watch[1]:
                     watch[1].remove(userid)
-        self.save()
+        self.__write_config()
 
     def add_stopword(self, stopword: str) -> None:
         """
@@ -265,7 +265,7 @@ class Settings:
         """
         if stopword not in self.__data['stopwords']:
             self.__data['stopwords'].append(stopword)
-        self.save()
+        self.__write_config()
 
     def remove_stopword(self, stopword: str) -> None:
         """
@@ -274,7 +274,7 @@ class Settings:
         """
         if stopword in self.__data['stopwords']:
             self.__data['stopwords'].remove(stopword)
-        self.save()
+        self.__write_config()
 
     def add_entity(self, entity: str) -> None:
         """
@@ -283,7 +283,7 @@ class Settings:
         """
         if entity not in self.__data['restent']:
             self.__data['restent'].append(entity)
-        self.save()
+        self.__write_config()
 
     def remove_entity(self, entity: str) -> None:
         """
@@ -292,9 +292,9 @@ class Settings:
         """
         if entity in self.__data['restent']:
             self.__data['restent'].remove(entity)
-        self.save()
+        self.__write_config()
 
-    def save(self) -> None:
+    def __write_config(self) -> None:
         """
         Save current settings to JSON file.
         """
@@ -394,7 +394,7 @@ class Settings:
         """
         if self.__data['schema'] == 11:
             self.__upgrade_schema_v11()
-        self.save()
+        self.__write_config()
 
     def __init__(self, schid) -> None:
         """

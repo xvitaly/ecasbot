@@ -308,13 +308,16 @@ class Settings:
         with open(self.__cfgfile, mode='r', encoding='utf-8') as f:
             self.__data = json.load(f)
 
-    def __check_schema(self, schid) -> bool:
+    def __check_schema(self, schid) -> None:
         """
         Check JSON config schema version.
         :param schid: New schema version.
-        :return: True if equal.
         """
-        return self.__data['schema'] >= schid
+        schema = self.__data['schema']
+        if schema < schid:
+            self.__upgrade_schema()
+        elif schema > schid:
+            raise Exception(f'JSON config schema version ({schema}) is higher than supported ({schid})!')
 
     def __get_cfgpath(self) -> str:
         """
@@ -388,7 +391,6 @@ class Settings:
         if not os.path.isfile(self.__cfgfile):
             raise Exception(f'Cannot find JSON config {self.__cfgfile}! Create it using sample from repo.')
         self.load()
-        if not self.__check_schema(schid):
-            self.__upgrade_schema()
+        self.__check_schema(schid)
         if not self.__apikey:
             raise Exception('No Telegram API token found. Please forward it using APIKEY environment variable!')

@@ -308,6 +308,13 @@ class Settings:
         with open(self.__cfgfile, mode='r', encoding='utf-8') as f:
             self.__data = json.load(f)
 
+    def __check_config(self) -> None:
+        """
+        Check if JSON config file exists.
+        """
+        if not os.path.isfile(self.__cfgfile):
+            raise Exception(f'Cannot find JSON config {self.__cfgfile}! Create it using sample from repo.')
+
     def __check_schema(self, schid) -> None:
         """
         Check JSON config schema version.
@@ -388,8 +395,7 @@ class Settings:
         self.__data = {}
         self.__get_cfgfile()
         self.__get_apikey()
-        if not os.path.isfile(self.__cfgfile):
-            raise Exception(f'Cannot find JSON config {self.__cfgfile}! Create it using sample from repo.')
+        self.__check_config()
         self.load()
         self.__check_schema(schid)
         if not self.__apikey:

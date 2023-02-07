@@ -18,7 +18,7 @@ class Ranges:
         splitted = sourcerow.split('-')
         first, second = int(splitted[0]), int(splitted[-1])
         if (1 > len(splitted) > 2) or (first > second):
-            raise ValueError('Invalid range specified: {}'.format(sourcerow))
+            raise ValueError(f'Invalid range specified: {sourcerow}')
         return range(first, second + 1)
 
     def tosorted(self) -> list:

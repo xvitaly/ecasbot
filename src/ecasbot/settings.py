@@ -296,14 +296,14 @@ class Settings:
 
     def __write_config(self) -> None:
         """
-        Save current settings to JSON file.
+        Write current settings to the JSON config file.
         """
         with open(self.__cfgfile, mode='w', encoding='utf-8') as f:
             json.dump(self.__data, f)
 
     def __read_config(self) -> None:
         """
-        Load settings from JSON file.
+        Read settings from the JSON config file.
         """
         with open(self.__cfgfile, mode='r', encoding='utf-8') as f:
             self.__data = json.load(f)

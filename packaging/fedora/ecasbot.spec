@@ -10,10 +10,10 @@ and block multimedia messages, links from the newly joined users,
 some common spam bots and users who added them to super-groups.}
 
 Name: %{pypi_name}
-Version: 1.7.1
+Version: 1.8.0
 Release: 1%{?dist}
 
-License: GPLv3+
+License: GPL-3.0-or-later
 Summary: EC AntiSpam bot for the Telegram messenger
 URL: https://github.com/xvitaly/%{pypi_name}
 Source0: %{url}/archive/v%{version}/%{pypi_name}-%{version}.tar.gz
@@ -91,5 +91,5 @@ install -D -p -m 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/%{pypi_name}.conf
 %doc docs/html/*
 
 %changelog
-* Tue Nov 22 2022 Vitaly Zaitsev <vitaly@easycoding.org> - 1.7.1-1
-- Updated to version 1.7.1.
+* Wed Feb 08 2023 Vitaly Zaitsev <vitaly@easycoding.org> - 1.8.0-1
+- Updated to version 1.8.0.

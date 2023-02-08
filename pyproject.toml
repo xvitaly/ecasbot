@@ -6,7 +6,7 @@
 
 [project]
 name = "ecasbot"
-version = "1.7.1"
+version = "1.8.0"
 license = { text = "GPL-3.0-or-later" }
 readme = "README.md"
 dependencies = [

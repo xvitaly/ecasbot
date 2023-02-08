@@ -6,8 +6,10 @@
 
 
 import json
-import os
 import logging
+import os
+
+from .exceptions import ConfigNotFound, TokenNotFound, WrongSchemaVersion
 
 
 class Settings:
@@ -311,30 +313,30 @@ class Settings:
     def __check_config(self) -> None:
         """
         Check if JSON config file exists.
-        :exception Exception If JSON config can't be found.
+        :exception ConfigNotFound If JSON config can't be found.
         """
         if not os.path.isfile(self.__cfgfile):
-            raise Exception(f'Cannot find JSON config {self.__cfgfile}! Create it using sample from repo.')
+            raise ConfigNotFound(f'Cannot find JSON config {self.__cfgfile}! Create it using sample from repo.')
 
     def __check_schema(self, schid: int) -> None:
         """
         Check JSON config schema version.
         :param schid: New schema version.
-        :exception Exception If JSON config schema version is higher than supported.
+        :exception WrongSchemaVersion If JSON config schema version is higher than supported.
         """
         schema = self.__data['schema']
         if schema < schid:
             self.__upgrade_schema()
         elif schema > schid:
-            raise Exception(f'JSON config schema version ({schema}) is higher than supported ({schid})!')
+            raise WrongSchemaVersion(f'JSON config schema version ({schema}) is higher than supported ({schid})!')
 
     def __check_apikey(self) -> None:
         """
         Check if Telegram Bot API token is present.
-        :exception Exception If Telegram API token not found.
+        :exception TokenNotFound If Telegram API token not found.
         """
         if not self.__apikey:
-            raise Exception('No Telegram API token found. Please forward it using APIKEY environment variable!')
+            raise TokenNotFound('No Telegram API token found. Please forward it using APIKEY environment variable!')
 
     def __get_cfgpath(self) -> str:
         """

@@ -12,6 +12,10 @@ ecasbot - EC AntiSpam bot for the Telegram messenger
 
 EC AntiSpam bot for the Telegram messenger will automatically detect and block multimedia messages, links from the newly joined users, some common spam bots and users who added them to super-groups.
 
+# COMPATIBILITY
+
+The Hide Members feature must be disabled in order to work properly!
+
 # BOT ACTIONS
 
 EC AntiSpam bot can be controlled via Telegram messages.
@@ -110,7 +114,10 @@ Available options of the `ecasbot.json` configuration file:
   * **hidejoins** - enable or disable removing of join messages;
   * **language** - the default language for the logs and the internal messages;
   * **rotatelogs** - use an internal log rotate function (useful for configurations without logrotate.d; recommended for all non-POSIX systems);
-  * **duplicatelogs** - allow to duplicate logs to stdout channel when logging to files is enabled.
+  * **duplicatelogs** - allow to duplicate logs to stdout channel when logging to files is enabled;
+  * **autoclean** - automatically cleanup used bot commands in super-groups;
+  * **restalert** - enable or disable alerting the subscribed admins on new restriction events;
+  * **delalert** - enable or disable alerting the subscribed admins on new message deletion events.
 
 # SYSTEMD UNIT
 

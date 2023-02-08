@@ -2,7 +2,7 @@
 
 Get an API token from the [@BotFather](https://t.me/BotFather).
 
-Copy the example configuration file `config/ecasbot.json` to `/etc/ecasbot/ecasbot.json` (you can also edit it in any text editor).
+Copy the example configuration file `packaging/assets/config/ecasbot.json` to `/etc/ecasbot/ecasbot.json` (you can also edit it in any text editor).
 
 Install this bot using Python package manager:
 ```

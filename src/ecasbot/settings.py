@@ -316,7 +316,7 @@ class Settings:
         :exception ConfigNotFound If JSON config can't be found.
         """
         if not os.path.isfile(self.__cfgfile):
-            raise ConfigNotFound(f'Cannot find JSON config {self.__cfgfile}! Create it using sample from repo.')
+            raise ConfigNotFound(f'Cannot find JSON config {self.__cfgfile}! Create it using the example.')
 
     def __check_schema(self, schid: int) -> None:
         """

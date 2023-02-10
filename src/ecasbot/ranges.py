@@ -28,7 +28,7 @@ class Ranges:
         """
         return sorted(self.__rlist)
 
-    def tolist(self) -> list:
+    def to_list(self) -> list:
         """
         Return unsorted list of specified range.
         :return: Unsorted list.

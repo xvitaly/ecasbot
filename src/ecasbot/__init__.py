@@ -575,8 +575,7 @@ class ASBot:
                     mutereq = ParamExtractor(message.text)
                     mutetime = int(time.time()) + (int(float(mutereq.param) * 86400) if mutereq.index != -1 else 0)
                     self.__bot.restrict_chat_member(message.chat.id, userid, until_date=mutetime,
-                                                    permissions=self.__perm.restrict,
-                                                    use_independent_chat_permissions=True)
+                                                    permissions=self.__perm.restrict)
                     logmsg = self.__get_lm('as_amute').format(message.from_user.first_name, message.from_user.id,
                                                               username, userid, message.chat.id, message.chat.title,
                                                               mutetime if mutereq.index != -1 else 'forever')
@@ -600,8 +599,7 @@ class ASBot:
         try:
             if message.reply_to_message:
                 self.__bot.restrict_chat_member(message.chat.id, message.reply_to_message.from_user.id,
-                                                permissions=self.__perm.unrestrict,
-                                                use_independent_chat_permissions=True)
+                                                permissions=self.__perm.unrestrict)
                 logmsg = self.__get_lm('as_aunres').format(message.from_user.first_name, message.from_user.id,
                                                            message.reply_to_message.from_user.first_name,
                                                            message.reply_to_message.from_user.id, message.chat.id,
@@ -761,8 +759,7 @@ class ASBot:
                             # Restrict all new users for specified in config time...
                             self.__bot.restrict_chat_member(message.chat.id, new_chat_member.id,
                                                             until_date=int(time.time()) + limtime,
-                                                            permissions=self.__perm.join,
-                                                            use_independent_chat_permissions=True)
+                                                            permissions=self.__perm.join)
                             actmsg = self.__get_lm('as_rest').format(new_chat_member.first_name,
                                                                      new_chat_member.id, score,
                                                                      message.chat.id,

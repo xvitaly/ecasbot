@@ -514,7 +514,7 @@ class ASBot:
             # Remove specified range...
             wipereq = ParamExtractor(message.text)
             if wipereq.index != -1:
-                wipelist = Ranges(wipereq.param).tosorted()
+                wipelist = Ranges(wipereq.param).to_sorted()
                 wipelength = len(wipelist)
                 if 1 <= wipelength <= 50:
                     logmsg = self.__get_lm('as_wipelg').format(message.from_user.first_name, message.from_user.id,

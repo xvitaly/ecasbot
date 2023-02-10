@@ -21,7 +21,7 @@ class Ranges:
             raise ValueError(f'Invalid range specified: {row}')
         return range(first, second + 1)
 
-    def tosorted(self) -> list:
+    def to_sorted(self) -> list:
         """
         Return sorted list of specified range.
         :return: Sorted list.

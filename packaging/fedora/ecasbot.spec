@@ -10,7 +10,7 @@ and block multimedia messages, links from the newly joined users,
 some common spam bots and users who added them to super-groups.}
 
 Name: %{pypi_name}
-Version: 1.8.0
+Version: 1.8.1
 Release: 1%{?dist}
 
 License: GPL-3.0-or-later
@@ -91,5 +91,5 @@ install -D -p -m 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/%{pypi_name}.conf
 %doc docs/html/*
 
 %changelog
-* Wed Feb 08 2023 Vitaly Zaitsev <vitaly@easycoding.org> - 1.8.0-1
-- Updated to version 1.8.0.
+* Fri Feb 10 2023 Vitaly Zaitsev <vitaly@easycoding.org> - 1.8.1-1
+- Updated to version 1.8.1.

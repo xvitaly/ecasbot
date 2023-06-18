@@ -15,10 +15,6 @@ Files: packaging/assets/*
 Copyright: 2017-2023 EasyCoding Team
 License: GPL-3.0-or-later
 
-Files: packaging/fedora/*
-Copyright: 2017-2023 EasyCoding Team
-License: GPL-3.0-or-later
-
 Files: packaging/windows/assets/ecasbot.ico
 Copyright: 2015 Google Inc.
 License: Apache-2.0

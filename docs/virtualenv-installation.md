@@ -1,4 +1,4 @@
-# Installing bot into Python Virtual Environment
+# Installing the bot into Python Virtual Environment
 
 Clone this repository:
 ```

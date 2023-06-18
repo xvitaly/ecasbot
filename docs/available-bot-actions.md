@@ -1,4 +1,4 @@
-# List of available bot actions
+# The list of available bot actions
 
 ## Allowed users
 

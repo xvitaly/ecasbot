@@ -3,15 +3,14 @@
 ## Basic usage
 
   * [Getting started](getting-started.md).
-  * [List of available bot actions](available-bot-actions.md).
+  * [The list of available bot actions](available-bot-actions.md).
   * [Configuration file documentation](schema-documentation.md).
 
 ## Installation
 
-  * [Installing the bot from PyPI](pypi-installation.md).
   * [Installing the bot on Windows](windows-installation.md).
-  * [Installing the bot on Fedora](fedora-installation.md).
-  * [Installation in Python virtual environment](virtualenv-installation.md).
+  * [Installing the bot from PyPI](pypi-installation.md).
+  * [Installing the bot into Python Virtual Environment](virtualenv-installation.md).
 
 ## Advanced configuration
 
